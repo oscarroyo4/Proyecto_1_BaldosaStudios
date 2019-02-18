@@ -29,10 +29,8 @@ Oscar Royo
 
 No tienen ninguna licencia.
 =======
-Readme prueba
+'Readme prueba'
 >>>>>>> 830f1d0bb9593951d00d9a8cc45d3af8850dcf31
 =======
-Readme prueva va con v
-pene
-hola
+
 >>>>>>> d36ffa8a6223ef413e5fe503ecd37982f937d5b2
