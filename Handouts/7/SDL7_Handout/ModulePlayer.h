@@ -26,6 +26,7 @@ public:
 	Animation up;
 	Animation down;
 	iPoint position;
+	Collider* colPlayer;
 };
 
 #endif

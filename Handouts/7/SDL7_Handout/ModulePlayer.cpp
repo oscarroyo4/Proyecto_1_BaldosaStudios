@@ -42,7 +42,7 @@ bool ModulePlayer::Start()
 	position.y = 120;
 
 	// TODO 2: Add a collider to the player
-
+	colPlayer = App->collision->AddCollider({ position.x, position.y, 32, 14 }, COLLIDER_PLAYER);
 	return true;
 }
 
@@ -101,7 +101,7 @@ update_status ModulePlayer::Update()
 		current_animation = &idle;
 
 	// TODO 3: Update collider position to player position
-
+	colPlayer->SetPos(position.x, position.y);
 	// Draw everything --------------------------------------
 	App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
 
@@ -109,3 +109,6 @@ update_status ModulePlayer::Update()
 }
 
 // TODO 4: Detect collision with a wall. If so, go back to intro screen.
+void OnCollision() {
+
+}
