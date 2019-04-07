@@ -9,6 +9,7 @@
 #include "ModuleParticles.h"
 #include "ModuleIntro.h"
 #include "ModuleEnemy.h"
+#include "ModuleCollision.h"
 #include "ModulePlayerSelect.h"
 #include "ModuleSounds.h"
 
@@ -27,6 +28,7 @@ Application::Application()
 	modules[9] = particles = new ModuleParticles();
 	modules[10] = fade = new ModuleFadeToBlack();
 	modules[11] = sounds = new ModuleSounds();
+	modules[12] = collision = new ModuleCollision();
 }	
 
 Application::~Application()

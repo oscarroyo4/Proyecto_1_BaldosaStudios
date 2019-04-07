@@ -6,6 +6,7 @@
 #include "p2Point.h"
 
 struct SDL_Texture;
+struct Collider;
 
 class ModulePlayer : public Module
 {
@@ -31,6 +32,7 @@ public:
 	Animation specialAttack;
 	Animation crouch;
 	iPoint position;
+	Collider* colPlayer;
 };
 
 #endif

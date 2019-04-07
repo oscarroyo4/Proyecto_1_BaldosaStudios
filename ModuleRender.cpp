@@ -57,10 +57,10 @@ update_status ModuleRender::Update()
 	if(App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_STATE::KEY_REPEAT)
 		camera.y -= speed;
 
-	if (App->input->keyboard[SDL_SCANCODE_LEFT] == KEY_STATE::KEY_REPEAT)
+	if(App->input->keyboard[SDL_SCANCODE_LEFT] == KEY_STATE::KEY_REPEAT)
 		camera.x += speed;
 
-	if (App->input->keyboard[SDL_SCANCODE_RIGHT] == KEY_STATE::KEY_REPEAT)
+	if(App->input->keyboard[SDL_SCANCODE_RIGHT] == KEY_STATE::KEY_REPEAT)
 		camera.x -= speed;
 
 	return update_status::UPDATE_CONTINUE;
@@ -68,6 +68,7 @@ update_status ModuleRender::Update()
 
 update_status ModuleRender::PostUpdate()
 {
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 	SDL_RenderPresent(renderer);
 	return update_status::UPDATE_CONTINUE;
 }
@@ -116,3 +117,27 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
 	return ret;
 }
 
+bool ModuleRender::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool use_camera)
+{
+	bool ret = true;
+
+	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+	SDL_SetRenderDrawColor(renderer, r, g, b, a);
+
+	SDL_Rect rec(rect);
+	if(use_camera)
+	{
+		rec.x = (int)(camera.x + rect.x * SCREEN_SIZE);
+		rec.y = (int)(camera.y + rect.y * SCREEN_SIZE);
+		rec.w *= SCREEN_SIZE;
+		rec.h *= SCREEN_SIZE;
+	}
+
+	if(SDL_RenderFillRect(renderer, &rec) != 0)
+	{
+		LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
+		ret = false;
+	}
+
+	return ret;
+}

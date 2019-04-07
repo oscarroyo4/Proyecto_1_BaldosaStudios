@@ -3,6 +3,7 @@
 #include "ModuleTextures.h"
 #include "ModuleInput.h"
 #include "ModuleParticles.h"
+#include "ModuleCollision.h"
 #include "ModuleRender.h"
 #include "ModulePlayer.h"
 #include "SDL_image/include/SDL_image.h"
@@ -83,6 +84,7 @@ bool ModulePlayer::Start()
 
 	graphicsTerry = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites.png");  //First Tery Bogard Sprite Sheet
 	graphicsTerry2 = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites 2.png");  //Second Tery Bogard Sprite Sheet
+	colPlayer = App->collision->AddCollider({ position.x, position.y, 34, 106 }, COLLIDER_PLAYER);
 
 	return true;
 }
@@ -106,16 +108,18 @@ update_status ModulePlayer::Update()
 
 	if (App->input->keyboard[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT)
 	{
-		position.x -= speed;
-		current_animation = &backward;
-		App->render->camera.x += 3;
+		if (position.x < 10) { position.x -= 0; }
+		else position.x -= speed;
+			current_animation = &backward;
+		if (App->render->camera.x > 0) { App->render->camera.x -= 0; }
+		else App->render->camera.x += 3;
 	}
 
 	if (App->input->keyboard[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT)
 	{
-		current_animation = &forward;
-		position.x += speed;
-		App->render->camera.x -= 3;
+		 position.x += speed;
+		 current_animation = &forward;
+         App->render->camera.x -= 3; 
 	}
 
 	if (App->input->keyboard[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT)
@@ -131,7 +135,6 @@ update_status ModulePlayer::Update()
 	if (App->input->keyboard[SDL_SCANCODE_F] == KEY_STATE::KEY_REPEAT)
 	{
 		current_animation = &punch;
-		
 	}
 
 	if (App->input->keyboard[SDL_SCANCODE_K] == KEY_STATE::KEY_REPEAT)
@@ -145,6 +148,8 @@ update_status ModulePlayer::Update()
 	current_animation = &specialAttack;
 	//App->particles->AddParticle(App->particles->special, position.x + 85, position.y - 70, 1, 1000, 1, 0);
 	}
+
+	colPlayer->SetPos(position.x + 12, position.y - 107);
 	// Draw everything --------------------------------------
 
 	SDL_Rect r = current_animation->GetCurrentFrame();

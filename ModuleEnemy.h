@@ -6,6 +6,7 @@
 #include "p2Point.h"
 
 struct SDL_Texture;
+struct Collider;
 
 class ModuleEnemy : public Module
 {
@@ -22,6 +23,8 @@ public:
 	SDL_Texture * graphicsTerry = nullptr;
 	Animation* current_animation = nullptr;
 	Animation idle;
+	Animation damage;
 	iPoint position;
+	Collider* colEnemy;
 };
 #endif
