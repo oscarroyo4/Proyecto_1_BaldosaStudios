@@ -6,6 +6,7 @@
 #include "ModuleCollision.h"
 #include "ModuleRender.h"
 #include "ModulePlayer.h"
+#include "ModuleEnemy.h"
 #include "SDL_image/include/SDL_image.h"
 
 
@@ -83,7 +84,7 @@ bool ModulePlayer::Start()
 	LOG("Loading player");
 
 	graphicsTerry = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites.png");  //First Tery Bogard Sprite Sheet
-	graphicsTerry2 = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites 2.png");  //Second Tery Bogard Sprite Sheet
+	//graphicsTerry2 = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites 2.png");  //Second Tery Bogard Sprite Sheet
 	colPlayer = App->collision->AddCollider({ position.x, position.y, 34, 106 }, COLLIDER_PLAYER);
 
 	return true;
@@ -135,6 +136,11 @@ update_status ModulePlayer::Update()
 	if (App->input->keyboard[SDL_SCANCODE_F] == KEY_STATE::KEY_REPEAT)
 	{
 		current_animation = &punch;
+		Collider* punch = App->collision->AddCollider({position.x + 45, position.y - 90, 40, 20}, COLLIDER_PLAYER_SHOT);
+		if (punch->CheckCollision(App->enemy->r)) {
+			App->enemy->hit = true;
+		}
+		punch->to_delete = true;
 	}
 
 	if (App->input->keyboard[SDL_SCANCODE_K] == KEY_STATE::KEY_REPEAT)

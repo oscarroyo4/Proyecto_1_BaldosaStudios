@@ -26,5 +26,8 @@ public:
 	Animation damage;
 	iPoint position;
 	Collider* colEnemy;
+	SDL_Rect r;
+
+	bool hit = false;
 };
 #endif

@@ -58,13 +58,16 @@ update_status ModuleEnemy::Update()
 
 	colEnemy->SetPos(position.x + 12, position.y - 107);
 
-
+	if (hit == true) {
+		current_animation = &damage;
+		hit = false;
+	}
 
 
 	
 	// Draw everything --------------------------------------
 
-	SDL_Rect r = current_animation->GetCurrentFrame();
+	r = current_animation->GetCurrentFrame();
 
 	App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r);
 
