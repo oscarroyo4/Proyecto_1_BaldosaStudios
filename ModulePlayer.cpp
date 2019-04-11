@@ -83,7 +83,7 @@ bool ModulePlayer::Start()
 
 	App->collision->Enable();
 	graphicsTerry = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites.png"); //First Tery Bogard Sprite Sheet
-	godMode = false;																	  //graphicsTerry2 = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites 2.png"); //Second Tery Bogard Sprite Sheet
+	godMode = true;																	  //graphicsTerry2 = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites 2.png"); //Second Tery Bogard Sprite Sheet
 	colPlayer = App->collision->AddCollider({ position.x, position.y, 34, 106 }, COLLIDER_PLAYER);
 
 	return true;
@@ -126,8 +126,6 @@ update_status ModulePlayer::Update()
 	if (App->input->keyboard[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT)
 	{
 		current_animation = &jump;
-		if (position.y < 180) {position.y += speed;}
-		else if (position.y >= 180) {position.y -= speed ;}
 	}
 
 	if (App->input->keyboard[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT)

@@ -16,17 +16,17 @@ ModuleEnemy::ModuleEnemy()
 	position.y = 223;
 
 	// idle animation (arcade sprite sheet)
-	idle.PushBack({ 351, 341, 60, 105 });
-	idle.PushBack({ 419, 341, 60, 106 });
-	idle.PushBack({ 488, 339, 62, 105 });
+	idle.PushBack({ 28, 208, 62, 105 });
+	idle.PushBack({ 97, 208, 60, 106 });
+	idle.PushBack({ 163, 208, 60, 105 });
 	idle.speed = 0.1f;
 
 	// taking damage animation
-	damage.PushBack({ 552, 341, 69, 87 });
-	damage.PushBack({ 632, 341, 64, 96 });
-	damage.PushBack({ 700, 339, 68, 106 });
-	damage.PushBack({ 772, 339, 60, 100 });
-	damage.speed = 0.1f;
+	damage.PushBack({ 344, 342, 60, 100 });
+	damage.PushBack({ 407, 336, 68, 106 });
+	damage.PushBack({ 408, 346, 64, 96 });
+	damage.PushBack({ 555, 355, 69, 87 });
+	damage.speed = 0.15f;
 }
 
 ModuleEnemy::~ModuleEnemy()
@@ -64,12 +64,11 @@ update_status ModuleEnemy::Update()
 	}
 
 
-	
 	// Draw everything --------------------------------------
 
 	r = current_animation->GetCurrentFrame();
 
-	App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r);
+	App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r, 1, SDL_FLIP_HORIZONTAL);
 
 	return UPDATE_CONTINUE;
 }
