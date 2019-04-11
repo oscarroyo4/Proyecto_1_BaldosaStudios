@@ -20,6 +20,7 @@ public:
 
 public:
 
+	bool godMode;
 	SDL_Texture * graphicsTerry = nullptr;
 	SDL_Texture* graphicsTerry2 = nullptr;
 	Animation* current_animation = nullptr;

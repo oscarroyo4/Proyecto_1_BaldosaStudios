@@ -9,7 +9,6 @@
 #include "ModuleEnemy.h"
 #include "SDL_image/include/SDL_image.h"
 
-
 ModulePlayer::ModulePlayer()
 {
 	position.x = 100;
@@ -20,7 +19,6 @@ ModulePlayer::ModulePlayer()
 	idle.PushBack({ 97, 208, 60, 106 });
 	idle.PushBack({ 163, 208, 60, 105 });
 	idle.speed = 0.1f;
-
 
 	//forward
 	forward.PushBack({ 15, 337, 60, 106 });
@@ -83,8 +81,9 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 
-	graphicsTerry = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites.png");  //First Tery Bogard Sprite Sheet
-	//graphicsTerry2 = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites 2.png");  //Second Tery Bogard Sprite Sheet
+	App->collision->Enable();
+	graphicsTerry = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites.png"); //First Tery Bogard Sprite Sheet
+	godMode = false;																	  //graphicsTerry2 = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites 2.png"); //Second Tery Bogard Sprite Sheet
 	colPlayer = App->collision->AddCollider({ position.x, position.y, 34, 106 }, COLLIDER_PLAYER);
 
 	return true;
@@ -95,9 +94,10 @@ bool ModulePlayer::CleanUp()
 {
 	LOG("Unloading player");
 
+	App->collision->Disable();
+	App->player->Disable();
 	SDL_DestroyTexture(graphicsTerry);
 	SDL_DestroyTexture(graphicsTerry2);
-	App->player->Disable();
 
 	return true;
 }
@@ -111,21 +111,23 @@ update_status ModulePlayer::Update()
 	{
 		if (position.x < 10) { position.x -= 0; }
 		else position.x -= speed;
-			current_animation = &backward;
+		current_animation = &backward;
 		if (App->render->camera.x > 0) { App->render->camera.x -= 0; }
 		else App->render->camera.x += 3;
 	}
 
 	if (App->input->keyboard[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT)
 	{
-		 position.x += speed;
-		 current_animation = &forward;
-         App->render->camera.x -= 3; 
+		position.x += speed;
+		current_animation = &forward;
+		App->render->camera.x -= 3;
 	}
 
 	if (App->input->keyboard[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT)
 	{
 		current_animation = &jump;
+		if (position.y < 180) {position.y += speed;}
+		else if (position.y >= 180) {position.y -= speed ;}
 	}
 
 	if (App->input->keyboard[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT)
@@ -136,7 +138,7 @@ update_status ModulePlayer::Update()
 	if (App->input->keyboard[SDL_SCANCODE_F] == KEY_STATE::KEY_REPEAT)
 	{
 		current_animation = &punch;
-		Collider* punch = App->collision->AddCollider({position.x + 45, position.y - 90, 40, 20}, COLLIDER_PLAYER_SHOT);
+		Collider* punch = App->collision->AddCollider({ position.x + 45, position.y - 90, 40, 20 }, COLLIDER_PLAYER_SHOT);
 		if (punch->CheckCollision(App->enemy->r)) {
 			App->enemy->hit = true;
 		}
@@ -148,18 +150,31 @@ update_status ModulePlayer::Update()
 		current_animation = &kick;
 	}
 
+	if (App->input->keyboard[SDL_SCANCODE_F5] == KEY_STATE::KEY_DOWN)
+	{
+		if (godMode){
+			colPlayer->to_delete = true;
+			colPlayer = App->collision->AddCollider({ position.x + 12, position.y - 107, 34, 106 }, COLLIDER_NONE);
+			godMode = false;
+		}
+		else {
+			colPlayer->to_delete = true;
+			colPlayer = App->collision->AddCollider({ position.x + 12, position.y - 107, 34, 106 }, COLLIDER_PLAYER);
+			godMode = true;
+		}
+	}
 
 	if (App->input->keyboard[SDL_SCANCODE_G] == KEY_STATE::KEY_REPEAT)
 	{
-	current_animation = &specialAttack;
-	//App->particles->AddParticle(App->particles->special, position.x + 85, position.y - 70, 1, 1000, 1, 0);
+		current_animation = &specialAttack;
+		//App->particles->AddParticle(App->particles->special, position.x + 85, position.y - 70, 1, 1000, 1, 0);
 	}
 
 	colPlayer->SetPos(position.x + 12, position.y - 107);
 	// Draw everything --------------------------------------
 
 	SDL_Rect r = current_animation->GetCurrentFrame();
-    
+
 	App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r);
 	App->render->Blit(graphicsTerry2, position.x, position.y - r.h, &r);
 
