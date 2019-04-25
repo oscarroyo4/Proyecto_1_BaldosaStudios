@@ -170,18 +170,17 @@ update_status ModulePlayer::Update()
 		break;
 
 	case PLAYER_JUMP:
-		jump_timer = 1; 	
+		jump_timer = 1;
 
 		break;
 
 	case IN_JUMP_FINISH:
 		status = PLAYER_IDLE;
-		jump.Reset();	
+		jump.Reset();
 		break;
 
 	case IN_PUNCH_FINISH:
 		status = PLAYER_IDLE;
-
 		punch.Reset();
 		break;
 
@@ -190,24 +189,27 @@ update_status ModulePlayer::Update()
 		kick.Reset();
 		break;
 
-	case PLAYER_KICK:
-		{kick_timer = 1;
+	case PLAYER_KICK: {
+		kick.Reset();
+		kick_timer = 1;
 		current_animation = &kick;
-		Collider* kick = App->collision->AddCollider({ position.x + 45, position.y - 90, 30, 20 }, COLLIDER_PLAYER_SHOT);
-		if (kick->CheckCollision(App->enemy->r)) {
+		Collider* kickCol = App->collision->AddCollider({ position.x + 45, position.y - 90, 30, 20 }, COLLIDER_PLAYER_SHOT);
+		if (kickCol->CheckCollision(App->enemy->r)) {
 			App->enemy->hit = true;
 		}
-		kick->to_delete = true;
-		break;}
+		kickCol->to_delete = true;
+		break;
+	}
 	
 
 	case PLAYER_PUNCH:
+		punch.Reset();
 		punch_timer = 1;
-		Collider* punch = App->collision->AddCollider({ position.x + 45, position.y - 90, 30, 20 }, COLLIDER_PLAYER_SHOT);
-		if (punch->CheckCollision(App->enemy->r)) {
+		Collider* punchCol = App->collision->AddCollider({ position.x + 45, position.y - 90, 30, 20 }, COLLIDER_PLAYER_SHOT);
+		if (punchCol->CheckCollision(App->enemy->r)) {
 			App->enemy->hit = true;
 		}
-		punch->to_delete = true;
+		punchCol->to_delete = true;
 		break;
     }
 
@@ -263,9 +265,10 @@ update_status ModulePlayer::Update()
 
 	SDL_Rect r = current_animation->GetCurrentFrame();
 
-	  { App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r); }
+	  
 	if (App->enemy->position.x < position.x) { App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r, 1, SDL_FLIP_HORIZONTAL); }
-	if (App->enemy->position.x > position.x) { App->render->Blit(graphicsTerry2, position.x, position.y - r.h, &r); }
-	if (App->enemy->position.x < position.x) { App->render->Blit(graphicsTerry2, position.x, position.y - r.h, &r, 1, SDL_FLIP_HORIZONTAL); }
+	else { App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r); }
+	//if (App->enemy->position.x > position.x) { App->render->Blit(graphicsTerry2, position.x, position.y - r.h, &r); }
+	//if (App->enemy->position.x < position.x) { App->render->Blit(graphicsTerry2, position.x, position.y - r.h, &r, 1, SDL_FLIP_HORIZONTAL); }
 	return UPDATE_CONTINUE;
 }
