@@ -7,6 +7,7 @@
 #include "ModuleRender.h"
 #include "ModuleEnemy.h"
 #include "ModulePlayer.h"
+#include "ModuleHUD.h"
 #include "SDL_image/include/SDL_image.h"
 
 
@@ -60,6 +61,8 @@ update_status ModuleEnemy::Update()
 
 	if (hit == true) {
 		current_animation = &damage;
+		Life = Life - 15;
+		if (Life <= 0) { Life = 0; App->hud->Win = true; }
 		hit = false;
 	}
 
@@ -68,7 +71,8 @@ update_status ModuleEnemy::Update()
 
 	r = current_animation->GetCurrentFrame();
 
-	App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r, 1, SDL_FLIP_HORIZONTAL);
+	if (App->player->position.x < position.x) { App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r, 1, SDL_FLIP_HORIZONTAL); }
+	if (App->player->position.x > position.x) {App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r);}
 
 	return UPDATE_CONTINUE;
 }

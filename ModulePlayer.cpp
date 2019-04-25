@@ -9,6 +9,8 @@
 #include "ModuleEnemy.h"
 #include "SDL_image/include/SDL_image.h"
 
+#define PUNCH_TIME 1000
+
 ModulePlayer::ModulePlayer()
 {
 	position.x = 100;
@@ -37,7 +39,7 @@ ModulePlayer::ModulePlayer()
 	punch.PushBack({ 14, 585, 72, 100 });
 	punch.PushBack({ 87, 585, 62, 100 });
 	punch.PushBack({ 155, 585, 96, 100 });
-	punch.speed = 0.15f;
+	punch.speed = 0.12f;
 
 	//Kick animation
 	kick.PushBack({ 40, 56, 50, 95, });
@@ -103,25 +105,9 @@ bool ModulePlayer::CleanUp()
 }
 
 update_status ModulePlayer::Update()
-{
-	current_animation = &idle;
+{	
 	int speed = 1;
-
-	if (App->input->keyboard[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT)
-	{
-		if (position.x < 10) { position.x -= 0; }
-		else position.x -= speed;
-		current_animation = &backward;
-		if (App->render->camera.x > 0) { App->render->camera.x -= 0; }
-		else App->render->camera.x += 3;
-	}
-
-	if (App->input->keyboard[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT)
-	{
-		position.x += speed;
-		current_animation = &forward;
-		App->render->camera.x -= 3;
-	}
+	/*
 
 	if (App->input->keyboard[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT)
 	{
@@ -133,24 +119,136 @@ update_status ModulePlayer::Update()
 		current_animation = &crouch;
 	}
 
-	if (App->input->keyboard[SDL_SCANCODE_F] == KEY_STATE::KEY_REPEAT)
+	if (App->input->keyboard[SDL_SCANCODE_G] == KEY_STATE::KEY_REPEAT)
 	{
-		current_animation = &punch;
-		Collider* punch = App->collision->AddCollider({ position.x + 45, position.y - 90, 40, 20 }, COLLIDER_PLAYER_SHOT);
+		current_animation = &specialAttack;
+		//App->particles->AddParticle(App->particles->special, position.x + 85, position.y - 70, 1, 1000, 1, 0);
+	}*/
+
+
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		status = PLAYER_BACKWARD;
+
+	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		status = PLAYER_FORWARD;
+
+	else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+		status = PLAYER_JUMP;
+
+	else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+		status = PLAYER_CROUCH;
+
+	else if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+		status = PLAYER_PUNCH;
+
+	else if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+		status = PLAYER_KICK;
+
+	else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		status = PLAYER_SPECIAL;
+	else
+		status = PLAYER_IDLE;
+
+	switch (status)
+	{
+	case PLAYER_IDLE:
+		current_animation = &idle;
+		break;
+
+	case PLAYER_BACKWARD:
+		if (position.x < 10) { position.x -= 0; }
+		else position.x -= speed;
+		current_animation = &backward;
+		if (App->render->camera.x > 0) { App->render->camera.x -= 0; }
+		else App->render->camera.x += 3;
+		break;
+
+	case PLAYER_FORWARD:
+		position.x += speed;
+		current_animation = &forward;
+		App->render->camera.x -= 3;
+		break;
+
+	case PLAYER_JUMP:
+		jump_timer = 1; 	
+
+		break;
+
+	case IN_JUMP_FINISH:
+		status = PLAYER_IDLE;
+		jump.Reset();	
+		break;
+
+	case IN_PUNCH_FINISH:
+		status = PLAYER_IDLE;
+
+		punch.Reset();
+		break;
+
+	case IN_KICK_FINISH:
+		status = PLAYER_IDLE;
+		kick.Reset();
+		break;
+
+	case PLAYER_KICK:
+		{kick_timer = 1;
+		current_animation = &kick;
+		Collider* kick = App->collision->AddCollider({ position.x + 45, position.y - 90, 30, 20 }, COLLIDER_PLAYER_SHOT);
+		if (kick->CheckCollision(App->enemy->r)) {
+			App->enemy->hit = true;
+		}
+		kick->to_delete = true;
+		break;}
+	
+
+	case PLAYER_PUNCH:
+		punch_timer = 1;
+		Collider* punch = App->collision->AddCollider({ position.x + 45, position.y - 90, 30, 20 }, COLLIDER_PLAYER_SHOT);
 		if (punch->CheckCollision(App->enemy->r)) {
 			App->enemy->hit = true;
 		}
 		punch->to_delete = true;
+		break;
+    }
+
+	colPlayer->SetPos(position.x + 12, position.y - 107);
+
+	if (punch_timer > 0)
+	{
+		punch_timer = punch_timer + 1;
+		current_animation = &punch;
+		if (punch_timer > 28)
+		{
+			status = IN_PUNCH_FINISH;
+			punch_timer = 0;
+		}
 	}
 
-	if (App->input->keyboard[SDL_SCANCODE_K] == KEY_STATE::KEY_REPEAT)
+	if (kick_timer > 0)
 	{
+		kick_timer = kick_timer + 1;
 		current_animation = &kick;
+		if (kick_timer > 40)
+		{
+			status = IN_KICK_FINISH;
+			kick_timer = 0;
+		}
+	}
+
+	if (jump_timer > 0)
+	{
+		jump_timer = jump_timer + 1;
+		current_animation = &jump;
+		if (jump_timer > 30)
+		{
+			status = IN_JUMP_FINISH;
+			jump_timer = 0;
+		}
 	}
 
 	if (App->input->keyboard[SDL_SCANCODE_F5] == KEY_STATE::KEY_DOWN)
 	{
-		if (godMode){
+		if (godMode) {
 			colPlayer->to_delete = true;
 			colPlayer = App->collision->AddCollider({ position.x + 12, position.y - 107, 34, 106 }, COLLIDER_NONE);
 			godMode = false;
@@ -161,20 +259,13 @@ update_status ModulePlayer::Update()
 			godMode = true;
 		}
 	}
-
-	if (App->input->keyboard[SDL_SCANCODE_G] == KEY_STATE::KEY_REPEAT)
-	{
-		current_animation = &specialAttack;
-		//App->particles->AddParticle(App->particles->special, position.x + 85, position.y - 70, 1, 1000, 1, 0);
-	}
-
-	colPlayer->SetPos(position.x + 12, position.y - 107);
 	// Draw everything --------------------------------------
 
 	SDL_Rect r = current_animation->GetCurrentFrame();
 
-	App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r);
-	App->render->Blit(graphicsTerry2, position.x, position.y - r.h, &r);
-
+	  { App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r); }
+	if (App->enemy->position.x < position.x) { App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r, 1, SDL_FLIP_HORIZONTAL); }
+	if (App->enemy->position.x > position.x) { App->render->Blit(graphicsTerry2, position.x, position.y - r.h, &r); }
+	if (App->enemy->position.x < position.x) { App->render->Blit(graphicsTerry2, position.x, position.y - r.h, &r, 1, SDL_FLIP_HORIZONTAL); }
 	return UPDATE_CONTINUE;
 }

@@ -11,6 +11,7 @@
 #include "ModuleEnemy.h"
 #include "ModuleCollision.h"
 #include "ModulePlayerSelect.h"
+#include "ModuleHUD.h"
 #include "ModuleSounds.h"
 
 
@@ -29,6 +30,7 @@ Application::Application()
 	modules[10] = fade = new ModuleFadeToBlack();
 	modules[11] = sounds = new ModuleSounds();
 	modules[12] = collision = new ModuleCollision();
+	modules[13] = hud = new ModuleHUD();
 }	
 
 Application::~Application()
@@ -46,6 +48,7 @@ bool Application::Init()
 	enemy->Disable();
 	select->Disable();
 	paopao->Disable();
+	hud->Disable();
 	// ---
 
 	for(int i = 0; i < NUM_MODULES && ret == true; ++i)

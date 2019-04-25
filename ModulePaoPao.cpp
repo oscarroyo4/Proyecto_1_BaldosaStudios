@@ -9,6 +9,7 @@
 #include "ModuleCollision.h"
 #include "ModuleSounds.h"
 #include "ModuleEnemy.h"
+#include "ModuleHUD.h"
 #include "ModuleFadeToBlack.h"
 #include "SDL_image/include/SDL_image.h"
 
@@ -27,6 +28,7 @@ ModuleScenePaoPao::~ModuleScenePaoPao()
 // Load assets
 bool ModuleScenePaoPao::Start()
 {
+	App->hud->Enable();
 	LOG("Loading background assets");
 	bool ret = true;
 	graphics = App->textures->Load("Assets/Sprites/Pao Pao Cafe Tileset/Pao Pao Cafe Stage.png");
@@ -52,6 +54,7 @@ bool ModuleScenePaoPao::CleanUp()
 	App->sounds->Unload(music);
 	App->player->Disable();
 	App->enemy->Disable();
+	App->hud->Disable();
 
 	return true;
 }
@@ -64,6 +67,7 @@ update_status ModuleScenePaoPao::Update()
 
 	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1)
 	{
+
 		App->fade->FadeToBlack(this, App->scene_intro, 2.5);
 	}
 

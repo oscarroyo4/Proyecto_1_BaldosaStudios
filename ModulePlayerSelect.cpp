@@ -105,7 +105,7 @@ update_status ModulePlayerSelect::Update()
 
 	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1)
 	{
-		App->fade->FadeToBlack(this, App->paopao, 2.5);
+		App->fade->FadeToBlack(this, App->paopao, 0.5);
 	}
 
 	return UPDATE_CONTINUE;

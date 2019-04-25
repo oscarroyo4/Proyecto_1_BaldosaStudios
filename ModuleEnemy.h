@@ -27,7 +27,7 @@ public:
 	iPoint position;
 	Collider* colEnemy;
 	SDL_Rect r;
-
+	int Life = 100;
 	bool hit = false;
 };
 #endif

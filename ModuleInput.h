@@ -26,8 +26,15 @@ public:
 	update_status PreUpdate();
 	bool CleanUp();
 
+
 public:
-	KEY_STATE keyboard[MAX_KEYS];
+
+	KEY_STATE* keyboard;
+
+	KEY_STATE GetKey(int id) const
+	{
+		return keyboard[id];
+	}
 };
 
 #endif // __ModuleInput_H__
