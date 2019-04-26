@@ -85,7 +85,8 @@ bool ModulePlayer::Start()
 
 	App->collision->Enable();
 	graphicsTerry = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites.png"); //First Tery Bogard Sprite Sheet
-	godMode = true;																	  //graphicsTerry2 = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites 2.png"); //Second Tery Bogard Sprite Sheet
+	//graphicsTerry2 = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites 2.png"); //Second Tery Bogard Sprite Sheet
+	godMode = true;
 	colPlayer = App->collision->AddCollider({ position.x, position.y, 34, 106 }, COLLIDER_PLAYER);
 
 	return true;
@@ -144,7 +145,7 @@ update_status ModulePlayer::Update()
 	else if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
 		status = PLAYER_KICK;
 
-	else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
 		status = PLAYER_SPECIAL;
 	else
 		status = PLAYER_IDLE;
@@ -159,8 +160,7 @@ update_status ModulePlayer::Update()
 		if (position.x < 10) { position.x -= 0; }
 		else position.x -= speed;
 		current_animation = &backward;
-		if (App->render->camera.x > 0) { App->render->camera.x -= 0; }
-		else App->render->camera.x += 3;
+		if (App->render->camera.x < 0) App->render->camera.x += 3;
 		break;
 
 	case PLAYER_FORWARD:
@@ -170,6 +170,7 @@ update_status ModulePlayer::Update()
 		break;
 
 	case PLAYER_JUMP:
+		jump.Reset();
 		jump_timer = 1;
 
 		break;
@@ -181,11 +182,13 @@ update_status ModulePlayer::Update()
 
 	case IN_PUNCH_FINISH:
 		status = PLAYER_IDLE;
+
 		punch.Reset();
 		break;
 
 	case IN_KICK_FINISH:
 		status = PLAYER_IDLE;
+
 		kick.Reset();
 		break;
 
@@ -193,23 +196,20 @@ update_status ModulePlayer::Update()
 		kick.Reset();
 		kick_timer = 1;
 		current_animation = &kick;
-		Collider* kickCol = App->collision->AddCollider({ position.x + 45, position.y - 90, 30, 20 }, COLLIDER_PLAYER_SHOT);
+		Collider* kickCol = App->collision->AddCollider({ position.x + 45, position.y - 60, 60, 20 }, COLLIDER_PLAYER_SHOT);
 		if (kickCol->CheckCollision(App->enemy->r)) {
 			App->enemy->hit = true;
 		}
 		kickCol->to_delete = true;
 		break;
-	}
+		}
 	
 
 	case PLAYER_PUNCH:
 		punch.Reset();
 		punch_timer = 1;
-		Collider* punchCol = App->collision->AddCollider({ position.x + 45, position.y - 90, 30, 20 }, COLLIDER_PLAYER_SHOT);
-		if (punchCol->CheckCollision(App->enemy->r)) {
-			App->enemy->hit = true;
-		}
-		punchCol->to_delete = true;
+		punchCol = App->collision->AddCollider({ position.x + 55, position.y - 90, 30, 20 }, COLLIDER_PLAYER_SHOT);
+		punchHit = false;
 		break;
     }
 
@@ -219,9 +219,14 @@ update_status ModulePlayer::Update()
 	{
 		punch_timer = punch_timer + 1;
 		current_animation = &punch;
+		if (punchCol->CheckCollision(App->enemy->r) && punchHit == false) {
+			App->enemy->hit = true;
+			punchHit = true;
+		}
 		if (punch_timer > 28)
 		{
 			status = IN_PUNCH_FINISH;
+			punchCol->to_delete = true;
 			punch_timer = 0;
 		}
 	}
@@ -267,8 +272,6 @@ update_status ModulePlayer::Update()
 
 	  
 	if (App->enemy->position.x < position.x) { App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r, 1, SDL_FLIP_HORIZONTAL); }
-	else { App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r); }
-	//if (App->enemy->position.x > position.x) { App->render->Blit(graphicsTerry2, position.x, position.y - r.h, &r); }
-	//if (App->enemy->position.x < position.x) { App->render->Blit(graphicsTerry2, position.x, position.y - r.h, &r, 1, SDL_FLIP_HORIZONTAL); }
+	if (App->enemy->position.x > position.x) { App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r); }
 	return UPDATE_CONTINUE;
 }
