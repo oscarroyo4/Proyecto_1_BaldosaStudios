@@ -5,6 +5,7 @@
 #include "ModulePaoPao.h"
 #include "ModuleInput.h"
 #include "ModuleIntro.h"
+#include "ModuleSounds.h"
 #include "ModulePlayerSelect.h"
 #include "ModuleFadeToBlack.h"
 #include "SDL_image/include/SDL_image.h"
@@ -41,6 +42,8 @@ bool ModulePlayerSelect::Start()
 	bool ret = true;
 	graphics = App->textures->Load("Assets/Sprites/Main/PlayerSelect.png");
 	App->scene_intro->Disable();
+	selectHover = App->sounds->Load("Assets/Audio/Fx/FX_SelectHover.wav");
+	chooseSelection = App->sounds->Load("Assets/Audio/Fx/FX_ChooseSelection.wav");
 	return ret;
 }
 
@@ -71,6 +74,10 @@ update_status ModulePlayerSelect::Update()
 		posJ = true;
 		posT = false;
 		posA = false;
+		if (Mix_PlayChannel(-1, selectHover, 0) == -1)
+		{
+			LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+		}
 	}
 
 	if (App->input->keyboard[SDL_SCANCODE_D] == KEY_STATE::KEY_DOWN && posT == true)
@@ -79,7 +86,10 @@ update_status ModulePlayerSelect::Update()
 		posA = true;
 		posJ = false;
 		posT = false;
-
+		if (Mix_PlayChannel(-1, selectHover, 0) == -1)
+		{
+			LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+		}
 	}
 
 	if (App->input->keyboard[SDL_SCANCODE_A] == KEY_STATE::KEY_DOWN && posA == true)
@@ -88,7 +98,10 @@ update_status ModulePlayerSelect::Update()
 		posA = false;
 		posJ = false;
 		posT = true;
-
+		if (Mix_PlayChannel(-1, selectHover, 0) == -1)
+		{
+			LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+		}
 	}
 
 	if (App->input->keyboard[SDL_SCANCODE_D] == KEY_STATE::KEY_DOWN && posJ == true)
@@ -97,7 +110,10 @@ update_status ModulePlayerSelect::Update()
 		posA = false;
 		posJ = false;
 		posT = true;
-
+		if (Mix_PlayChannel(-1, selectHover, 0) == -1)
+		{
+			LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+		}
 	}
 
 
@@ -105,6 +121,10 @@ update_status ModulePlayerSelect::Update()
 
 	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1)
 	{
+		if (Mix_PlayChannel(-1, chooseSelection, 0) == -1)
+		{
+			LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+		}
 		App->fade->FadeToBlack(this, App->paopao, 0.5);
 	}
 

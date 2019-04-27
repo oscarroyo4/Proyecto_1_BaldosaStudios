@@ -24,6 +24,8 @@ public:
 	Animation selectA;
 	Animation selectJ;
 	Animation* current_animation = nullptr;
+	Mix_Chunk* selectHover = nullptr;
+	Mix_Chunk* chooseSelection = nullptr;
 };
 
 #endif

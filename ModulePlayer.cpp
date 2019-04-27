@@ -6,6 +6,7 @@
 #include "ModuleCollision.h"
 #include "ModuleRender.h"
 #include "ModulePlayer.h"
+#include "ModuleSounds.h"
 #include "ModuleEnemy.h"
 #include "SDL_image/include/SDL_image.h"
 
@@ -88,6 +89,7 @@ bool ModulePlayer::Start()
 	//graphicsTerry2 = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites 2.png"); //Second Tery Bogard Sprite Sheet
 	godMode = true;
 	colPlayer = App->collision->AddCollider({ position.x, position.y, 34, 106 }, COLLIDER_PLAYER);
+	App->sounds->Load("Assets/Audio/Fx/FX_SelectHover.wav");
 
 	return true;
 }
@@ -100,7 +102,7 @@ bool ModulePlayer::CleanUp()
 	App->collision->Disable();
 	App->player->Disable();
 	SDL_DestroyTexture(graphicsTerry);
-	SDL_DestroyTexture(graphicsTerry2);
+	//SDL_DestroyTexture(graphicsTerry2); //Destroy second Tery Bogard Sprite Sheet
 
 	return true;
 }
