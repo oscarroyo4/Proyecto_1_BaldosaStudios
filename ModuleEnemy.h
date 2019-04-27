@@ -19,10 +19,10 @@ enum enemy_status
 	ENEMY_KICK,
 	ENEMY_SPECIAL,
 	ENEMY_DAMAGE,
-	IN_PUNCH_FINISH_ENEMY,
-	IN_KICK_FINISH_ENEMY,
-	IN_JUMP_FINISH_ENEMY,
-	DAMAGE_FINISH_ENEMY
+	ENEMY_IN_PUNCH_FINISH,
+	ENEMY_IN_KICK_FINISH,
+	ENEMY_IN_JUMP_FINISH,
+	ENEMY_DAMAGE_FINISH
 };
 
 class ModuleEnemy : public Module
@@ -37,6 +37,10 @@ public:
 
 public:
 
+	bool godMode;
+	bool punchEnable = true;
+	bool kickEnable = true;
+	bool jumpEnable = true;
 	SDL_Texture * graphicsTerry = nullptr;	
 	SDL_Texture* graphicsTerry2 = nullptr;
 	Animation* current_animation = &idle;
@@ -51,15 +55,10 @@ public:
 	Animation damage;
 	iPoint position;
 	Collider* colEnemy;
-	SDL_Rect r;	
 	Collider* punchCol;
 	Collider* kickCol;
 	int Life = 100;
 	bool hit = false;
-	bool godMode;
-	bool punchEnable = true;
-	bool kickEnable = true;
-	bool jumpEnable = true;
 	bool punchHit = false;
 	bool kickHit = false;
 	enemy_status status = ENEMY_IDLE;
@@ -67,6 +66,7 @@ public:
 	Uint32 jump_timer = 0;
 	Uint32 kick_timer = 0;
 	Uint32 damage_timer = 0;
+	SDL_Rect r;
 
 };
 #endif

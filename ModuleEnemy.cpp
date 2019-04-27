@@ -10,6 +10,7 @@
 #include "ModuleHUD.h"
 #include "SDL_image/include/SDL_image.h"
 
+#define PUNCH_TIME 1000
 
 ModuleEnemy::ModuleEnemy()
 {
@@ -91,6 +92,8 @@ bool ModuleEnemy::Start()
 	LOG("Loading enemy");
 	graphicsTerry = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites.png");  //First Tery Bogard Sprite Sheet
 	colEnemy = App->collision->AddCollider({ position.x, position.y, 34, 106 }, COLLIDER_ENEMY);
+	godMode = true;
+	
 	Life = 100;
 	return true;
 }
@@ -146,7 +149,7 @@ update_status ModuleEnemy::Update()
 	else if (App->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN)
 		status = ENEMY_KICK;
 
-	else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_MINUS) == KEY_DOWN)
 		status = ENEMY_SPECIAL;
 
 	else if (hit == true) {
@@ -183,22 +186,22 @@ update_status ModuleEnemy::Update()
 		}
 		break;
 
-	case IN_JUMP_FINISH_ENEMY:
+	case ENEMY_IN_JUMP_FINISH:
 		status = ENEMY_IDLE;
 		jump.Reset();
 		break;
 
-	case IN_PUNCH_FINISH_ENEMY:
+	case ENEMY_IN_PUNCH_FINISH:
 		status = ENEMY_IDLE;
 		punch.Reset();
 		break;
 
-	case IN_KICK_FINISH_ENEMY:
+	case ENEMY_IN_KICK_FINISH:
 		status = ENEMY_IDLE;
 		kick.Reset();
 		break;
 
-	case DAMAGE_FINISH_ENEMY:
+	case ENEMY_DAMAGE_FINISH:
 		status = ENEMY_IDLE;
 		damage.Reset();
 		break;
@@ -208,7 +211,7 @@ update_status ModuleEnemy::Update()
 			kickEnable = false;
 			kick.Reset();
 			kick_timer = 1;
-			kickCol = App->collision->AddCollider({ position.x + 46, position.y - 58, 55, 18 }, COLLIDER_PLAYER_SHOT);
+			kickCol = App->collision->AddCollider({ position.x - 45, position.y - 58, 55, 18 }, COLLIDER_ENEMY_SHOT);
 			kickHit = false;
 		}
 		break;
@@ -218,7 +221,7 @@ update_status ModuleEnemy::Update()
 			punchEnable = false;
 			punch.Reset();
 			punch_timer = 1;
-			punchCol = App->collision->AddCollider({ position.x + 46, position.y - 90, 40, 20 }, COLLIDER_PLAYER_SHOT);
+			punchCol = App->collision->AddCollider({ position.x - 30, position.y - 90, 40, 20 }, COLLIDER_ENEMY_SHOT);
 			punchHit = false;
 		}
 		break;
@@ -228,7 +231,7 @@ update_status ModuleEnemy::Update()
 		damage.Reset();
 
 		Life = Life - 15;
-		if (Life <= 0) { Life = 0; App->hud->Win = true; }
+		if (Life <= 0) { Life = 0; App->hud->Lose = true; }
 
 		damage_timer = 1;
 
@@ -240,14 +243,14 @@ update_status ModuleEnemy::Update()
 	{
 		kick_timer = kick_timer + 1;
 		current_animation = &kick;
-		if (kickCol->CheckCollision(App->enemy->r) && kickHit == false) {
-			App->enemy->hit = true;
+		if (kickCol->CheckCollision(App->player->r) && kickHit == false) {
+			App->player->hit = true;
 			kickHit = true;
 		}
 		if (kick_timer > 35)
 		{
 			kickEnable = true;
-			status = IN_KICK_FINISH_ENEMY;
+			status = ENEMY_IN_KICK_FINISH;
 			kickCol->to_delete = true;
 			kick_timer = 0;
 		}
@@ -257,14 +260,14 @@ update_status ModuleEnemy::Update()
 	{
 		punch_timer = punch_timer + 1;
 		current_animation = &punch;
-		if (punchCol->CheckCollision(App->enemy->r) && punchHit == false) {
-			App->enemy->hit = true;
+		if (punchCol->CheckCollision(App->player->r) && punchHit == false) {
+			App->player->hit = true;
 			punchHit = true;
 		}
 		if (punch_timer > 28)
 		{
 			punchEnable = true;
-			status = IN_PUNCH_FINISH_ENEMY;
+			status = ENEMY_IN_PUNCH_FINISH;
 			punchCol->to_delete = true;
 			punch_timer = 0;
 		}
@@ -278,23 +281,21 @@ update_status ModuleEnemy::Update()
 		if (jump_timer > 38)
 		{
 			jumpEnable = true;
-			status = IN_JUMP_FINISH_ENEMY;
+			status = ENEMY_IN_JUMP_FINISH;
 			jump_timer = 0;
 		}
 	}
 
-	colEnemy->SetPos(position.x + 12, position.y - 107);
-
-
-	if (damage_timer > 0 ) {
+	if (damage_timer > 0) {
 		damage_timer = damage_timer + 1;
 		current_animation = &damage;
 		if (damage_timer > 30) {
-			status = DAMAGE_FINISH_ENEMY;
-			LOG("Life: %i", Life);
+			status = ENEMY_DAMAGE_FINISH;
 			damage_timer = 0;
 		}
 	}
+
+	colEnemy->SetPos(position.x + 12, position.y - 107);
 	
 
 

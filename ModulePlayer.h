@@ -19,9 +19,11 @@ enum player_status
 	PLAYER_PUNCH,
 	PLAYER_KICK,
 	PLAYER_SPECIAL,
-	IN_PUNCH_FINISH,
-	IN_KICK_FINISH,
-	IN_JUMP_FINISH
+	PLAYER_DAMAGE,
+	PLAYER_IN_PUNCH_FINISH,
+	PLAYER_IN_KICK_FINISH,
+	PLAYER_IN_JUMP_FINISH,
+	PLAYER_DAMAGE_FINISH
 };
 
 
@@ -52,16 +54,21 @@ public:
 	Animation jump;
 	Animation specialAttack;
 	Animation crouch;
+	Animation damage;
 	iPoint position;
 	Collider* colPlayer;
 	Collider* punchCol;
 	Collider* kickCol;
+	int Life = 100;
+	bool hit = false;
 	bool punchHit = false;
 	bool kickHit = false;
 	player_status status = PLAYER_IDLE;
 	Uint32 punch_timer = 0;
 	Uint32 jump_timer = 0;
 	Uint32 kick_timer = 0;
+	Uint32 damage_timer = 0;
+	SDL_Rect r;
 };
 
 #endif
