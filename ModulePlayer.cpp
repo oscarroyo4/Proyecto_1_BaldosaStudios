@@ -230,7 +230,7 @@ update_status ModulePlayer::Update()
 	case PLAYER_DAMAGE:
 		damage.Reset();
 
-		Life = Life - 15;
+		if (colPlayer->type == COLLIDER_PLAYER) {Life = Life - 15;}
 		if (Life <= 0) { Life = 0; App->hud->Lose = true; }
 
 		damage_timer = 1;
