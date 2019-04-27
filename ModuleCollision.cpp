@@ -173,8 +173,10 @@ Collider* ModuleCollision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, Module
 // -----------------------------------------------------
 
 bool Collider::CheckCollision(const SDL_Rect& r) const
-{
-	if (r.x + r.w < rect.x || rect.x + rect.w < r.x || r.y - r.h > rect.y || rect.y - rect.h > r.y) return false;
+ {
+	bool ret = true;
 
-	else return true;
+	if (r.x + r.w < rect.x || rect.x + rect.w < r.x || r.y - r.h > rect.y || rect.y - rect.h > r.y) ret = false;
+
+	return ret;
 }

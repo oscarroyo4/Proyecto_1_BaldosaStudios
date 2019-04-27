@@ -5,16 +5,16 @@
 #include "ModuleParticles.h"
 #include "ModuleCollision.h"
 #include "ModuleRender.h"
-#include "ModulePlayer.h"
-#include "ModuleSounds.h"
 #include "ModuleEnemy.h"
+#include "ModulePlayer.h"
+#include "ModuleHUD.h"
 #include "SDL_image/include/SDL_image.h"
 
 #define PUNCH_TIME 1000
 
 ModulePlayer::ModulePlayer()
 {
-	position.x = 100;
+	position.x = 230;
 	position.y = 220;
 
 	// idle animation (arcade sprite sheet)
@@ -74,6 +74,13 @@ ModulePlayer::ModulePlayer()
 	specialAttack.PushBack({ 75, 730, 66, 68 });
 	specialAttack.PushBack({ 10, 717, 62, 81 });
 	specialAttack.speed = 0.175f;
+
+	// taking damage animation
+	damage.PushBack({ 344, 342, 60, 100 });
+	damage.PushBack({ 407, 336, 68, 106 });
+	damage.PushBack({ 408, 346, 64, 96 });
+	damage.PushBack({ 555, 355, 69, 87 });
+	damage.speed = 0.15f;
 }
 
 ModulePlayer::~ModulePlayer()
@@ -89,8 +96,7 @@ bool ModulePlayer::Start()
 	//graphicsTerry2 = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites 2.png"); //Second Tery Bogard Sprite Sheet
 	godMode = true;
 	colPlayer = App->collision->AddCollider({ position.x, position.y, 34, 106 }, COLLIDER_PLAYER);
-	App->sounds->Load("Assets/Audio/Fx/FX_SelectHover.wav");
-
+	Life = 100;
 	return true;
 }
 
@@ -102,7 +108,7 @@ bool ModulePlayer::CleanUp()
 	App->collision->Disable();
 	App->player->Disable();
 	SDL_DestroyTexture(graphicsTerry);
-	//SDL_DestroyTexture(graphicsTerry2); //Destroy second Tery Bogard Sprite Sheet
+	SDL_DestroyTexture(graphicsTerry2);
 
 	return true;
 }
@@ -110,24 +116,6 @@ bool ModulePlayer::CleanUp()
 update_status ModulePlayer::Update()
 {	
 	int speed = 1;
-	/*
-
-	if (App->input->keyboard[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT)
-	{
-		current_animation = &jump;
-	}
-
-	if (App->input->keyboard[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT)
-	{
-		current_animation = &crouch;
-	}
-
-	if (App->input->keyboard[SDL_SCANCODE_G] == KEY_STATE::KEY_REPEAT)
-	{
-		current_animation = &specialAttack;
-		//App->particles->AddParticle(App->particles->special, position.x + 85, position.y - 70, 1, 1000, 1, 0);
-	}*/
-
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		status = PLAYER_BACKWARD;
@@ -149,6 +137,12 @@ update_status ModulePlayer::Update()
 
 	else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
 		status = PLAYER_SPECIAL;
+
+	else if (hit == true) {
+		status = PLAYER_DAMAGE;
+		hit = false;
+	}
+
 	else
 		status = PLAYER_IDLE;
 
@@ -162,60 +156,104 @@ update_status ModulePlayer::Update()
 		if (position.x < 10) { position.x -= 0; }
 		else position.x -= speed;
 		current_animation = &backward;
-		if (App->render->camera.x < 0) App->render->camera.x += 3;
 		break;
 
 	case PLAYER_FORWARD:
 		position.x += speed;
 		current_animation = &forward;
-		App->render->camera.x -= 3;
 		break;
 
 	case PLAYER_JUMP:
-		jump.Reset();
-		jump_timer = 1;
-
+		if (jumpEnable == true) {
+			jumpEnable = false;
+			jump.Reset();
+			jump_timer = 1;
+		}
 		break;
 
-	case IN_JUMP_FINISH:
+	case PLAYER_IN_JUMP_FINISH:
 		status = PLAYER_IDLE;
 		jump.Reset();
 		break;
 
-	case IN_PUNCH_FINISH:
+	case PLAYER_IN_PUNCH_FINISH:
 		status = PLAYER_IDLE;
-
 		punch.Reset();
 		break;
 
-	case IN_KICK_FINISH:
+	case PLAYER_IN_KICK_FINISH:
 		status = PLAYER_IDLE;
-
 		kick.Reset();
 		break;
 
-	case PLAYER_KICK: {
-		kick.Reset();
-		kick_timer = 1;
-		current_animation = &kick;
-		Collider* kickCol = App->collision->AddCollider({ position.x + 45, position.y - 60, 60, 20 }, COLLIDER_PLAYER_SHOT);
-		if (kickCol->CheckCollision(App->enemy->r)) {
-			App->enemy->hit = true;
-		}
-		kickCol->to_delete = true;
+	case PLAYER_DAMAGE_FINISH:
+		status = PLAYER_IDLE;
+		damage.Reset();
 		break;
+
+	case IN_SPECIAL_FINISH:
+		status = PLAYER_IDLE;
+		specialAttack.Reset();
+		break;
+
+	case PLAYER_KICK:
+		if (kickEnable == true) {
+			kickEnable = false;
+			kick.Reset();
+			kick_timer = 1;
+			kickCol = App->collision->AddCollider({ position.x + 46, position.y - 58, 55, 18 }, COLLIDER_PLAYER_SHOT);
+			kickHit = false;
 		}
-	
+		break;
 
 	case PLAYER_PUNCH:
-		punch.Reset();
-		punch_timer = 1;
-		punchCol = App->collision->AddCollider({ position.x + 55, position.y - 90, 30, 20 }, COLLIDER_PLAYER_SHOT);
-		punchHit = false;
+		if (punchEnable == true) {
+			punchEnable = false;
+			punch.Reset();
+			punch_timer = 1;
+			punchCol = App->collision->AddCollider({ position.x + 46, position.y - 90, 40, 20 }, COLLIDER_PLAYER_SHOT);
+			punchHit = false;
+		}
 		break;
-    }
 
-	colPlayer->SetPos(position.x + 12, position.y - 107);
+
+	case PLAYER_SPECIAL:
+		if (specialEnable == true) {
+			specialEnable = false;
+			specialAttack.Reset();
+			groundFire_timer = 1;
+			special_timer = 1;
+		}
+		break;
+	
+
+	case PLAYER_DAMAGE:
+		damage.Reset();
+
+		Life = Life - 15;
+		if (Life <= 0) { Life = 0; App->hud->Lose = true; }
+
+		damage_timer = 1;
+
+		break;
+	}
+
+	if (kick_timer > 0)
+	{
+		kick_timer = kick_timer + 1;
+		current_animation = &kick;
+		if (kickCol->CheckCollision(App->enemy->r) && kickHit == false) {
+			App->enemy->hit = true;
+			kickHit = true;
+		}
+		if (kick_timer > 35)
+		{
+			kickEnable = true;
+			status = PLAYER_IN_KICK_FINISH;
+			kickCol->to_delete = true;
+			kick_timer = 0;
+		}
+	}
 
 	if (punch_timer > 0)
 	{
@@ -227,31 +265,75 @@ update_status ModulePlayer::Update()
 		}
 		if (punch_timer > 28)
 		{
-			status = IN_PUNCH_FINISH;
+			punchEnable = true;
+			status = PLAYER_IN_PUNCH_FINISH;
 			punchCol->to_delete = true;
 			punch_timer = 0;
 		}
 	}
 
-	if (kick_timer > 0)
-	{
-		kick_timer = kick_timer + 1;
-		current_animation = &kick;
-		if (kick_timer > 40)
-		{
-			status = IN_KICK_FINISH;
-			kick_timer = 0;
-		}
-	}
 
 	if (jump_timer > 0)
 	{
 		jump_timer = jump_timer + 1;
 		current_animation = &jump;
-		if (jump_timer > 30)
+
+		if (jump_timer > 38)
 		{
-			status = IN_JUMP_FINISH;
+			jumpEnable = true;
+			status = PLAYER_IN_JUMP_FINISH;
 			jump_timer = 0;
+		}
+	}
+
+	if (damage_timer > 0) {
+		damage_timer = damage_timer + 1;
+		current_animation = &damage;
+		if (damage_timer > 30) {
+			status = PLAYER_DAMAGE_FINISH;
+			damage_timer = 0;
+		}
+	}
+
+	if (special_timer > 0)
+	{
+		special_timer = special_timer + 1;
+		current_animation = &specialAttack;
+
+		if (special_timer > 30)
+		{
+			status = IN_SPECIAL_FINISH;
+			special_timer = 0;
+		}
+	}
+
+	if (groundFire_timer > 0)
+	{
+		groundFire_timer = groundFire_timer + 1;
+
+		if (groundFire_timer == 69)
+		{
+			App->particles->AddParticle(App->particles->smallfire, position.x + 26, position.y - 45, 0, 2800, 1, 0);
+		}
+		if (groundFire_timer == 55)
+		{
+			App->particles->AddParticle(App->particles->midfire, position.x + 28, position.y - 72, 0, 2700, 1, 0);
+		}
+		if (groundFire_timer == 41)
+		{
+			App->particles->AddParticle(App->particles->bigfire, position.x + 29, position.y - 100, 0, 2600, 1, 0);
+		}
+		if (groundFire_timer == 27)
+		{
+			App->particles->AddParticle(App->particles->midfire, position.x + 31, position.y - 72, 0, 2500, 1, 0);
+		}
+		if (groundFire_timer == 13)
+		{
+			App->particles->AddParticle(App->particles->smallfire, position.x + 33, position.y - 45, 0, 2400, 1, 0);
+		}
+		if (groundFire_timer == 180)
+		{
+			specialEnable = true;
 		}
 	}
 
@@ -268,12 +350,18 @@ update_status ModulePlayer::Update()
 			godMode = true;
 		}
 	}
+
+	colPlayer->SetPos(position.x + 12, position.y - 107);
 	// Draw everything --------------------------------------
 
-	SDL_Rect r = current_animation->GetCurrentFrame();
+	r = current_animation->GetCurrentFrame();
 
 	  
 	if (App->enemy->position.x < position.x) { App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r, 1, SDL_FLIP_HORIZONTAL); }
 	if (App->enemy->position.x > position.x) { App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r); }
+
+	r.x = position.x;
+	r.y = position.y;
+
 	return UPDATE_CONTINUE;
 }

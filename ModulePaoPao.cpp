@@ -35,6 +35,7 @@ bool ModuleScenePaoPao::Start()
 	music = App->sounds->Load("Assets/Audio/PaoPao.ogg");
 	App->player->Enable();
 	App->enemy->Enable();
+	App->render->camera.x = -530;
 	//Play the music
 	if (Mix_PlayChannel(-1, music, 0) == -1)
 	{

@@ -12,6 +12,15 @@
     <Filter Include="Containers">
       <UniqueIdentifier>{78a7f487-1d77-4fdc-9f51-f067eccd6239}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Modules\Players">
+      <UniqueIdentifier>{7a763e4e-3997-49a4-b391-ea87585aeade}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Stages">
+      <UniqueIdentifier>{a74cbfc0-5f2f-443e-8f2b-c13e17c4bf6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Intro Modules">
+      <UniqueIdentifier>{313eb6e5-ebdf-43a0-9e10-a25105522afc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -38,9 +47,6 @@
     <ClInclude Include="ModuleTextures.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="ModulePlayer.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
     <ClInclude Include="p2Point.h">
       <Filter>Containers</Filter>
     </ClInclude>
@@ -53,19 +59,7 @@
     <ClInclude Include="ModuleParticles.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleIntro.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModulePaoPao.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleSounds.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleEnemy.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModulePlayerSelect.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="ModuleCollision.h">
@@ -73,6 +67,21 @@
     </ClInclude>
     <ClInclude Include="ModuleHUD.h">
       <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModulePlayer.h">
+      <Filter>Modules\Players</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleEnemy.h">
+      <Filter>Modules\Players</Filter>
+    </ClInclude>
+    <ClInclude Include="ModulePaoPao.h">
+      <Filter>Modules\Stages</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleIntro.h">
+      <Filter>Modules\Intro Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModulePlayerSelect.h">
+      <Filter>Modules\Intro Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -97,28 +106,13 @@
     <ClCompile Include="Globals.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="ModulePlayer.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="ModuleFadeToBlack.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="ModuleParticles.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleIntro.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModulePaoPao.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="ModuleSounds.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleEnemy.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModulePlayerSelect.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="ModuleCollision.cpp">
@@ -126,6 +120,21 @@
     </ClCompile>
     <ClCompile Include="ModuleHUD.cpp">
       <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModulePlayer.cpp">
+      <Filter>Modules\Players</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleEnemy.cpp">
+      <Filter>Modules\Players</Filter>
+    </ClCompile>
+    <ClCompile Include="ModulePaoPao.cpp">
+      <Filter>Modules\Stages</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleIntro.cpp">
+      <Filter>Modules\Intro Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModulePlayerSelect.cpp">
+      <Filter>Modules\Intro Modules</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

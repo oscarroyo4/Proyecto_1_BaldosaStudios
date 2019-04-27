@@ -22,13 +22,15 @@ bool ModuleParticles::Start()
 	LOG("Loading particles");
 	graphics = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites.png");
 
-	special.anim.PushBack({ 486, 731, 17, 68 });
-	special.anim.PushBack({ 520, 758, 17, 41 });
-	special.anim.PushBack({ 554, 703, 17, 96 });
-	special.anim.PushBack({ 520, 758, 17, 41 });
-	special.anim.PushBack({ 486, 731, 17, 68 });
-	special.anim.loop = false;
-	special.anim.speed = 0.01f;
+	smallfire.anim.PushBack({ 517, 755, 22, 44 });
+	midfire.anim.PushBack({ 483, 728, 27, 72 });
+	bigfire.anim.PushBack({ 550, 700, 18, 100 });
+	midfire.anim.PushBack({ 483, 728, 27, 72 });
+	smallfire.anim.PushBack({ 517, 755, 22, 44 });
+
+	smallfire.anim.speed = 0.01f;
+	midfire.anim.speed = 0.01f;
+	bigfire.anim.speed = 0.01f;
 
 	return true;
 }
