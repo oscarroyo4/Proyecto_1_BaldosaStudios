@@ -36,16 +36,17 @@ ModuleEnemy::~ModuleEnemy()
 // Load assets
 bool ModuleEnemy::Start()
 {
-	LOG("Loading player");
+	LOG("Loading enemy");
 	graphicsTerry = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites.png");  //First Tery Bogard Sprite Sheet
 	colEnemy = App->collision->AddCollider({ position.x, position.y, 34, 106 }, COLLIDER_ENEMY);
+	Life = 100;
 	return true;
 }
 
 // Unload assets
 bool ModuleEnemy::CleanUp()
 {
-	LOG("Unloading player");
+	LOG("Unloading enemy");
 
 	SDL_DestroyTexture(graphicsTerry);
 	App->enemy->Disable();
@@ -71,8 +72,11 @@ update_status ModuleEnemy::Update()
 
 	r = current_animation->GetCurrentFrame();
 
-	if (App->player->position.x < position.x) { App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r, 1, SDL_FLIP_HORIZONTAL); }
+	if (App->player->position.x < position.x) {App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r, 1, SDL_FLIP_HORIZONTAL); }
 	if (App->player->position.x > position.x) {App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r);}
+
+	r.x = position.x;
+	r.y = position.y;
 
 	return UPDATE_CONTINUE;
 }

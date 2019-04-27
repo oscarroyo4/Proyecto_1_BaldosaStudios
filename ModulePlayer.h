@@ -51,6 +51,8 @@ public:
 	Animation crouch;
 	iPoint position;
 	Collider* colPlayer;
+	Collider* punchCol;
+	bool punchHit = false;
 	player_status status = PLAYER_IDLE;
 	Uint32 punch_timer = 0;
 	Uint32 jump_timer = 0;
