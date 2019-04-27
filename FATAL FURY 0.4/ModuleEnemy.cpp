@@ -149,6 +149,11 @@ update_status ModuleEnemy::Update()
 	else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
 		status = ENEMY_SPECIAL;
 
+	else if (hit == true) {
+		status = ENEMY_DAMAGE;
+		hit = false;
+	}
+
 	else
 		status = ENEMY_IDLE;
 
@@ -221,12 +226,12 @@ update_status ModuleEnemy::Update()
 
 	case ENEMY_DAMAGE:
 		damage.Reset();
-		if (hit == true) {
-			Life = Life - 15;
-			damage_timer = 1;
 
-		}
+		Life = Life - 15;
 		if (Life <= 0) { Life = 0; App->hud->Win = true; }
+
+		damage_timer = 1;
+
 		break;
 	}
 	
@@ -282,13 +287,13 @@ update_status ModuleEnemy::Update()
 
 
 	if (damage_timer > 0 ) {
-	damage_timer = damage_timer + 1;
-	current_animation = &damage;
-	}
-		
-	if (damage_timer < 30) {
-		status = DAMAGE_FINISH_ENEMY;
-		damage_timer = 0;
+		damage_timer = damage_timer + 1;
+		current_animation = &damage;
+		if (damage_timer > 30) {
+			status = DAMAGE_FINISH_ENEMY;
+			LOG("Life: %i", Life);
+			damage_timer = 0;
+		}
 	}
 	
 

@@ -5,7 +5,6 @@
 #include "Animation.h"
 #include "p2Point.h"
 #include "ModuleInput.h"
-#include "ModuleSounds.h"
 
 struct SDL_Texture;
 struct Collider;
@@ -39,6 +38,9 @@ public:
 public:
 
 	bool godMode;
+	bool punchEnable = true;
+	bool kickEnable = true;
+	bool jumpEnable = true;
 	SDL_Texture * graphicsTerry = nullptr;
 	SDL_Texture* graphicsTerry2 = nullptr;
 	Animation* current_animation = &idle;
@@ -53,12 +55,13 @@ public:
 	iPoint position;
 	Collider* colPlayer;
 	Collider* punchCol;
+	Collider* kickCol;
 	bool punchHit = false;
+	bool kickHit = false;
 	player_status status = PLAYER_IDLE;
 	Uint32 punch_timer = 0;
 	Uint32 jump_timer = 0;
 	Uint32 kick_timer = 0;
-	Mix_Chunk* punchS = nullptr;
 };
 
 #endif

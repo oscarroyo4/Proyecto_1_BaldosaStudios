@@ -75,11 +75,11 @@ update_status ModuleHUD::Update()
 
 	App->render->Blit(life, App->render->camera.x , App->render->camera.y, &lifebar, - 3);
 
-	rectPlayer.x = 34 + App->render->camera.x * -1/3;
+	rectPlayer.x = 34 + App->render->camera.x * -1 / 3;
 	rectPlayer.y = 25 + App->render->camera.y;
 	App->render->DrawQuad(rectPlayer, 250, 230, 30, 255, true);
 
-	rectEnemy.x = 183 + App->render->camera.x * -1 / 3;
+	rectEnemy.x = 186 + App->render->camera.x * -1 / 3;
 	rectEnemy.y = 25 + App->render->camera.y;
 	rectEnemy.w = App->enemy->Life;
 	App->render->DrawQuad(rectEnemy, 250, 230, 30, 255, true);

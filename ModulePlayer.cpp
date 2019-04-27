@@ -6,7 +6,6 @@
 #include "ModuleCollision.h"
 #include "ModuleRender.h"
 #include "ModulePlayer.h"
-#include "ModuleSounds.h"
 #include "ModuleEnemy.h"
 #include "SDL_image/include/SDL_image.h"
 
@@ -14,7 +13,7 @@
 
 ModulePlayer::ModulePlayer()
 {
-	position.x = 100;
+	position.x = 230;
 	position.y = 220;
 
 	// idle animation (arcade sprite sheet)
@@ -89,7 +88,6 @@ bool ModulePlayer::Start()
 	//graphicsTerry2 = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites 2.png"); //Second Tery Bogard Sprite Sheet
 	godMode = true;
 	colPlayer = App->collision->AddCollider({ position.x, position.y, 34, 106 }, COLLIDER_PLAYER);
-	App->sounds->Load("Assets/Audio/Fx/FX_SelectHover.wav");
 
 	return true;
 }
@@ -102,7 +100,7 @@ bool ModulePlayer::CleanUp()
 	App->collision->Disable();
 	App->player->Disable();
 	SDL_DestroyTexture(graphicsTerry);
-	//SDL_DestroyTexture(graphicsTerry2); //Destroy second Tery Bogard Sprite Sheet
+	SDL_DestroyTexture(graphicsTerry2);
 
 	return true;
 }
@@ -162,19 +160,18 @@ update_status ModulePlayer::Update()
 		if (position.x < 10) { position.x -= 0; }
 		else position.x -= speed;
 		current_animation = &backward;
-		if (App->render->camera.x < 0) App->render->camera.x += 3;
 		break;
 
 	case PLAYER_FORWARD:
 		position.x += speed;
 		current_animation = &forward;
-		App->render->camera.x -= 3;
 		break;
 
 	case PLAYER_JUMP:
-		jump.Reset();
-		jump_timer = 1;
-
+		if (jumpEnable == true) {
+			jumpEnable = false;
+			jump.Reset();
+			jump_timer = 1;}
 		break;
 
 	case IN_JUMP_FINISH:
@@ -184,38 +181,50 @@ update_status ModulePlayer::Update()
 
 	case IN_PUNCH_FINISH:
 		status = PLAYER_IDLE;
-
 		punch.Reset();
 		break;
 
 	case IN_KICK_FINISH:
 		status = PLAYER_IDLE;
-
 		kick.Reset();
 		break;
 
-	case PLAYER_KICK: {
-		kick.Reset();
-		kick_timer = 1;
-		current_animation = &kick;
-		Collider* kickCol = App->collision->AddCollider({ position.x + 45, position.y - 60, 60, 20 }, COLLIDER_PLAYER_SHOT);
-		if (kickCol->CheckCollision(App->enemy->r)) {
-			App->enemy->hit = true;
+	case PLAYER_KICK:
+		if (kickEnable == true) {
+			kickEnable = false;
+			kick.Reset();
+			kick_timer = 1;
+			kickCol = App->collision->AddCollider({ position.x + 46, position.y - 58, 55, 18 }, COLLIDER_PLAYER_SHOT);
+			kickHit = false;
 		}
-		kickCol->to_delete = true;
 		break;
-		}
 	
-
 	case PLAYER_PUNCH:
-		punch.Reset();
-		punch_timer = 1;
-		punchCol = App->collision->AddCollider({ position.x + 55, position.y - 90, 30, 20 }, COLLIDER_PLAYER_SHOT);
-		punchHit = false;
+		if (punchEnable == true){
+			punchEnable = false;
+			punch.Reset();
+			punch_timer = 1;
+			punchCol = App->collision->AddCollider({ position.x + 46, position.y - 90, 40, 20 }, COLLIDER_PLAYER_SHOT);
+			punchHit = false;}
 		break;
-    }
+	}
 
-	colPlayer->SetPos(position.x + 12, position.y - 107);
+	if (kick_timer > 0)
+	{
+		kick_timer = kick_timer + 1;
+		current_animation = &kick;
+		if (kickCol->CheckCollision(App->enemy->r) && kickHit == false) {
+			App->enemy->hit = true;
+			kickHit = true;
+		}
+		if (kick_timer > 35)
+		{
+			kickEnable = true;
+			status = IN_KICK_FINISH;
+			kickCol->to_delete = true;
+			kick_timer = 0;
+		}
+	}
 
 	if (punch_timer > 0)
 	{
@@ -227,29 +236,22 @@ update_status ModulePlayer::Update()
 		}
 		if (punch_timer > 28)
 		{
+			punchEnable = true;
 			status = IN_PUNCH_FINISH;
 			punchCol->to_delete = true;
 			punch_timer = 0;
 		}
 	}
 
-	if (kick_timer > 0)
-	{
-		kick_timer = kick_timer + 1;
-		current_animation = &kick;
-		if (kick_timer > 40)
-		{
-			status = IN_KICK_FINISH;
-			kick_timer = 0;
-		}
-	}
 
 	if (jump_timer > 0)
 	{
 		jump_timer = jump_timer + 1;
 		current_animation = &jump;
-		if (jump_timer > 30)
+
+		if (jump_timer > 38)
 		{
+			jumpEnable = true;
 			status = IN_JUMP_FINISH;
 			jump_timer = 0;
 		}
@@ -268,6 +270,8 @@ update_status ModulePlayer::Update()
 			godMode = true;
 		}
 	}
+
+	colPlayer->SetPos(position.x + 12, position.y - 107);
 	// Draw everything --------------------------------------
 
 	SDL_Rect r = current_animation->GetCurrentFrame();
