@@ -53,6 +53,8 @@ public:
 	Animation specialAttack;
 	Animation crouch;
 	Animation damage;
+	Animation defeat;
+	Animation win;
 	iPoint position;
 	Collider* colEnemy;
 	Collider* punchCol;
@@ -66,6 +68,8 @@ public:
 	Uint32 jump_timer = 0;
 	Uint32 kick_timer = 0;
 	Uint32 damage_timer = 0;
+	Uint32 defeat_timer = 0;
+	Uint32 win_timer = 0;
 	SDL_Rect r;
 
 };

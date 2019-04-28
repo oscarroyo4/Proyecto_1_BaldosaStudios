@@ -81,6 +81,26 @@ ModuleEnemy::ModuleEnemy()
 	damage.PushBack({ 408, 346, 64, 96 });
 	damage.PushBack({ 555, 355, 69, 87 });
 	damage.speed = 0.15f;
+
+	// defeat animation
+	defeat.PushBack({ 10, 921, 64, 96 });
+	defeat.PushBack({ 81, 930, 69, 87 });
+	defeat.PushBack({ 159, 912, 84, 105 });
+	defeat.PushBack({ 242, 934, 107, 71 });
+	defeat.PushBack({ 356, 934, 87, 66 });
+	defeat.PushBack({ 450, 935, 102, 64 });
+	defeat.PushBack({ 559, 956, 112, 44 });
+	defeat.PushBack({ 684, 969, 115, 31 });
+	defeat.speed = 0.07f;
+	defeat.loop = false;
+
+	// win animation
+	win.PushBack({ 272, 491, 62, 97 });
+	win.PushBack({ 345, 488, 56, 100 });
+	win.PushBack({ 412, 489, 59, 99 });
+	win.PushBack({ 481, 452, 56, 136 });
+	win.speed = 0.05f;
+	win.loop = false;
 }
 
 ModuleEnemy::~ModuleEnemy()
@@ -213,12 +233,29 @@ update_status ModuleEnemy::Update()
 		damage.Reset();
 
 		Life = Life - 15;
-		if (Life <= 0) { Life = 0; App->hud->Win = true; }
-
+		if (Life <= 0) {
+			Life = 0;
+			defeat_timer = 1;
+			App->player->win_timer = 1;
+		}
 		damage_timer = 1;
-
 		break;
 	}
+
+	if (defeat_timer > 0)
+	{
+		defeat_timer = defeat_timer + 1;
+		current_animation = &defeat;
+	}
+	if (defeat_timer >= 210) { App->hud->Win = true; }
+
+	if (win_timer > 0)
+	{
+		win_timer = win_timer + 1;
+		current_animation = &win;
+	}
+	if (win_timer >= 210) { App->hud->Win = true; }
+
 	
 
 	if (kick_timer > 0)
@@ -285,8 +322,9 @@ update_status ModuleEnemy::Update()
 
 	r = current_animation->GetCurrentFrame();
 
-	if (App->player->position.x < position.x) {App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r, 1, SDL_FLIP_HORIZONTAL); }
+	if (App->player->position.x < position.x &&  defeat_timer == 0) {App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r, 1, SDL_FLIP_HORIZONTAL); }
 	if (App->player->position.x > position.x) {App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r);}
+	if (defeat_timer > 0) { App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r); }
 
 	r.x = position.x;
 	r.y = position.y;

@@ -2,7 +2,12 @@
 #define __ANIMATION_H__
 
 #include "SDL/include/SDL_rect.h"
+#include "ModuleRender.h"
 #define MAX_FRAMES 25
+
+
+struct SDL_Renderer;
+struct SDL_Texture;
 
 class Animation
 {
