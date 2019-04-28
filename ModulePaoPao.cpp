@@ -20,6 +20,8 @@ ModuleScenePaoPao::ModuleScenePaoPao()
 	paopao.PushBack({ 0, 0, 619, 224 });
 	paopao.PushBack({ 0, 224, 619, 224 });
 	paopao.speed = 0.08f;
+
+
 }
 
 ModuleScenePaoPao::~ModuleScenePaoPao()
@@ -53,6 +55,7 @@ bool ModuleScenePaoPao::CleanUp()
 	App->paopao->Disable();
 	SDL_DestroyTexture(graphics);
 	App->sounds->Unload(music);
+	Mix_FreeChunk(music);
 	App->player->Disable();
 	App->enemy->Disable();
 	App->hud->Disable();
@@ -65,6 +68,8 @@ update_status ModuleScenePaoPao::Update()
 {
 	// Draw everything --------------------------------------
 	App->render->Blit(graphics, 0, 0, &(paopao.GetCurrentFrame()), 0.75f);
+
+	App->render->camera.x = App->player->position.x  * -2; 
 
 	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1)
 	{

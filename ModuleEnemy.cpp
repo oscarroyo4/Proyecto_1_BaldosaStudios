@@ -111,6 +111,12 @@ bool ModuleEnemy::Start()
 {
 	LOG("Loading enemy");
 	graphicsTerry = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites.png");  //First Tery Bogard Sprite Sheet
+	punchfx = App->sounds->Load("Assets/Audio/Fx/SFX_Punch.wav");
+	kickfx = App->sounds->Load("Assets/Audio/Fx/SFX_Punch2.wav");
+	jumpfx = App->sounds->Load("Assets/Audio/Fx/SFX_Landing.wav");
+	specialfx = App->sounds->Load("Assets/Audio/Fx/FX_PowerWaveAttackTerryBogardVoice.wav");
+	winfx = App->sounds->Load("Assets/Audio/Fx/FX_WinScream.wav");
+	defeatfx = App->sounds->Load("Assets/Audio/Fx/FX_DefeatScream.wav.wav");
 	colEnemy = App->collision->AddCollider({ position.x, position.y, 34, 106 }, COLLIDER_ENEMY);
 	godMode = true;
 	
@@ -123,8 +129,14 @@ bool ModuleEnemy::CleanUp()
 {
 	LOG("Unloading enemy");
 
+	App->collision->Disable();
+	App->player->Disable();
+	App->sounds->Unload(punchfx);
+	App->sounds->Unload(kickfx);
+	App->sounds->Unload(jumpfx);
+	App->sounds->Unload(specialfx);
 	SDL_DestroyTexture(graphicsTerry);
-	App->enemy->Disable();
+	SDL_DestroyTexture(graphicsTerry2);
 
 	return true;
 }
@@ -151,7 +163,7 @@ update_status ModuleEnemy::Update()
 	else if (App->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN)
 		status = ENEMY_KICK;
 
-	else if (App->input->GetKey(SDL_SCANCODE_MINUS) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_RALT) == KEY_DOWN)
 		status = ENEMY_SPECIAL;
 
 	else if (hit == true) {
@@ -184,6 +196,10 @@ update_status ModuleEnemy::Update()
 		if (jumpEnable == true) {
 			jumpEnable = false;
 			jump.Reset();
+			if (Mix_PlayChannel(-1, jumpfx, 0) == -1)
+			{
+				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+			}
 			jump_timer = 1;
 		}
 		break;
@@ -213,6 +229,10 @@ update_status ModuleEnemy::Update()
 			kickEnable = false;
 			kick.Reset();
 			kick_timer = 1;
+			if (Mix_PlayChannel(-1, kickfx, 0) == -1)
+			{
+				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+			}
 			kickCol = App->collision->AddCollider({ position.x - 45, position.y - 58, 55, 18 }, COLLIDER_ENEMY_SHOT);
 			kickHit = false;
 		}
@@ -223,8 +243,21 @@ update_status ModuleEnemy::Update()
 			punchEnable = false;
 			punch.Reset();
 			punch_timer = 1;
+			if (Mix_PlayChannel(-1, punchfx, 0) == -1)
+			{
+				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+			}
 			punchCol = App->collision->AddCollider({ position.x - 30, position.y - 90, 40, 20 }, COLLIDER_ENEMY_SHOT);
 			punchHit = false;
+		}
+		break;
+
+	case ENEMY_SPECIAL:
+		if (specialEnable == true) {
+			specialEnable = false;
+			specialAttack.Reset();
+			groundFire_timer = 1;
+			special_timer = 1;
 		}
 		break;
 	
@@ -246,6 +279,13 @@ update_status ModuleEnemy::Update()
 	{
 		defeat_timer = defeat_timer + 1;
 		current_animation = &defeat;
+		if (win_timer == 4)
+		{
+			if (Mix_PlayChannel(-1, defeatfx, 0) == -1)
+			{
+				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+			}
+		}
 	}
 	if (defeat_timer >= 210) { App->hud->Win = true; }
 
@@ -253,6 +293,13 @@ update_status ModuleEnemy::Update()
 	{
 		win_timer = win_timer + 1;
 		current_animation = &win;
+		if (win_timer == 4)
+		{
+			if (Mix_PlayChannel(-1, winfx, 0) == -1)
+			{
+				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+			}
+		}
 	}
 	if (win_timer >= 210) { App->hud->Win = true; }
 
@@ -311,6 +358,48 @@ update_status ModuleEnemy::Update()
 		if (damage_timer > 30) {
 			status = ENEMY_DAMAGE_FINISH;
 			damage_timer = 0;
+		}
+	}
+
+	if (special_timer > 0)
+	{
+		special_timer = special_timer + 1;
+		current_animation = &specialAttack;
+
+		if (special_timer > 30)
+		{
+			status = ENEMY_IN_SPECIAL_FINISH;
+			special_timer = 0;
+		}
+	}
+
+	if (groundFire_timer > 0)
+	{
+		groundFire_timer = groundFire_timer + 1;
+
+		if (groundFire_timer == 69)
+		{
+			App->particles->AddParticle(App->particles->smallfire, position.x + 19, position.y - 45, 0, 2800, -1, 0);
+		}
+		if (groundFire_timer == 55)
+		{
+			App->particles->AddParticle(App->particles->midfire, position.x + 17, position.y - 72, 0, 2700, -1, 0);
+		}
+		if (groundFire_timer == 41)
+		{
+			App->particles->AddParticle(App->particles->bigfire, position.x + 16, position.y - 100, 0, 2600, -1, 0);
+		}
+		if (groundFire_timer == 27)
+		{
+			App->particles->AddParticle(App->particles->midfire, position.x + 15, position.y - 72, 0, 2500, -1, 0);
+		}
+		if (groundFire_timer == 13)
+		{
+			App->particles->AddParticle(App->particles->smallfire, position.x + 12, position.y - 45, 0, 2400, -1, 0);
+		}
+		if (groundFire_timer == 180)
+		{
+			specialEnable = true;
 		}
 	}
 

@@ -115,6 +115,12 @@ bool ModulePlayer::Start()
 	App->collision->Enable();
 	graphicsTerry = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites.png"); //First Tery Bogard Sprite Sheet
 	//graphicsTerry2 = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites 2.png"); //Second Tery Bogard Sprite Sheet
+	punchfx = App->sounds->Load("Assets/Audio/Fx/SFX_Punch.wav");
+	kickfx = App->sounds->Load("Assets/Audio/Fx/SFX_Punch2.wav");
+	jumpfx = App->sounds->Load("Assets/Audio/Fx/SFX_Landing.wav");
+	specialfx = App->sounds->Load("Assets/Audio/Fx/FX_PowerWaveAttackTerryBogardVoice.wav");
+	winfx = App->sounds->Load("Assets/Audio/Fx/FX_WinScream.wav");
+	defeatfx = App->sounds->Load("Assets/Audio/Fx/FX_DefeatScream.wav.wav");
 	godMode = true;
 	colPlayer = App->collision->AddCollider({ position.x, position.y, 34, 106 }, COLLIDER_PLAYER);
 	Life = 100;
@@ -128,6 +134,10 @@ bool ModulePlayer::CleanUp()
 
 	App->collision->Disable();
 	App->player->Disable();
+	App->sounds->Unload(punchfx);
+	App->sounds->Unload(kickfx);
+	App->sounds->Unload(jumpfx);
+	App->sounds->Unload(specialfx);
 	SDL_DestroyTexture(graphicsTerry);
 	SDL_DestroyTexture(graphicsTerry2);
 
@@ -150,7 +160,7 @@ update_status ModulePlayer::Update()
 	else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		status = PLAYER_CROUCH;
 
-	else if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) 
 		status = PLAYER_PUNCH;
 
 	else if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
@@ -188,6 +198,10 @@ update_status ModulePlayer::Update()
 		if (jumpEnable == true) {
 			jumpEnable = false;
 			jump.Reset();
+			if (Mix_PlayChannel(-1, jumpfx, 0) == -1)
+			{
+				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+			}
 			jump_timer = 1;
 		}
 		break;
@@ -222,6 +236,10 @@ update_status ModulePlayer::Update()
 			kickEnable = false;
 			kick.Reset();
 			kick_timer = 1;
+			if (Mix_PlayChannel(-1, kickfx, 0) == -1)
+			{
+				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+			}
 			kickCol = App->collision->AddCollider({ position.x + 46, position.y - 58, 55, 18 }, COLLIDER_PLAYER_SHOT);
 			kickHit = false;
 		}
@@ -232,6 +250,10 @@ update_status ModulePlayer::Update()
 			punchEnable = false;
 			punch.Reset();
 			punch_timer = 1;
+			if (Mix_PlayChannel(-1, punchfx, 0) == -1)
+			{
+				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+			}
 			punchCol = App->collision->AddCollider({ position.x + 46, position.y - 90, 40, 20 }, COLLIDER_PLAYER_SHOT);
 			punchHit = false;
 		}
@@ -242,6 +264,10 @@ update_status ModulePlayer::Update()
 		if (specialEnable == true) {
 			specialEnable = false;
 			specialAttack.Reset();
+			if (Mix_PlayChannel(-1, specialfx, 0) == -1)
+			{
+				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+			}
 			groundFire_timer = 1;
 			special_timer = 1;
 		}
@@ -264,6 +290,14 @@ update_status ModulePlayer::Update()
 	{ 
 		defeat_timer = defeat_timer + 1; 
 		current_animation = &defeat;
+
+		if (win_timer == 4)
+		{
+			if (Mix_PlayChannel(-1, defeatfx, 0) == -1)
+			{
+				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+			}
+		}
 	}
 	if (defeat_timer >= 210) { App->hud->Lose = true; }
 
@@ -271,6 +305,13 @@ update_status ModulePlayer::Update()
 	{
 		win_timer = win_timer + 1;
 		current_animation = &win;
+		if (win_timer == 4) 
+		{
+			if (Mix_PlayChannel(-1, winfx, 0) == -1)
+			{
+				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+			}
+		}
 	}
 	if (win_timer >= 210) { App->hud->Win = true; }
 
@@ -312,7 +353,10 @@ update_status ModulePlayer::Update()
 	if (jump_timer > 0)
 	{
 		jump_timer = jump_timer + 1;
-		current_animation = &jump;
+		current_animation = &jump; 
+		if (jump_timer < 12)colPlayer->SetPos(position.x + 12, position.y - 130);
+		else if (jump_timer < 29)colPlayer->SetPos(position.x + 12, position.y - 140);
+		else if (jump_timer < 38)colPlayer->SetPos(position.x + 12, position.y - 130);
 
 		if (jump_timer > 38)
 		{
@@ -350,25 +394,31 @@ update_status ModulePlayer::Update()
 		if (groundFire_timer == 69)
 		{
 			App->particles->AddParticle(App->particles->smallfire, position.x + 26, position.y - 45, 0, 2800, 1, 0);
+			
 		}
 		if (groundFire_timer == 55)
 		{
 			App->particles->AddParticle(App->particles->midfire, position.x + 28, position.y - 72, 0, 2700, 1, 0);
+	
 		}
 		if (groundFire_timer == 41)
 		{
 			App->particles->AddParticle(App->particles->bigfire, position.x + 29, position.y - 100, 0, 2600, 1, 0);
+			
 		}
 		if (groundFire_timer == 27)
 		{
 			App->particles->AddParticle(App->particles->midfire, position.x + 31, position.y - 72, 0, 2500, 1, 0);
+
 		}
 		if (groundFire_timer == 13)
 		{
 			App->particles->AddParticle(App->particles->smallfire, position.x + 33, position.y - 45, 0, 2400, 1, 0);
+
 		}
 		if (groundFire_timer == 180)
 		{
+
 			specialEnable = true;
 		}
 	}
@@ -387,7 +437,8 @@ update_status ModulePlayer::Update()
 		}
 	}
 
-	colPlayer->SetPos(position.x + 12, position.y - 107);
+
+	if (jump_timer == 0) { colPlayer->SetPos(position.x + 12, position.y - 107); }
 	// Draw everything --------------------------------------
 
 	r = current_animation->GetCurrentFrame();

@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Animation.h"
 #include "p2Point.h"
+#include "ModuleSounds.h"
 
 struct SDL_Texture;
 struct Collider;
@@ -22,7 +23,8 @@ enum enemy_status
 	ENEMY_IN_PUNCH_FINISH,
 	ENEMY_IN_KICK_FINISH,
 	ENEMY_IN_JUMP_FINISH,
-	ENEMY_DAMAGE_FINISH
+	ENEMY_DAMAGE_FINISH,
+	ENEMY_IN_SPECIAL_FINISH
 };
 
 class ModuleEnemy : public Module
@@ -41,6 +43,8 @@ public:
 	bool punchEnable = true;
 	bool kickEnable = true;
 	bool jumpEnable = true;
+	bool specialEnable = true;
+
 	SDL_Texture * graphicsTerry = nullptr;	
 	SDL_Texture* graphicsTerry2 = nullptr;
 	Animation* current_animation = &idle;
@@ -68,8 +72,16 @@ public:
 	Uint32 jump_timer = 0;
 	Uint32 kick_timer = 0;
 	Uint32 damage_timer = 0;
+	Uint32 special_timer = 0;
+	Uint32 groundFire_timer = 0;
 	Uint32 defeat_timer = 0;
 	Uint32 win_timer = 0;
+	Mix_Chunk* punchfx = nullptr;
+	Mix_Chunk* kickfx = nullptr;
+	Mix_Chunk* jumpfx = nullptr;
+	Mix_Chunk* specialfx = nullptr;
+	Mix_Chunk* winfx = nullptr;
+	Mix_Chunk* defeatfx = nullptr;
 	SDL_Rect r;
 
 };

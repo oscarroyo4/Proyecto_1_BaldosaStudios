@@ -42,8 +42,14 @@ bool ModulePlayerSelect::Start()
 	bool ret = true;
 	graphics = App->textures->Load("Assets/Sprites/Main/PlayerSelect.png");
 	App->scene_intro->Disable();
+	music = App->sounds->Load("Assets/Audio/CharacterSelection.ogg");
 	selectHover = App->sounds->Load("Assets/Audio/Fx/FX_SelectHover.wav");
 	chooseSelection = App->sounds->Load("Assets/Audio/Fx/FX_ChooseSelection.wav");
+	if (Mix_PlayChannel(-1, music, 0) == -1)
+	{
+		LOG("Could not play music. Mix_PlayChannel: %s", Mix_GetError());
+		ret = false;
+	}
 	return ret;
 }
 
@@ -53,6 +59,9 @@ bool ModulePlayerSelect::CleanUp()
 	LOG("Unloading ken scene");
 
 	SDL_DestroyTexture(graphics);
+	App->sounds->Unload(music);
+	App->sounds->Unload(selectHover);
+	App->sounds->Unload(chooseSelection);
 	App->paopao->Enable();
 
 	return true;

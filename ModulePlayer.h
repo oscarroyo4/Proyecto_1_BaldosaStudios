@@ -5,6 +5,7 @@
 #include "Animation.h"
 #include "p2Point.h"
 #include "ModuleInput.h"
+#include "ModuleSounds.h"
 
 struct SDL_Texture;
 struct Collider;
@@ -63,6 +64,9 @@ public:
 	Collider* colPlayer;
 	Collider* punchCol;
 	Collider* kickCol;
+	Collider* specialCol1;
+	Collider* specialCol2;
+	Collider* specialCol3;
 	int Life = 100;
 	bool hit = false;
 	bool punchHit = false;
@@ -76,6 +80,12 @@ public:
 	Uint32 groundFire_timer = 0;
 	Uint32 defeat_timer = 0;
 	Uint32 win_timer = 0;
+	Mix_Chunk* punchfx = nullptr;
+	Mix_Chunk* kickfx = nullptr;
+	Mix_Chunk* jumpfx = nullptr;
+	Mix_Chunk* specialfx = nullptr;
+	Mix_Chunk* winfx = nullptr;
+	Mix_Chunk* defeatfx = nullptr;
 	SDL_Rect r;
 };
 

@@ -82,7 +82,7 @@ update_status ModuleParticles::Update()
 	return UPDATE_CONTINUE;
 }
 
-void ModuleParticles::AddParticle(const Particle& particle, int x, int y, Uint32 delay, Uint32 lifeVar, int speedX, int speedY)
+void ModuleParticles::AddParticle(const Particle& particle, int x, int y, Uint32 delay, Uint32 lifeVar, float speedX, int speedY)
 {
 	Particle* p = new Particle(particle);
 	p->born = SDL_GetTicks() + delay;

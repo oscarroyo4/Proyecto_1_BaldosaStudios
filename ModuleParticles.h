@@ -35,7 +35,7 @@ public:
 	update_status Update();
 	bool CleanUp();
 
-	void AddParticle(const Particle& particle, int x, int y, Uint32 delay = 0, Uint32 lifeVar = 0, int speedX = 0, int speedY = 0);
+	void AddParticle(const Particle& particle, int x, int y, Uint32 delay = 0, Uint32 lifeVar = 0, float speedX = 0, int speedY = 0);
 
 private:
 
