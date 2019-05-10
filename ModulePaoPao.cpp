@@ -55,7 +55,6 @@ bool ModuleScenePaoPao::CleanUp()
 	App->paopao->Disable();
 	SDL_DestroyTexture(graphics);
 	App->sounds->Unload(music);
-	Mix_FreeChunk(music);
 	App->player->Disable();
 	App->enemy->Disable();
 	App->hud->Disable();

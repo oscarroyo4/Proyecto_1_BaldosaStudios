@@ -2,6 +2,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleTextures.h"
+#include "ModuleCollision.h"
 #include "ModuleRender.h"
 #include "ModuleParticles.h"
 
@@ -65,6 +66,7 @@ update_status ModuleParticles::Update()
 
 		if(p->Update() == false)
 		{
+			p->col->to_delete = true;
 			delete p;
 			active[i] = nullptr;
 		}
@@ -82,14 +84,14 @@ update_status ModuleParticles::Update()
 	return UPDATE_CONTINUE;
 }
 
-void ModuleParticles::AddParticle(const Particle& particle, int x, int y, Uint32 delay, Uint32 lifeVar, float speedX, int speedY)
+void ModuleParticles::AddParticle(const Particle& particle, int x, int y, Uint32 delay, Uint32 lifeVar, float speedX, float speedY)
 {
 	Particle* p = new Particle(particle);
 	p->born = SDL_GetTicks() + delay;
 	p->position.x = x;
 	p->position.y = y;
 	p->life = lifeVar;
-
+	p->col = App->collision->AddCollider({ p->position.x - 3, p->position.y, p->anim.GetCurrentFrame().w,  p->anim.GetCurrentFrame().h }, COLLIDER_PLAYER_SHOT);
 	p->speed.x = speedX;
 	p->speed.y = speedY;
 
@@ -125,6 +127,8 @@ bool Particle::Update()
 
 	position.x += speed.x;
 	position.y += speed.y;
+	
+	col->SetPos(position.x, position.y);
 
 	return ret;
 }

@@ -131,15 +131,19 @@ bool ModulePlayer::Start()
 bool ModulePlayer::CleanUp()
 {
 	LOG("Unloading player");
+	if (App->player->IsEnabled()) {
+		App->collision->Disable();
+		App->sounds->Unload(punchfx);
+		App->sounds->Unload(kickfx);
+		App->sounds->Unload(jumpfx);
+		App->sounds->Unload(specialfx);
+		App->sounds->Unload(winfx);
+		App->sounds->Unload(defeatfx);
+		SDL_DestroyTexture(graphicsTerry);
+		App->player->Disable();
+	}
 
-	App->collision->Disable();
-	App->player->Disable();
-	App->sounds->Unload(punchfx);
-	App->sounds->Unload(kickfx);
-	App->sounds->Unload(jumpfx);
-	App->sounds->Unload(specialfx);
-	SDL_DestroyTexture(graphicsTerry);
-	SDL_DestroyTexture(graphicsTerry2);
+	//SDL_DestroyTexture(graphicsTerry2);
 
 	return true;
 }
@@ -160,13 +164,13 @@ update_status ModulePlayer::Update()
 	else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		status = PLAYER_CROUCH;
 
-	else if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) 
+	else if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) 
 		status = PLAYER_PUNCH;
 
-	else if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
 		status = PLAYER_KICK;
 
-	else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN)
 		status = PLAYER_SPECIAL;
 
 	else if (hit == true) {
@@ -262,7 +266,6 @@ update_status ModulePlayer::Update()
 
 	case PLAYER_SPECIAL:
 		if (specialEnable == true) {
-			specialEnable = false;
 			specialAttack.Reset();
 			if (Mix_PlayChannel(-1, specialfx, 0) == -1)
 			{
@@ -270,6 +273,7 @@ update_status ModulePlayer::Update()
 			}
 			groundFire_timer = 1;
 			special_timer = 1;
+			specialEnable = false;
 		}
 		break;
 	
@@ -390,7 +394,6 @@ update_status ModulePlayer::Update()
 	if (groundFire_timer > 0)
 	{
 		groundFire_timer = groundFire_timer + 1;
-
 		if (groundFire_timer == 69)
 		{
 			App->particles->AddParticle(App->particles->smallfire, position.x + 26, position.y - 45, 0, 2800, 1, 0);
