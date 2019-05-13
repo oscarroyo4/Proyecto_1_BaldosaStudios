@@ -88,6 +88,7 @@ public:
 	Mix_Chunk* winfx = nullptr;
 	Mix_Chunk* defeatfx = nullptr;
 	SDL_Rect r;
+
 };
 
 #endif

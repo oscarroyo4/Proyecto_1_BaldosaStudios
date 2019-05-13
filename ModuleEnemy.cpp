@@ -111,12 +111,12 @@ bool ModuleEnemy::Start()
 {
 	LOG("Loading enemy");
 	graphicsTerry = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites.png");  //First Tery Bogard Sprite Sheet
-	punchfx = App->sounds->Load("Assets/Audio/Fx/SFX_Punch.wav");
-	kickfx = App->sounds->Load("Assets/Audio/Fx/SFX_Punch2.wav");
-	jumpfx = App->sounds->Load("Assets/Audio/Fx/SFX_Landing.wav");
-	specialfx = App->sounds->Load("Assets/Audio/Fx/FX_PowerWaveAttackTerryBogardVoice.wav");
-	winfx = App->sounds->Load("Assets/Audio/Fx/FX_WinScream.wav");
-	defeatfx = App->sounds->Load("Assets/Audio/Fx/FX_DefeatScream.wav.wav");
+	punchfx1 = App->sounds->Load("Assets/Audio/Fx/SFX_Punch.wav");
+	kickfx1 = App->sounds->Load("Assets/Audio/Fx/SFX_Punch2.wav");
+	jumpfx1 = App->sounds->Load("Assets/Audio/Fx/SFX_Landing.wav");
+	specialfx1 = App->sounds->Load("Assets/Audio/Fx/FX_SpecialAttack.wav");
+	winfx1 = App->sounds->Load("Assets/Audio/Fx/FX_WinScream.wav");
+	defeatfx1 = App->sounds->Load("Assets/Audio/Fx/FX_DefeatScream.wav");
 	colEnemy = App->collision->AddCollider({ position.x, position.y, 34, 106 }, COLLIDER_ENEMY);
 	godMode = true;
 	
@@ -130,13 +130,12 @@ bool ModuleEnemy::CleanUp()
 	LOG("Unloading enemy");
 	if (App->enemy->IsEnabled()) {
 		App->collision->Disable();
-		App->sounds->Unload(punchfx);
-		App->sounds->Unload(kickfx);
-		App->sounds->Unload(jumpfx);
-		App->sounds->Unload(specialfx);
-		App->sounds->Unload(winfx);
-		App->sounds->Unload(defeatfx);
-		App->sounds->Disable();
+		App->sounds->Unload(punchfx1);
+		App->sounds->Unload(kickfx1);
+		App->sounds->Unload(jumpfx1);
+		//App->sounds->Unload(specialfx1);
+		//App->sounds->Unload(winfx1);
+		//App->sounds->Unload(defeatfx1);
 		SDL_DestroyTexture(graphicsTerry);
 		App->enemy->Disable();
 	}
@@ -201,7 +200,7 @@ update_status ModuleEnemy::Update()
 		if (jumpEnable == true) {
 			jumpEnable = false;
 			jump.Reset();
-			if (Mix_PlayChannel(-1, jumpfx, 0) == -1)
+			if (Mix_PlayChannel(-1, jumpfx1, 0) == -1)
 			{
 				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 			}
@@ -234,7 +233,7 @@ update_status ModuleEnemy::Update()
 			kickEnable = false;
 			kick.Reset();
 			kick_timer = 1;
-			if (Mix_PlayChannel(-1, kickfx, 0) == -1)
+			if (Mix_PlayChannel(-1, kickfx1, 0) == -1)
 			{
 				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 			}
@@ -248,7 +247,7 @@ update_status ModuleEnemy::Update()
 			punchEnable = false;
 			punch.Reset();
 			punch_timer = 1;
-			if (Mix_PlayChannel(-1, punchfx, 0) == -1)
+			if (Mix_PlayChannel(-1, punchfx1, 0) == -1)
 			{
 				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 			}
@@ -286,7 +285,7 @@ update_status ModuleEnemy::Update()
 		current_animation = &defeat;
 		if (win_timer == 4)
 		{
-			if (Mix_PlayChannel(-1, defeatfx, 0) == -1)
+			if (Mix_PlayChannel(-1, defeatfx1, 0) == -1)
 			{
 				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 			}
@@ -300,7 +299,7 @@ update_status ModuleEnemy::Update()
 		current_animation = &win;
 		if (win_timer == 4)
 		{
-			if (Mix_PlayChannel(-1, winfx, 0) == -1)
+			if (Mix_PlayChannel(-1, winfx1, 0) == -1)
 			{
 				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 			}

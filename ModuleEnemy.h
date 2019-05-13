@@ -76,12 +76,12 @@ public:
 	Uint32 groundFire_timer = 0;
 	Uint32 defeat_timer = 0;
 	Uint32 win_timer = 0;
-	Mix_Chunk* punchfx = nullptr;
-	Mix_Chunk* kickfx = nullptr;
-	Mix_Chunk* jumpfx = nullptr;
-	Mix_Chunk* specialfx = nullptr;
-	Mix_Chunk* winfx = nullptr;
-	Mix_Chunk* defeatfx = nullptr;
+	Mix_Chunk* punchfx1 = nullptr;
+	Mix_Chunk* kickfx1 = nullptr;
+	Mix_Chunk* jumpfx1 = nullptr;
+	Mix_Chunk* specialfx1 = nullptr;
+	Mix_Chunk* winfx1 = nullptr;
+	Mix_Chunk* defeatfx1 = nullptr;
 	SDL_Rect r;
 
 };

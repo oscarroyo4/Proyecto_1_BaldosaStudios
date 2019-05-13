@@ -119,9 +119,9 @@ bool ModulePlayer::Start()
 	punchfx = App->sounds->Load("Assets/Audio/Fx/SFX_Punch.wav");
 	kickfx = App->sounds->Load("Assets/Audio/Fx/SFX_Punch2.wav");
 	jumpfx = App->sounds->Load("Assets/Audio/Fx/SFX_Landing.wav");
-	specialfx = App->sounds->Load("Assets/Audio/Fx/FX_PowerWaveAttackTerryBogardVoice.wav");
+	specialfx = App->sounds->Load("Assets/Audio/Fx/FX_SpecialAttack.wav");
 	winfx = App->sounds->Load("Assets/Audio/Fx/FX_WinScream.wav");
-	defeatfx = App->sounds->Load("Assets/Audio/Fx/FX_DefeatScream.wav.wav");
+	defeatfx = App->sounds->Load("Assets/Audio/Fx/FX_DefeatScream.wav");
 	godMode = true;
 	colPlayer = App->collision->AddCollider({ position.x, position.y, 34, 106 }, COLLIDER_PLAYER);
 	Life = 100;
@@ -137,10 +137,9 @@ bool ModulePlayer::CleanUp()
 		App->sounds->Unload(punchfx);
 		App->sounds->Unload(kickfx);
 		App->sounds->Unload(jumpfx);
-		App->sounds->Unload(specialfx);
-		App->sounds->Unload(winfx);
-		App->sounds->Unload(defeatfx);
-		App->sounds->Disable();
+		//App->sounds->Unload(specialfx);
+		//App->sounds->Unload(winfx);
+		//App->sounds->Unload(defeatfx);
 		SDL_DestroyTexture(graphicsTerry);
 		App->player->Disable();
 	}
@@ -166,7 +165,7 @@ update_status ModulePlayer::Update()
 	else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		status = PLAYER_CROUCH;
 
-	else if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) 
+	else if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 		status = PLAYER_PUNCH;
 
 	else if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
