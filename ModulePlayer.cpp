@@ -71,6 +71,7 @@ ModulePlayer::ModulePlayer()
 	specialAttack.PushBack({ 297, 702, 61, 96 });
 	specialAttack.PushBack({ 214, 720, 80, 78 });
 	specialAttack.PushBack({ 142, 721, 68, 77 });
+	specialAttackStatic.PushBack({ 142, 721, 68, 77 });
 	specialAttack.PushBack({ 75, 730, 66, 68 });
 	specialAttack.PushBack({ 10, 717, 62, 81 });
 	specialAttack.speed = 0.175f;
@@ -139,6 +140,7 @@ bool ModulePlayer::CleanUp()
 		App->sounds->Unload(specialfx);
 		App->sounds->Unload(winfx);
 		App->sounds->Unload(defeatfx);
+		App->sounds->Disable();
 		SDL_DestroyTexture(graphicsTerry);
 		App->player->Disable();
 	}
@@ -188,14 +190,23 @@ update_status ModulePlayer::Update()
 		break;
 
 	case PLAYER_BACKWARD:
-		if (position.x < 10) { position.x -= 0; }
-		else position.x -= speed;
-		current_animation = &backward;
+		if (specialEnable == false) { position.x += 0; }
+		else
+		{
+			if (position.x < 10) { position.x -= 0; }
+			else position.x -= speed;
+			current_animation = &backward;
+		}
 		break;
 
 	case PLAYER_FORWARD:
-		position.x += speed;
-		current_animation = &forward;
+
+		if (specialEnable == false) { position.x += 0; }
+		else
+		{
+			position.x += speed;
+			current_animation = &forward;
+		}
 		break;
 
 	case PLAYER_JUMP:
@@ -394,9 +405,10 @@ update_status ModulePlayer::Update()
 	if (groundFire_timer > 0)
 	{
 		groundFire_timer = groundFire_timer + 1;
+		if (groundFire_timer > 30) { current_animation = &specialAttackStatic; }
 		if (groundFire_timer == 69)
 		{
-			App->particles->AddParticle(App->particles->smallfire, position.x + 26, position.y - 45, 0, 2800, 1, 0);
+			App->particles->AddParticle(App->particles->smallfire, position.x + 26, position.y - 45, 0, 2800, 1.5, 0);
 			
 		}
 		if (groundFire_timer == 55)
@@ -419,10 +431,14 @@ update_status ModulePlayer::Update()
 			App->particles->AddParticle(App->particles->smallfire, position.x + 33, position.y - 45, 0, 2400, 1, 0);
 
 		}
-		if (groundFire_timer == 180)
+		if (groundFire_timer >= 120)
 		{
-
+			status = PLAYER_IDLE;
+		}
+		if (groundFire_timer >= 180)
+		{
 			specialEnable = true;
+			groundFire_timer = 0;
 		}
 	}
 

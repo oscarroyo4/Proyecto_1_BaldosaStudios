@@ -5,6 +5,7 @@
 
 ModuleWindow::ModuleWindow() : Module()
 {
+
 }
 
 // Destructor

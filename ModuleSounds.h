@@ -5,7 +5,7 @@
 #include "Globals.h"
 #include "SDL_mixer/include/SDL_mixer.h"
 
-#define MAX_SOUNDS 200
+#define MAX_SOUNDS 100
 
 class ModuleSounds : public Module
 {

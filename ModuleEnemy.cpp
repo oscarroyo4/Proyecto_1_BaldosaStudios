@@ -129,12 +129,14 @@ bool ModuleEnemy::CleanUp()
 {
 	LOG("Unloading enemy");
 	if (App->enemy->IsEnabled()) {
+		App->collision->Disable();
 		App->sounds->Unload(punchfx);
 		App->sounds->Unload(kickfx);
 		App->sounds->Unload(jumpfx);
 		App->sounds->Unload(specialfx);
 		App->sounds->Unload(winfx);
 		App->sounds->Unload(defeatfx);
+		App->sounds->Disable();
 		SDL_DestroyTexture(graphicsTerry);
 		App->enemy->Disable();
 	}

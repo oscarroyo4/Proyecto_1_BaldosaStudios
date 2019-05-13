@@ -56,6 +56,7 @@ public:
 	Animation kick;
 	Animation jump;
 	Animation specialAttack;
+	Animation specialAttackStatic;
 	Animation crouch;
 	Animation damage;
 	Animation defeat;
