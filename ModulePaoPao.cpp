@@ -21,8 +21,6 @@ ModuleScenePaoPao::ModuleScenePaoPao()
 	paopao.PushBack({ 0, 0, 619, 224 });
 	paopao.PushBack({ 0, 224, 619, 224 });
 	paopao.speed = 0.08f;
-
-
 }
 
 ModuleScenePaoPao::~ModuleScenePaoPao()

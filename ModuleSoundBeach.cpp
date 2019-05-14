@@ -91,6 +91,26 @@ update_status ModuleSceneSoundBeach::Update()
 	App->render->Blit(graphicsAnim, 350, 107, &(backgroundPeople4.GetCurrentFrame()), 0.75f);
 	App->render->Blit(graphicsAnim, 420, 107, &(backgroundPeople1.GetCurrentFrame()), 0.75f);
 
+	if ((App->player->Life == 0 || App->enemy->Life == 0) && App->player->win_timer == 360 || App->enemy->win_timer == 360 || App->enemy->defeat_timer == 360)
+	{
+		App->fade->FadeToBlack(this, this, 1.5);
+	}
+
+	if ((App->player->Life == 0 || App->enemy->Life == 0) && App->player->win_timer == 400 || App->enemy->win_timer == 400 || App->enemy->defeat_timer == 400)
+	{
+		//Reseting things for the new round
+		App->player->win_timer = 0;
+		App->player->defeat_timer = 0;
+		App->enemy->win_timer = 0;
+		App->enemy->defeat_timer = 0;
+		App->hud->Win = false;
+		App->player->Life = 100;
+		App->enemy->Life = 100;
+		App->player->position.x = 230;
+		App->enemy->position.x = 375;
+		App->player->status = PLAYER_IDLE;
+		App->enemy->status = ENEMY_IDLE;
+	}
 
 	App->render->camera.x = App->player->position.x  * -2;
 
