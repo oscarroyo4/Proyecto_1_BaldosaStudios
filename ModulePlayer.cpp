@@ -154,7 +154,6 @@ update_status ModulePlayer::Update()
 {	
 	float speed = 2;
 
-
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		status = PLAYER_BACKWARD;
 
