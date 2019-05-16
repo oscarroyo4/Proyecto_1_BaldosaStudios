@@ -46,6 +46,7 @@ public:
 	bool kickEnable = true;
 	bool jumpEnable = true;
 	bool specialEnable = true;
+	SDL_Event ev;
 	SDL_Texture * graphicsTerry = nullptr;
 	SDL_Texture* graphicsTerry2 = nullptr;
 	Animation* current_animation = &idle;
@@ -56,6 +57,7 @@ public:
 	Animation kick;
 	Animation jump;
 	Animation specialAttack;
+	Animation specialAttackStatic;
 	Animation crouch;
 	Animation damage;
 	Animation defeat;
@@ -68,6 +70,7 @@ public:
 	Collider* specialCol2;
 	Collider* specialCol3;
 	int Life = 100;
+	int PlayerVict = 0;
 	bool hit = false;
 	bool punchHit = false;
 	bool kickHit = false;
@@ -87,6 +90,7 @@ public:
 	Mix_Chunk* winfx = nullptr;
 	Mix_Chunk* defeatfx = nullptr;
 	SDL_Rect r;
+
 };
 
 #endif

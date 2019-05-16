@@ -6,6 +6,7 @@
 #include "ModulePlayer.h"
 #include "ModuleFadeToBlack.h"
 #include "ModulePaoPao.h"
+#include "ModuleSoundBeach.h"
 #include "ModuleParticles.h"
 #include "ModuleIntro.h"
 #include "ModuleEnemy.h"
@@ -13,6 +14,7 @@
 #include "ModulePlayerSelect.h"
 #include "ModuleHUD.h"
 #include "ModuleSounds.h"
+#include "ModuleController.h"
 
 
 Application::Application()
@@ -20,17 +22,20 @@ Application::Application()
 	modules[0] = window = new ModuleWindow();
 	modules[1] = render = new ModuleRender();
 	modules[2] = input = new ModuleInput();
-	modules[3] = textures = new ModuleTextures();
-	modules[4] = paopao = new ModuleScenePaoPao();
-	modules[5] = scene_intro = new ModuleIntro();
-	modules[6] = select = new ModulePlayerSelect();
-	modules[7] = player = new ModulePlayer();
-	modules[8] = enemy = new ModuleEnemy();
-	modules[9] = particles = new ModuleParticles();
-	modules[10] = fade = new ModuleFadeToBlack();
-	modules[11] = sounds = new ModuleSounds();
-	modules[12] = collision = new ModuleCollision();
-	modules[13] = hud = new ModuleHUD();
+	modules[3] = gamepad = new ModuleGameControllers();
+	modules[4] = textures = new ModuleTextures();
+	modules[5] = paopao = new ModuleScenePaoPao();
+	modules[6] = soundBeach = new ModuleSceneSoundBeach();
+	modules[7] = scene_intro = new ModuleIntro();
+	modules[8] = select = new ModulePlayerSelect();
+	modules[9] = player = new ModulePlayer();
+	modules[10] = enemy = new ModuleEnemy();
+	modules[11] = particles = new ModuleParticles();
+	modules[12] = fade = new ModuleFadeToBlack();
+	modules[13] = sounds = new ModuleSounds();
+	modules[14] = collision = new ModuleCollision();
+	modules[15] = hud = new ModuleHUD();
+
 }	
 
 Application::~Application()
@@ -48,6 +53,7 @@ bool Application::Init()
 	enemy->Disable();
 	select->Disable();
 	paopao->Disable();
+	soundBeach->Disable();
 	hud->Disable();
 	// ---
 

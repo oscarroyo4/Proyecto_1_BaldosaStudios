@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleInput.h"
+#include "ModuleController.h"
 #include "SDL/include/SDL.h"
 
 ModuleInput::ModuleInput() : Module()
@@ -19,6 +20,10 @@ bool ModuleInput::Init()
 	LOG("Init SDL input event system");
 	bool ret = true;
 	SDL_Init(0);
+	SDL_Init(SDL_INIT_GAMECONTROLLER);
+
+	SDL_GameController *controller = SDL_GameControllerOpen(0);
+	SDL_GameControllerMapping(controller);
 
 	if(SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
 	{

@@ -21,6 +21,9 @@
     <Filter Include="Modules\Intro Modules">
       <UniqueIdentifier>{313eb6e5-ebdf-43a0-9e10-a25105522afc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Modules\Input">
+      <UniqueIdentifier>{50823f2c-deb0-4997-a377-1e8aaadf85ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -37,9 +40,6 @@
     </ClInclude>
     <ClInclude Include="Application.h">
       <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleInput.h">
-      <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="ModuleRender.h">
       <Filter>Modules</Filter>
@@ -83,6 +83,15 @@
     <ClInclude Include="ModulePlayerSelect.h">
       <Filter>Modules\Intro Modules</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleSoundBeach.h">
+      <Filter>Modules\Stages</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleInput.h">
+      <Filter>Modules\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleController.h">
+      <Filter>Modules\Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -92,9 +101,6 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="ModuleWindow.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleInput.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="ModuleRender.cpp">
@@ -135,6 +141,15 @@
     </ClCompile>
     <ClCompile Include="ModulePlayerSelect.cpp">
       <Filter>Modules\Intro Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleSoundBeach.cpp">
+      <Filter>Modules\Stages</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleInput.cpp">
+      <Filter>Modules\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleController.cpp">
+      <Filter>Modules\Input</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

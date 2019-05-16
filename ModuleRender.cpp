@@ -36,6 +36,7 @@ bool ModuleRender::Init()
 		ret = false;
 	}
 
+
 	return ret;
 }
 
@@ -64,6 +65,8 @@ update_status ModuleRender::Update()
 		camera.x -= speed;
 
 	return update_status::UPDATE_CONTINUE;
+
+	
 }
 
 update_status ModuleRender::PostUpdate()

@@ -54,6 +54,7 @@ bool ModuleIntro::CleanUp()
 // Update: draw background
 update_status ModuleIntro::Update()
 {
+
 	// Draw everything --------------------------------------
 	App->render->Blit(background, -25, 0, &(intr.GetCurrentFrame()), 0.75f);
 

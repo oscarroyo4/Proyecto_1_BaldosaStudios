@@ -19,8 +19,6 @@ enum update_status
 };
 
 
-
-
 // Useful typedefs ---------
 typedef unsigned int uint;
 

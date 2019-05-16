@@ -78,7 +78,7 @@ bool ModuleSounds::Unload(Mix_Chunk *sound)
 		if (sound == sounds[i])
 		{
 			//Destroy sound
-			Mix_FreeChunk(sounds[i]);
+ 			Mix_FreeChunk(sounds[i]);
 			sounds[i] = nullptr;
 			ret = true;
 			break;

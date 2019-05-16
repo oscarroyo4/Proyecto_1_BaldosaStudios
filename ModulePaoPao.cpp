@@ -7,6 +7,7 @@
 #include "ModuleInput.h"
 #include "ModuleIntro.h"
 #include "ModuleCollision.h"
+#include "ModuleSoundBeach.h"
 #include "ModuleSounds.h"
 #include "ModuleEnemy.h"
 #include "ModuleHUD.h"
@@ -20,8 +21,6 @@ ModuleScenePaoPao::ModuleScenePaoPao()
 	paopao.PushBack({ 0, 0, 619, 224 });
 	paopao.PushBack({ 0, 224, 619, 224 });
 	paopao.speed = 0.08f;
-
-
 }
 
 ModuleScenePaoPao::~ModuleScenePaoPao()
@@ -51,12 +50,13 @@ bool ModuleScenePaoPao::Start()
 bool ModuleScenePaoPao::CleanUp()
 {
 	LOG("Unloading ken scene");
-
 	App->paopao->Disable();
 	SDL_DestroyTexture(graphics);
 	App->sounds->Unload(music);
 	App->player->Disable();
 	App->enemy->Disable();
+	App->collision->Disable();
+	App->sounds->Disable();
 	App->hud->Disable();
 
 	return true;
@@ -73,8 +73,15 @@ update_status ModuleScenePaoPao::Update()
 	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1)
 	{
 
-		App->fade->FadeToBlack(this, App->scene_intro, 2.5);
+		App->fade->FadeToBlack(this, App->soundBeach, 2.5);
 	}
+
+	if (App->player->PlayerVict == 2)
+	{
+		App->fade->FadeToBlack(this, App->soundBeach, 2.5);
+	}
+
+	if (App->player->win_timer == 210) { App->hud->round = App->hud->round + 1; }
 
 	return UPDATE_CONTINUE;
 }

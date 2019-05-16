@@ -71,6 +71,7 @@ ModulePlayer::ModulePlayer()
 	specialAttack.PushBack({ 297, 702, 61, 96 });
 	specialAttack.PushBack({ 214, 720, 80, 78 });
 	specialAttack.PushBack({ 142, 721, 68, 77 });
+	specialAttackStatic.PushBack({ 142, 721, 68, 77 });
 	specialAttack.PushBack({ 75, 730, 66, 68 });
 	specialAttack.PushBack({ 10, 717, 62, 81 });
 	specialAttack.speed = 0.175f;
@@ -118,12 +119,13 @@ bool ModulePlayer::Start()
 	punchfx = App->sounds->Load("Assets/Audio/Fx/SFX_Punch.wav");
 	kickfx = App->sounds->Load("Assets/Audio/Fx/SFX_Punch2.wav");
 	jumpfx = App->sounds->Load("Assets/Audio/Fx/SFX_Landing.wav");
-	specialfx = App->sounds->Load("Assets/Audio/Fx/FX_PowerWaveAttackTerryBogardVoice.wav");
+	specialfx = App->sounds->Load("Assets/Audio/Fx/FX_SpecialAttack.wav");
 	winfx = App->sounds->Load("Assets/Audio/Fx/FX_WinScream.wav");
-	defeatfx = App->sounds->Load("Assets/Audio/Fx/FX_DefeatScream.wav.wav");
+	defeatfx = App->sounds->Load("Assets/Audio/Fx/FX_DefeatScream.wav");
 	godMode = true;
 	colPlayer = App->collision->AddCollider({ position.x, position.y, 34, 106 }, COLLIDER_PLAYER);
 	Life = 100;
+
 	return true;
 }
 
@@ -136,9 +138,9 @@ bool ModulePlayer::CleanUp()
 		App->sounds->Unload(punchfx);
 		App->sounds->Unload(kickfx);
 		App->sounds->Unload(jumpfx);
-		App->sounds->Unload(specialfx);
-		App->sounds->Unload(winfx);
-		App->sounds->Unload(defeatfx);
+		//App->sounds->Unload(specialfx);
+		//App->sounds->Unload(winfx);
+		//App->sounds->Unload(defeatfx);
 		SDL_DestroyTexture(graphicsTerry);
 		App->player->Disable();
 	}
@@ -150,7 +152,8 @@ bool ModulePlayer::CleanUp()
 
 update_status ModulePlayer::Update()
 {	
-	int speed = 1;
+	float speed = 2;
+
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		status = PLAYER_BACKWARD;
@@ -164,7 +167,7 @@ update_status ModulePlayer::Update()
 	else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		status = PLAYER_CROUCH;
 
-	else if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) 
+	else if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 		status = PLAYER_PUNCH;
 
 	else if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
@@ -185,17 +188,27 @@ update_status ModulePlayer::Update()
 	{
 	case PLAYER_IDLE:
 		current_animation = &idle;
+		position.y = 220;
 		break;
 
 	case PLAYER_BACKWARD:
-		if (position.x < 10) { position.x -= 0; }
-		else position.x -= speed;
-		current_animation = &backward;
+		if (specialEnable == false) { position.x += 0; }
+		else
+		{
+			if (position.x < 10) { position.x -= 0; }
+			else position.x -= speed;
+			current_animation = &backward;
+		}
 		break;
 
 	case PLAYER_FORWARD:
-		position.x += speed;
-		current_animation = &forward;
+
+		if (specialEnable == false) { position.x += 0; }
+		else
+		{
+			position.x += speed;
+			current_animation = &forward;
+		}
 		break;
 
 	case PLAYER_JUMP:
@@ -311,13 +324,16 @@ update_status ModulePlayer::Update()
 		current_animation = &win;
 		if (win_timer == 4) 
 		{
+			PlayerVict = PlayerVict + 1;
 			if (Mix_PlayChannel(-1, winfx, 0) == -1)
 			{
 				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 			}
 		}
 	}
-	if (win_timer >= 210) { App->hud->Win = true; }
+	if (win_timer >= 190) { App->hud->Win = true; }
+
+		
 
 	if (kick_timer > 0)
 	{
@@ -394,9 +410,10 @@ update_status ModulePlayer::Update()
 	if (groundFire_timer > 0)
 	{
 		groundFire_timer = groundFire_timer + 1;
+		if (groundFire_timer > 30) { current_animation = &specialAttackStatic; }
 		if (groundFire_timer == 69)
 		{
-			App->particles->AddParticle(App->particles->smallfire, position.x + 26, position.y - 45, 0, 2800, 1, 0);
+			App->particles->AddParticle(App->particles->smallfire, position.x + 26, position.y - 45, 0, 2800, 1.5, 0);
 			
 		}
 		if (groundFire_timer == 55)
@@ -419,10 +436,14 @@ update_status ModulePlayer::Update()
 			App->particles->AddParticle(App->particles->smallfire, position.x + 33, position.y - 45, 0, 2400, 1, 0);
 
 		}
-		if (groundFire_timer == 180)
+		if (groundFire_timer >= 120)
 		{
-
+			status = PLAYER_IDLE;
+		}
+		if (groundFire_timer >= 180)
+		{
 			specialEnable = true;
+			groundFire_timer = 0;
 		}
 	}
 

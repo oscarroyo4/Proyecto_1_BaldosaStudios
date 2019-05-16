@@ -32,6 +32,16 @@ ModuleHUD::ModuleHUD()
 	lose.y = 0;
 	lose.w = 320;
 	lose.h = 224;
+
+	r.x = 0;
+	r.y = 0;
+	r.w = 16;
+	r.y = 16;
+
+	roundCircle.PushBack({ 0, 0, 16, 16 });
+	roundCircleWon.PushBack({ 16, 0, 16, 16 });
+	roundCircleWon.PushBack({ 0, 16, 16, 16 });
+	roundCircleWon.speed = 0.1;     
 }
 
 
@@ -45,6 +55,8 @@ bool ModuleHUD::Start()
 	life = App->textures->Load("Assets/Sprites/Main/life bar.png");
 	youWin = App->textures->Load("Assets/Sprites/Main/win.png");
 	youLose = App->textures->Load("Assets/Sprites/Main/gameover.png");
+	Round = App->textures->Load("Assets/Sprites/Main/Round indicator.png");
+	round = 1;
 
 	return true;
 }
@@ -75,6 +87,22 @@ update_status ModuleHUD::Update()
 	}
 
 	App->render->Blit(life, App->render->camera.x , App->render->camera.y, &lifebar, - 3);
+
+	if (round == 1) 
+	{
+	App->render->Blit(Round, 18, 42, &(roundCircle.GetCurrentFrame()), -1 / 3);
+	App->render->Blit(Round, 34, 42, &(roundCircle.GetCurrentFrame()), -1 / 3);
+	App->render->Blit(Round, 270, 42, &(roundCircle.GetCurrentFrame()), -1 / 3);
+	App->render->Blit(Round, 286, 42, &(roundCircle.GetCurrentFrame()), -1 / 3);
+	}
+
+	if (round == 2 && App->player->PlayerVict == 1)
+	{
+		App->render->Blit(Round, 18, 42, &(roundCircleWon.GetCurrentFrame()), -1 / 3);
+		App->render->Blit(Round, 34, 42, &(roundCircle.GetCurrentFrame()), -1 / 3);
+		App->render->Blit(Round, 270, 42, &(roundCircle.GetCurrentFrame()), -1 / 3);
+		App->render->Blit(Round, 286, 42, &(roundCircle.GetCurrentFrame()), -1 / 3);
+	}
 
 	rectPlayer.x = 34 + App->render->camera.x * -1 / 3;
 	rectPlayer.y = 25 + App->render->camera.y;

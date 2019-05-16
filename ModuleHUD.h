@@ -16,13 +16,16 @@ public:
 	bool CleanUp();
 
 public:
-
+	int round;
 	SDL_Renderer *renderer;
 	SDL_Texture * life = nullptr;
 	SDL_Texture * youWin = nullptr;
 	SDL_Texture * youLose = nullptr;
+	SDL_Texture * Round = nullptr;
 	SDL_Rect lifebar, rectPlayer, rectEnemy;
-	SDL_Rect win, lose;
+	SDL_Rect win, lose, r;
+	Animation roundCircle;
+	Animation roundCircleWon;
 	bool Win, Lose;
 };
 
