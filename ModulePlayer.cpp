@@ -180,9 +180,10 @@ update_status ModulePlayer::Update()
 			hit = false;
 		}
 
-		else
+		else {
 			status = PLAYER_IDLE;
-
+			crouch.Reset();
+		}
 	}
 	
 	switch (status)
@@ -222,6 +223,10 @@ update_status ModulePlayer::Update()
 			}
 			jump_timer = 1;
 		}
+		break;
+
+	case PLAYER_CROUCH:
+		current_animation = &crouch;
 		break;
 
 	case PLAYER_IN_JUMP_FINISH:

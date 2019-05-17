@@ -90,6 +90,10 @@ update_status  ModuleGameControllers::PreUpdate()
 		{
 			App->input->keyboard[SDL_SCANCODE_W] = KEY_STATE::KEY_DOWN;
 		}
+		if (Controller_AxisY > 6400)
+		{
+			App->input->keyboard[SDL_SCANCODE_S] = KEY_STATE::KEY_DOWN;
+		}
 	}
 	
 	return update_status::UPDATE_CONTINUE;
