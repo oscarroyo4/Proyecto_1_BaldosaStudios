@@ -62,7 +62,20 @@ bool ModuleSceneSoundBeach::Start()
 	App->player->Enable();
 	App->enemy->Enable();
 	App->render->camera.x = -530;
-
+	App->enemy->input = true;
+	App->player->input = true;
+	App->player->win_timer = 0;
+	App->player->defeat_timer = 0;
+	App->enemy->win_timer = 0;
+	App->enemy->defeat_timer = 0;
+	App->hud->Win = false;
+	App->player->Life = 100;
+	App->enemy->Life = 100;
+	App->player->position.x = 230;
+	App->enemy->position.x = 375;
+	App->player->status = PLAYER_IDLE;
+	App->enemy->status = ENEMY_IDLE;
+	App->hud->round = 1;
 	return ret;
 }
 
@@ -85,13 +98,7 @@ update_status ModuleSceneSoundBeach::Update()
 {
 	// Draw everything --------------------------------------
 	
-
-	if ((App->player->Life == 0 || App->enemy->Life == 0) && App->player->win_timer == 360 || App->enemy->win_timer == 360 || App->enemy->defeat_timer == 360)
-	{
-		App->fade->FadeToBlack(this, this, 1.3);
-	}
-
-
+	
 	if ((App->player->Life == 0 || App->enemy->Life == 0) && App->player->win_timer == 400 || App->enemy->win_timer == 400 || App->enemy->defeat_timer == 400)
 	{
 		//Reseting things for the new round
@@ -109,31 +116,13 @@ update_status ModuleSceneSoundBeach::Update()
 		App->enemy->status = ENEMY_IDLE;
 	}
 
-	if (App->hud->round == 1)
-	{
-		App->player->input = true;
-		App->enemy->input = true;
-		App->render->Blit(graphics, 45, 0, &(soundBeachSky.GetCurrentFrame()), 0.45f);
-		App->render->Blit(graphics, 0, 0, &(soundBeachGround.GetCurrentFrame()), 0.75f);
-		App->render->Blit(graphicsAnim, 140, 107, &(backgroundPeople1.GetCurrentFrame()), 0.75f);
-		App->render->Blit(graphicsAnim, 210, 107, &(backgroundPeople2.GetCurrentFrame()), 0.75f);
-		App->render->Blit(graphicsAnim, 280, 107, &(backgroundPeople3.GetCurrentFrame()), 0.75f);
-		App->render->Blit(graphicsAnim, 350, 107, &(backgroundPeople4.GetCurrentFrame()), 0.75f);
-		App->render->Blit(graphicsAnim, 420, 107, &(backgroundPeople1.GetCurrentFrame()), 0.75f);
-	}
-
-	if (App->hud->round == 2)
-	{
-		App->player->input = true;
-		App->enemy->input = true;
-		App->render->Blit(graphics2, 45, 0, &(soundBeachSky.GetCurrentFrame()), 0.45f);
-		App->render->Blit(graphics2, 0, 0, &(soundBeachGround.GetCurrentFrame()), 0.75f);
-		App->render->Blit(graphicsAnim2, 140, 107, &(backgroundPeople1.GetCurrentFrame()), 0.75f);
-		App->render->Blit(graphicsAnim2, 210, 107, &(backgroundPeople2.GetCurrentFrame()), 0.75f);
-		App->render->Blit(graphicsAnim2, 280, 107, &(backgroundPeople3.GetCurrentFrame()), 0.75f);
-		App->render->Blit(graphicsAnim2, 350, 107, &(backgroundPeople4.GetCurrentFrame()), 0.75f);
-		App->render->Blit(graphicsAnim2, 420, 107, &(backgroundPeople1.GetCurrentFrame()), 0.75f);
-	}
+	App->render->Blit(graphics, 45, 0, &(soundBeachSky.GetCurrentFrame()), 0.45f);
+	App->render->Blit(graphics, 0, 0, &(soundBeachGround.GetCurrentFrame()), 0.75f);
+	App->render->Blit(graphicsAnim, 140, 107, &(backgroundPeople1.GetCurrentFrame()), 0.75f);
+	App->render->Blit(graphicsAnim, 210, 107, &(backgroundPeople2.GetCurrentFrame()), 0.75f);
+	App->render->Blit(graphicsAnim, 280, 107, &(backgroundPeople3.GetCurrentFrame()), 0.75f);
+	App->render->Blit(graphicsAnim, 350, 107, &(backgroundPeople4.GetCurrentFrame()), 0.75f);
+	App->render->Blit(graphicsAnim, 420, 107, &(backgroundPeople1.GetCurrentFrame()), 0.75f);
 
 	App->render->camera.x = App->player->position.x  * -2;
 
