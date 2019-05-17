@@ -153,36 +153,38 @@ bool ModulePlayer::CleanUp()
 update_status ModulePlayer::Update()
 {	
 	float speed = 2;
+	if (input) {
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+			status = PLAYER_BACKWARD;
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-		status = PLAYER_BACKWARD;
+		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+			status = PLAYER_FORWARD;
 
-	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-		status = PLAYER_FORWARD;
+		else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+			status = PLAYER_JUMP;
 
-	else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
-		status = PLAYER_JUMP;
+		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+			status = PLAYER_CROUCH;
 
-	else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
-		status = PLAYER_CROUCH;
+		else if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+			status = PLAYER_PUNCH;
 
-	else if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
-		status = PLAYER_PUNCH;
+		else if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+			status = PLAYER_KICK;
 
-	else if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
-		status = PLAYER_KICK;
+		else if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN)
+			status = PLAYER_SPECIAL;
 
-	else if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN)
-		status = PLAYER_SPECIAL;
+		else if (hit == true) {
+			status = PLAYER_DAMAGE;
+			hit = false;
+		}
 
-	else if (hit == true) {
-		status = PLAYER_DAMAGE;
-		hit = false;
+		else
+			status = PLAYER_IDLE;
+
 	}
-
-	else
-		status = PLAYER_IDLE;
-
+	
 	switch (status)
 	{
 	case PLAYER_IDLE:
@@ -292,7 +294,7 @@ update_status ModulePlayer::Update()
 
 	case PLAYER_DAMAGE:
 		damage.Reset();
-		if (colPlayer->type == COLLIDER_PLAYER) {Life = Life - 15;}
+		Life = Life - 10;
 		if (Life <= 0) { 
 			Life = 0; 
 			defeat_timer = 1;
@@ -304,6 +306,8 @@ update_status ModulePlayer::Update()
 
 	if (defeat_timer > 0) 
 	{ 
+		input = false;
+
 		defeat_timer = defeat_timer + 1; 
 		current_animation = &defeat;
 
@@ -319,6 +323,8 @@ update_status ModulePlayer::Update()
 
 	if (win_timer > 0)
 	{
+		input = false;
+
 		win_timer = win_timer + 1;
 		current_animation = &win;
 		if (win_timer == 4) 
@@ -412,27 +418,27 @@ update_status ModulePlayer::Update()
 		if (groundFire_timer > 30) { current_animation = &specialAttackStatic; }
 		if (groundFire_timer == 69)
 		{
-			App->particles->AddParticle(App->particles->smallfire, position.x + 26, position.y - 45, 0, 2800, 1.5, 0);
+			App->particles->AddParticle(App->particles->smallfire, position.x + 26, position.y - 45, 0, 2800, 1.5, 0,1);
 			
 		}
 		if (groundFire_timer == 55)
 		{
-			App->particles->AddParticle(App->particles->midfire, position.x + 28, position.y - 72, 0, 2700, 1, 0);
+			App->particles->AddParticle(App->particles->midfire, position.x + 28, position.y - 72, 0, 2700, 1, 0,1);
 	
 		}
 		if (groundFire_timer == 41)
 		{
-			App->particles->AddParticle(App->particles->bigfire, position.x + 29, position.y - 100, 0, 2600, 1, 0);
+			App->particles->AddParticle(App->particles->bigfire, position.x + 29, position.y - 100, 0, 2600, 1, 0,1);
 			
 		}
 		if (groundFire_timer == 27)
 		{
-			App->particles->AddParticle(App->particles->midfire, position.x + 31, position.y - 72, 0, 2500, 1, 0);
+			App->particles->AddParticle(App->particles->midfire, position.x + 31, position.y - 72, 0, 2500, 1, 0,1);
 
 		}
 		if (groundFire_timer == 13)
 		{
-			App->particles->AddParticle(App->particles->smallfire, position.x + 33, position.y - 45, 0, 2400, 1, 0);
+			App->particles->AddParticle(App->particles->smallfire, position.x + 33, position.y - 45, 0, 2400, 1, 0,1);
 
 		}
 		if (groundFire_timer >= 120)

@@ -14,7 +14,7 @@
 #include "ModulePlayerSelect.h"
 #include "ModuleHUD.h"
 #include "ModuleSounds.h"
-#include "ModuleController.h"
+#include "ModuleGameControllers.h"
 
 
 Application::Application()

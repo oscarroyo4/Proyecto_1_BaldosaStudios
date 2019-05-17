@@ -5,6 +5,8 @@
 #include "ModuleCollision.h"
 #include "ModuleRender.h"
 #include "ModuleParticles.h"
+#include "ModuleEnemy.h"
+#include "ModulePlayer.h"
 
 #include "SDL/include/SDL_timer.h"
 
@@ -84,16 +86,24 @@ update_status ModuleParticles::Update()
 	return UPDATE_CONTINUE;
 }
 
-void ModuleParticles::AddParticle(const Particle& particle, int x, int y, Uint32 delay, Uint32 lifeVar, float speedX, float speedY)
+void ModuleParticles::AddParticle(const Particle& particle, int x, int y, Uint32 delay, Uint32 lifeVar, float speedX, float speedY, int PlEnVar)
 {
 	Particle* p = new Particle(particle);
 	p->born = SDL_GetTicks() + delay;
 	p->position.x = x;
 	p->position.y = y;
 	p->life = lifeVar;
-	p->col = App->collision->AddCollider({ p->position.x - 3, p->position.y, p->anim.GetCurrentFrame().w,  p->anim.GetCurrentFrame().h }, COLLIDER_PLAYER_SHOT);
+	
 	p->speed.x = speedX;
 	p->speed.y = speedY;
+	if (PlEnVar == 1) {
+		p->col = App->collision->AddCollider({ p->position.x - 3, p->position.y, p->anim.GetCurrentFrame().w,  p->anim.GetCurrentFrame().h }, COLLIDER_PLAYER_SHOT);
+		p->PlEn = 1;
+	}
+	else if (PlEnVar == 2) {
+		p->col = App->collision->AddCollider({ p->position.x - 3, p->position.y, p->anim.GetCurrentFrame().w,  p->anim.GetCurrentFrame().h }, COLLIDER_ENEMY_SHOT);
+		p->PlEn = 2;
+	}
 
 	active[last_particle++] = p;
 }
@@ -129,6 +139,16 @@ bool Particle::Update()
 	position.y += speed.y;
 	
 	col->SetPos(position.x, position.y);
+	if (col->CheckCollision(App->enemy->r) && PlEn == 1) {
+		App->enemy->hit = true;
+		col->to_delete = true;
+		ret = false;
+	}
+	else if (col->CheckCollision(App->player->r) && PlEn == 2) {
+		App->player->hit = true;
+		col->to_delete = true;
+		ret = false;
+	}
 
 	return ret;
 }

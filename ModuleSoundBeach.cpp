@@ -111,6 +111,8 @@ update_status ModuleSceneSoundBeach::Update()
 
 	if (App->hud->round == 1)
 	{
+		App->player->input = true;
+		App->enemy->input = true;
 		App->render->Blit(graphics, 45, 0, &(soundBeachSky.GetCurrentFrame()), 0.45f);
 		App->render->Blit(graphics, 0, 0, &(soundBeachGround.GetCurrentFrame()), 0.75f);
 		App->render->Blit(graphicsAnim, 140, 107, &(backgroundPeople1.GetCurrentFrame()), 0.75f);
@@ -122,6 +124,8 @@ update_status ModuleSceneSoundBeach::Update()
 
 	if (App->hud->round == 2)
 	{
+		App->player->input = true;
+		App->enemy->input = true;
 		App->render->Blit(graphics2, 45, 0, &(soundBeachSky.GetCurrentFrame()), 0.45f);
 		App->render->Blit(graphics2, 0, 0, &(soundBeachGround.GetCurrentFrame()), 0.75f);
 		App->render->Blit(graphicsAnim2, 140, 107, &(backgroundPeople1.GetCurrentFrame()), 0.75f);

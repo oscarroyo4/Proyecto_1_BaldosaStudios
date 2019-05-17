@@ -148,35 +148,38 @@ bool ModuleEnemy::CleanUp()
 update_status ModuleEnemy::Update()
 {
 	int speed = 2;
+	if (input) {
+		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+			status = ENEMY_BACKWARD;
 
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		status = ENEMY_BACKWARD;
+		else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+			status = ENEMY_FORWARD;
 
-	else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		status = ENEMY_FORWARD;
+		else if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
+			status = ENEMY_JUMP;
 
-	else if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
-		status = ENEMY_JUMP;
+		else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
+			status = ENEMY_CROUCH;
 
-	else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
-		status = ENEMY_CROUCH;
+		else if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+			status = ENEMY_PUNCH;
 
-	else if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-		status = ENEMY_PUNCH;
+		else if (App->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN)
+			status = ENEMY_KICK;
 
-	else if (App->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN)
-		status = ENEMY_KICK;
+		else if (App->input->GetKey(SDL_SCANCODE_RALT) == KEY_DOWN)
+			status = ENEMY_SPECIAL;
 
-	else if (App->input->GetKey(SDL_SCANCODE_RALT) == KEY_DOWN)
-		status = ENEMY_SPECIAL;
+		else if (hit == true) {
+			status = ENEMY_DAMAGE;
+			hit = false;
+		}
 
-	else if (hit == true) {
-		status = ENEMY_DAMAGE;
-		hit = false;
+		else
+			status = ENEMY_IDLE;
+
 	}
-
-	else
-		status = ENEMY_IDLE;
+	
 
 	switch (status)
 	{
@@ -269,7 +272,7 @@ update_status ModuleEnemy::Update()
 	case ENEMY_DAMAGE:
 		damage.Reset();
 
-		Life = Life - 15;
+		Life = Life - 10;
 		if (Life <= 0) {
 			Life = 0;
 			defeat_timer = 1;
@@ -291,10 +294,14 @@ update_status ModuleEnemy::Update()
 			}
 		}
 	}
-	if (defeat_timer >= 210) { App->hud->Win = true; }
+	if (defeat_timer >= 210) {
+		App->hud->Win = true; 
+		input = false;
+	}
 
 	if (win_timer > 0)
 	{
+		input = false;
 		win_timer = win_timer + 1;
 		current_animation = &win;
 		if (win_timer == 4)
@@ -383,23 +390,23 @@ update_status ModuleEnemy::Update()
 
 		if (groundFire_timer == 69)
 		{
-			App->particles->AddParticle(App->particles->smallfire, position.x + 19, position.y - 45, 0, 2800, -1, 0);
+			App->particles->AddParticle(App->particles->smallfire, position.x + 19, position.y - 45, 0, 2800, -1, 0, 2);
 		}
 		if (groundFire_timer == 55)
 		{
-			App->particles->AddParticle(App->particles->midfire, position.x + 17, position.y - 72, 0, 2700, -1, 0);
+			App->particles->AddParticle(App->particles->midfire, position.x + 17, position.y - 72, 0, 2700, -1, 0, 2);
 		}
 		if (groundFire_timer == 41)
 		{
-			App->particles->AddParticle(App->particles->bigfire, position.x + 16, position.y - 100, 0, 2600, -1, 0);
+			App->particles->AddParticle(App->particles->bigfire, position.x + 16, position.y - 100, 0, 2600, -1, 0, 2);
 		}
 		if (groundFire_timer == 27)
 		{
-			App->particles->AddParticle(App->particles->midfire, position.x + 15, position.y - 72, 0, 2500, -1, 0);
+			App->particles->AddParticle(App->particles->midfire, position.x + 15, position.y - 72, 0, 2500, -1, 0, 2);
 		}
 		if (groundFire_timer == 13)
 		{
-			App->particles->AddParticle(App->particles->smallfire, position.x + 12, position.y - 45, 0, 2400, -1, 0);
+			App->particles->AddParticle(App->particles->smallfire, position.x + 12, position.y - 45, 0, 2400, -1, 0, 2);
 		}
 		if (groundFire_timer == 180)
 		{

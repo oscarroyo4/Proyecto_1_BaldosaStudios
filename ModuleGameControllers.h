@@ -13,7 +13,7 @@ public:
 	~ModuleGameControllers();
 
 
-	bool Init();
+	bool Start();
 	update_status PreUpdate();
 	bool CleanUp();
 

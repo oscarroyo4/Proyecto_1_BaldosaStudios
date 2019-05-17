@@ -89,7 +89,7 @@
     <ClInclude Include="ModuleInput.h">
       <Filter>Modules\Input</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleController.h">
+    <ClInclude Include="ModuleGameControllers.h">
       <Filter>Modules\Input</Filter>
     </ClInclude>
   </ItemGroup>
@@ -148,7 +148,7 @@
     <ClCompile Include="ModuleInput.cpp">
       <Filter>Modules\Input</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleController.cpp">
+    <ClCompile Include="ModuleGameControllers.cpp">
       <Filter>Modules\Input</Filter>
     </ClCompile>
   </ItemGroup>

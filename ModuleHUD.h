@@ -11,7 +11,7 @@ public:
 	ModuleHUD();
 	~ModuleHUD();
 
-	bool Start();
+	bool Init();
 	update_status Update();
 	bool CleanUp();
 

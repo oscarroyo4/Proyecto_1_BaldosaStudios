@@ -46,6 +46,7 @@ public:
 	bool kickEnable = true;
 	bool jumpEnable = true;
 	bool specialEnable = true;
+	bool input = true;
 	SDL_Event ev;
 	SDL_Texture * graphicsTerry = nullptr;
 	SDL_Texture* graphicsTerry2 = nullptr;

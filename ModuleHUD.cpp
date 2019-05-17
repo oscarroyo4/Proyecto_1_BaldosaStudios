@@ -48,7 +48,7 @@ ModuleHUD::ModuleHUD()
 ModuleHUD::~ModuleHUD()
 {}
 
-bool ModuleHUD::Start()
+bool ModuleHUD::Init()
 {
 	Win = false;
 	Lose = false;
