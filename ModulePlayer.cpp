@@ -116,12 +116,12 @@ bool ModulePlayer::Start()
 	App->collision->Enable();
 	graphicsTerry = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites.png"); //First Tery Bogard Sprite Sheet
 	//graphicsTerry2 = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites 2.png"); //Second Tery Bogard Sprite Sheet
-	punchfx = App->sounds->Load("Assets/Audio/Fx/SFX_Punch.wav");
-	kickfx = App->sounds->Load("Assets/Audio/Fx/SFX_Punch2.wav");
-	jumpfx = App->sounds->Load("Assets/Audio/Fx/SFX_Landing.wav");
-	specialfx = App->sounds->Load("Assets/Audio/Fx/FX_SpecialAttack.wav");
-	winfx = App->sounds->Load("Assets/Audio/Fx/FX_WinScream.wav");
-	defeatfx = App->sounds->Load("Assets/Audio/Fx/FX_DefeatScream.wav");
+	punchfx = App->sounds->Load("Assets/Audio/Fx/SFX_Punch.ogg");
+	kickfx = App->sounds->Load("Assets/Audio/Fx/SFX_Punch2.ogg");
+	jumpfx = App->sounds->Load("Assets/Audio/Fx/SFX_Landing.ogg");
+	specialfx = App->sounds->Load("Assets/Audio/Fx/FX_SpecialAttack.ogg");
+	winfx = App->sounds->Load("Assets/Audio/Fx/FX_WinScream.ogg");
+	//defeatfx = App->sounds->Load("Assets/Audio/Fx/FX_DefeatScream.ogg"); Not working
 	godMode = true;
 	colPlayer = App->collision->AddCollider({ position.x, position.y, 34, 106 }, COLLIDER_PLAYER);
 	Life = 100;
@@ -135,12 +135,6 @@ bool ModulePlayer::CleanUp()
 	LOG("Unloading player");
 	if (App->player->IsEnabled()) {
 		App->collision->Disable();
-		App->sounds->Unload(punchfx);
-		App->sounds->Unload(kickfx);
-		App->sounds->Unload(jumpfx);
-		//App->sounds->Unload(specialfx);
-		//App->sounds->Unload(winfx);
-		//App->sounds->Unload(defeatfx);
 		SDL_DestroyTexture(graphicsTerry);
 		App->player->Disable();
 	}

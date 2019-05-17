@@ -20,7 +20,7 @@ bool ModuleSounds::Init()
 {
 	LOG("Init Sound library");
 	bool ret = true;
-
+	last_sound = 0;
 	// load support for the mp3 and ogg audio format
 	int flags = MIX_INIT_OGG;
 	int init = Mix_Init(flags);
@@ -64,26 +64,23 @@ Mix_Chunk* const ModuleSounds::Load(const char* path)
 	}
 	else {
 		sounds[last_sound++] = sound;
+		//soundsCount++;
 	}
 	
 	return sound;
 }
 
-bool ModuleSounds::Unload(Mix_Chunk *sound)
+bool ModuleSounds::Unload()
 {
-	bool ret = false;
+	bool ret = true;
 
-	for (int i = 0; i < MAX_SOUNDS; ++i)
+	for (int i = 0; i < last_sound; i++)
 	{
-		if (sound == sounds[i])
-		{
-			//Destroy sound
- 			Mix_FreeChunk(sounds[i]);
-			sounds[i] = nullptr;
-			ret = true;
-			break;
-		}
+		//Destroy sound
+		Mix_FreeChunk(sounds[i]);
+		sounds[i] = nullptr;
+		if (sounds[i] != nullptr) ret = false;
 	}
-	   
+	last_sound = 0;
 	return ret;
 }

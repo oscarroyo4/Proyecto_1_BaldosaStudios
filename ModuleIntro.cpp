@@ -45,7 +45,7 @@ bool ModuleIntro::CleanUp()
 	LOG("Unloading intro scene");
 
 	App->textures->Unload(background);
-	App->sounds->Unload(music);
+	App->sounds->Unload();
 
 
 	return true;

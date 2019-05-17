@@ -17,11 +17,12 @@ public:
 	bool CleanUp();
 
 	Mix_Chunk* const Load(const char* path);
-	bool Unload(Mix_Chunk* sound);
+	bool Unload();
 
 public:
 	Mix_Chunk* sounds[MAX_SOUNDS];
 	uint last_sound = 0;
+	uint soundsCount = 0;
 };
 
 #endif // __ModuleSounds_H__

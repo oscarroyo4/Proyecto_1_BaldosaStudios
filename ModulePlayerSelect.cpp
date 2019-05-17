@@ -59,9 +59,7 @@ bool ModulePlayerSelect::CleanUp()
 	LOG("Unloading ken scene");
 
 	SDL_DestroyTexture(graphics);
-	App->sounds->Unload(music);
-	App->sounds->Unload(selectHover);
-	App->sounds->Unload(chooseSelection);
+	App->sounds->Unload();
 	App->paopao->Enable();
 
 	return true;
