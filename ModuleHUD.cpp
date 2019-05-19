@@ -56,7 +56,7 @@ bool ModuleHUD::Start()
 	youWin = App->textures->Load("Assets/Sprites/Main/win.png");
 	youLose = App->textures->Load("Assets/Sprites/Main/gameover.png");
 	Round = App->textures->Load("Assets/Sprites/Main/Round indicator.png");
-	round = 1;
+	newround = App->textures->Load("Assets/Sprites/Main/round.png");
 
 	return true;
 }
@@ -69,6 +69,8 @@ bool ModuleHUD::CleanUp()
 	App->textures->Unload(life);
 	App->textures->Unload(youWin);
 	App->textures->Unload(youLose);
+	App->textures->Unload(Round);
+	App->textures->Unload(newround);
 	this->Disable();
 
 	return true;
@@ -88,21 +90,6 @@ update_status ModuleHUD::Update()
 
 	App->render->Blit(life, App->render->camera.x , App->render->camera.y, &lifebar, - 3);
 
-	if (round == 1) 
-	{
-	App->render->Blit(Round, 18, 42, &(roundCircle.GetCurrentFrame()), -1 / 3);
-	App->render->Blit(Round, 34, 42, &(roundCircle.GetCurrentFrame()), -1 / 3);
-	App->render->Blit(Round, 270, 42, &(roundCircle.GetCurrentFrame()), -1 / 3);
-	App->render->Blit(Round, 286, 42, &(roundCircle.GetCurrentFrame()), -1 / 3);
-	}
-
-	if (round == 2 && App->player->PlayerVict == 1)
-	{
-		App->render->Blit(Round, 18, 42, &(roundCircleWon.GetCurrentFrame()), -1 / 3);
-		App->render->Blit(Round, 34, 42, &(roundCircle.GetCurrentFrame()), -1 / 3);
-		App->render->Blit(Round, 270, 42, &(roundCircle.GetCurrentFrame()), -1 / 3);
-		App->render->Blit(Round, 286, 42, &(roundCircle.GetCurrentFrame()), -1 / 3);
-	}
 
 	rectPlayer.x = 34 + App->render->camera.x * -1 / 3;
 	rectPlayer.y = 25 + App->render->camera.y;

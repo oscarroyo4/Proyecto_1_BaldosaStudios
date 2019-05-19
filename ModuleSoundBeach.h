@@ -30,6 +30,9 @@ public:
 	Animation backgroundPeople2;
 	Animation backgroundPeople3;
 	Animation backgroundPeople4;
+	int PlayerVictories = 0;
+	int EnemyVictories = 0;
+	int round = 1;
 };
 
 #endif

@@ -308,6 +308,8 @@ update_status ModuleEnemy::Update()
 	}
 	if (win_timer >= 210) { App->hud->Win = true; }
 
+	if (win_timer >= 400) { win_timer = 0; }
+	if (defeat_timer >= 400) { defeat_timer = 0; }
 	
 
 	if (kick_timer > 0)
@@ -318,7 +320,7 @@ update_status ModuleEnemy::Update()
 			App->player->hit = true;
 			kickHit = true;
 		}
-		if (kick_timer > 35)
+		if (kick_timer > 37)
 		{
 			kickEnable = true;
 			status = ENEMY_IN_KICK_FINISH;
@@ -335,7 +337,7 @@ update_status ModuleEnemy::Update()
 			App->player->hit = true;
 			punchHit = true;
 		}
-		if (punch_timer > 28)
+		if (punch_timer > 30)
 		{
 			punchEnable = true;
 			status = ENEMY_IN_PUNCH_FINISH;

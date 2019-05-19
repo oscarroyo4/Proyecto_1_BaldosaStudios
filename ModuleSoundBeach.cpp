@@ -75,7 +75,6 @@ bool ModuleSceneSoundBeach::Start()
 	App->enemy->position.x = 375;
 	App->player->status = PLAYER_IDLE;
 	App->enemy->status = ENEMY_IDLE;
-	App->hud->round = 1;
 	return ret;
 }
 
@@ -98,11 +97,55 @@ update_status ModuleSceneSoundBeach::Update()
 {
 	// Draw everything --------------------------------------
 	
-	
-	if ((App->player->Life == 0 || App->enemy->Life == 0) && App->player->win_timer == 400 || App->enemy->win_timer == 400 || App->enemy->defeat_timer == 400)
+	App->render->camera.x = App->player->position.x  * -2;
+
+	if (round == 1) 
 	{
-		//Reseting things for the new round
-		App->hud->round = 2;
+		App->render->Blit(graphics, 45, 0, &(soundBeachSky.GetCurrentFrame()), 0.45f);
+		App->render->Blit(graphics, 0, 0, &(soundBeachGround.GetCurrentFrame()), 0.75f);
+		App->render->Blit(graphicsAnim, 140, 107, &(backgroundPeople1.GetCurrentFrame()), 0.75f);
+		App->render->Blit(graphicsAnim, 210, 107, &(backgroundPeople2.GetCurrentFrame()), 0.75f);
+		App->render->Blit(graphicsAnim, 280, 107, &(backgroundPeople3.GetCurrentFrame()), 0.75f);
+		App->render->Blit(graphicsAnim, 350, 107, &(backgroundPeople4.GetCurrentFrame()), 0.75f);
+		App->render->Blit(graphicsAnim, 420, 107, &(backgroundPeople1.GetCurrentFrame()), 0.75f);
+	}
+
+
+	if (round == 2)
+	{
+		App->render->Blit(graphics2, 45, 0, &(soundBeachSky.GetCurrentFrame()), 0.45f);
+		App->render->Blit(graphics2, 0, 0, &(soundBeachGround.GetCurrentFrame()), 0.75f);
+		App->render->Blit(graphicsAnim2, 140, 107, &(backgroundPeople1.GetCurrentFrame()), 0.75f);
+		App->render->Blit(graphicsAnim2, 210, 107, &(backgroundPeople2.GetCurrentFrame()), 0.75f);
+		App->render->Blit(graphicsAnim2, 280, 107, &(backgroundPeople3.GetCurrentFrame()), 0.75f);
+		App->render->Blit(graphicsAnim2, 350, 107, &(backgroundPeople4.GetCurrentFrame()), 0.75f);
+		App->render->Blit(graphicsAnim2, 420, 107, &(backgroundPeople1.GetCurrentFrame()), 0.75f);
+	}
+
+	
+
+	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1)
+	{
+		App->fade->FadeToBlack(this, App->scene_intro, 2.5);
+	}
+
+	if (App->player->win_timer == 180 && PlayerVictories == 0)
+	{
+		App->fade->FadeToBlackVisualEffect(2.5);
+	}
+
+	if (App->enemy->win_timer == 180 && EnemyVictories == 0)
+	{
+		App->fade->FadeToBlackVisualEffect(2.5);
+	}
+
+	if (App->player->win_timer == 235 && PlayerVictories == 0)
+	{
+		PlayerVictories++;
+		round = 2;
+		App->render->camera.x = -530;
+		App->enemy->input = true;
+		App->player->input = true;
 		App->player->win_timer = 0;
 		App->player->defeat_timer = 0;
 		App->enemy->win_timer = 0;
@@ -112,23 +155,74 @@ update_status ModuleSceneSoundBeach::Update()
 		App->enemy->Life = 100;
 		App->player->position.x = 230;
 		App->enemy->position.x = 375;
+		App->player->win.Reset();
+		App->enemy->defeat.Reset();
 		App->player->status = PLAYER_IDLE;
 		App->enemy->status = ENEMY_IDLE;
 	}
 
-	App->render->Blit(graphics, 45, 0, &(soundBeachSky.GetCurrentFrame()), 0.45f);
-	App->render->Blit(graphics, 0, 0, &(soundBeachGround.GetCurrentFrame()), 0.75f);
-	App->render->Blit(graphicsAnim, 140, 107, &(backgroundPeople1.GetCurrentFrame()), 0.75f);
-	App->render->Blit(graphicsAnim, 210, 107, &(backgroundPeople2.GetCurrentFrame()), 0.75f);
-	App->render->Blit(graphicsAnim, 280, 107, &(backgroundPeople3.GetCurrentFrame()), 0.75f);
-	App->render->Blit(graphicsAnim, 350, 107, &(backgroundPeople4.GetCurrentFrame()), 0.75f);
-	App->render->Blit(graphicsAnim, 420, 107, &(backgroundPeople1.GetCurrentFrame()), 0.75f);
+	if (App->enemy->win_timer == 235 && EnemyVictories == 0)
+	{
+		EnemyVictories++;
+		round = 2;
+		App->render->camera.x = -530;
+		App->enemy->input = true;
+		App->player->input = true;
+		App->player->win_timer = 0;
+		App->player->defeat_timer = 0;
+		App->enemy->win_timer = 0;
+		App->enemy->defeat_timer = 0;
+		App->hud->Win = false;
+		App->player->Life = 100;
+		App->enemy->Life = 100;
+		App->player->position.x = 230;
+		App->enemy->position.x = 375;
+		App->player->defeat.Reset();
+		App->enemy->win.Reset();
+		App->player->status = PLAYER_IDLE;
+		App->enemy->status = ENEMY_IDLE;
 
-	App->render->camera.x = App->player->position.x  * -2;
-
-	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1)
+	}
+	if (App->player->win_timer == 210 && PlayerVictories == 1)
 	{
 		App->fade->FadeToBlack(this, App->scene_intro, 2.5);
+	}
+
+	if (App->enemy->win_timer == 210 && EnemyVictories == 1)
+	{
+		App->fade->FadeToBlack(this, App->scene_intro, 2.5);
+	}
+
+	if (PlayerVictories == 0 && EnemyVictories == 0)
+	{
+		App->render->Blit(App->hud->Round, 18, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
+		App->render->Blit(App->hud->Round, 34, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
+		App->render->Blit(App->hud->Round, 270, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
+		App->render->Blit(App->hud->Round, 286, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
+	}
+
+	if (PlayerVictories == 1 && EnemyVictories == 0)
+	{
+		App->render->Blit(App->hud->Round, 18, 42, &(App->hud->roundCircleWon.GetCurrentFrame()), -1 / 3);
+		App->render->Blit(App->hud->Round, 34, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
+		App->render->Blit(App->hud->Round, 270, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
+		App->render->Blit(App->hud->Round, 286, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
+	}
+
+	if (PlayerVictories == 0 && EnemyVictories == 1)
+	{
+		App->render->Blit(App->hud->Round, 18, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
+		App->render->Blit(App->hud->Round, 34, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
+		App->render->Blit(App->hud->Round, 270, 42, &(App->hud->roundCircleWon.GetCurrentFrame()), -1 / 3);
+		App->render->Blit(App->hud->Round, 286, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
+	}
+
+	if (PlayerVictories == 1 && EnemyVictories == 1)
+	{
+		App->render->Blit(App->hud->Round, 18, 42, &(App->hud->roundCircleWon.GetCurrentFrame()), -1 / 3);
+		App->render->Blit(App->hud->Round, 34, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
+		App->render->Blit(App->hud->Round, 270, 42, &(App->hud->roundCircleWon.GetCurrentFrame()), -1 / 3);
+		App->render->Blit(App->hud->Round, 286, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
 	}
 
 	return UPDATE_CONTINUE;

@@ -78,3 +78,18 @@ bool ModuleFadeToBlack::FadeToBlack(Module* module_off, Module* module_on, float
 
 	return ret;
 }
+
+bool ModuleFadeToBlack::FadeToBlackVisualEffect(float time)
+{
+	bool ret = false;
+
+	if (current_step == fade_step::none)
+	{
+		current_step = fade_step::fade_to_black;
+		start_time = SDL_GetTicks();
+		total_time = (Uint32)(time * 0.5f * 1000.0f);
+		ret = true;
+	}
+
+	return ret;
+}

@@ -337,7 +337,8 @@ update_status ModulePlayer::Update()
 	}
 	if (win_timer >= 190) { App->hud->Win = true; }
 
-		
+	if (win_timer >= 400) { win_timer = 0; }
+	if (defeat_timer >= 400) { defeat_timer = 0; }
 
 	if (kick_timer > 0)
 	{
@@ -347,7 +348,7 @@ update_status ModulePlayer::Update()
 			App->enemy->hit = true;
 			kickHit = true;
 		}
-		if (kick_timer > 35)
+		if (kick_timer > 37)
 		{
 			kickEnable = true;
 			status = PLAYER_IN_KICK_FINISH;
@@ -364,7 +365,7 @@ update_status ModulePlayer::Update()
 			App->enemy->hit = true;
 			punchHit = true;
 		}
-		if (punch_timer > 28)
+		if (punch_timer > 30)
 		{
 			punchEnable = true;
 			status = PLAYER_IN_PUNCH_FINISH;
@@ -422,22 +423,22 @@ update_status ModulePlayer::Update()
 		}
 		if (groundFire_timer == 55)
 		{
-			App->particles->AddParticle(App->particles->midfire, position.x + 28, position.y - 72, 0, 2700, 1, 0,1);
+			App->particles->AddParticle(App->particles->midfire, position.x + 28, position.y - 72, 0, 2700, 1.5, 0,1);
 	
 		}
 		if (groundFire_timer == 41)
 		{
-			App->particles->AddParticle(App->particles->bigfire, position.x + 29, position.y - 100, 0, 2600, 1, 0,1);
+			App->particles->AddParticle(App->particles->bigfire, position.x + 29, position.y - 100, 0, 2600, 1.5, 0,1);
 			
 		}
 		if (groundFire_timer == 27)
 		{
-			App->particles->AddParticle(App->particles->midfire, position.x + 31, position.y - 72, 0, 2500, 1, 0,1);
+			App->particles->AddParticle(App->particles->midfire, position.x + 31, position.y - 72, 0, 2500, 1.5, 0,1);
 
 		}
 		if (groundFire_timer == 13)
 		{
-			App->particles->AddParticle(App->particles->smallfire, position.x + 33, position.y - 45, 0, 2400, 1, 0,1);
+			App->particles->AddParticle(App->particles->smallfire, position.x + 33, position.y - 45, 0, 2400, 1.5, 0,1);
 
 		}
 		if (groundFire_timer >= 120)

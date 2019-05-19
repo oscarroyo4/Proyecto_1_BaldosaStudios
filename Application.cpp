@@ -15,6 +15,7 @@
 #include "ModuleHUD.h"
 #include "ModuleSounds.h"
 #include "ModuleGameControllers.h"
+#include "ModuleCinematics.h"
 
 
 Application::Application()
@@ -26,15 +27,17 @@ Application::Application()
 	modules[4] = textures = new ModuleTextures();
 	modules[5] = paopao = new ModuleScenePaoPao();
 	modules[6] = soundBeach = new ModuleSceneSoundBeach();
-	modules[7] = scene_intro = new ModuleIntro();
-	modules[8] = select = new ModulePlayerSelect();
-	modules[9] = player = new ModulePlayer();
-	modules[10] = enemy = new ModuleEnemy();
-	modules[11] = particles = new ModuleParticles();
-	modules[12] = fade = new ModuleFadeToBlack();
-	modules[13] = sounds = new ModuleSounds();
-	modules[14] = collision = new ModuleCollision();
-	modules[15] = hud = new ModuleHUD();
+	modules[7] = cinematics = new ModuleCinematics();
+	modules[8] = scene_intro = new ModuleIntro();
+	modules[9] = select = new ModulePlayerSelect();
+	modules[10] = player = new ModulePlayer();
+	modules[11] = enemy = new ModuleEnemy();
+	modules[12] = particles = new ModuleParticles();
+	modules[13] = fade = new ModuleFadeToBlack();
+	modules[14] = sounds = new ModuleSounds();
+	modules[15] = collision = new ModuleCollision();
+	modules[16] = hud = new ModuleHUD();
+
 
 }	
 
@@ -49,12 +52,14 @@ bool Application::Init()
 	bool ret = true;
 
 	// Disable all stopped modules here
+	scene_intro->Disable();
 	player->Disable();
 	enemy->Disable();
 	select->Disable();
 	paopao->Disable();
 	soundBeach->Disable();
 	hud->Disable();
+
 	// ---
 
 	for(int i = 0; i < NUM_MODULES && ret == true; ++i)
