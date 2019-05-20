@@ -41,7 +41,6 @@ bool ModulePlayerSelect::Start()
 	LOG("Loading background assets");
 	bool ret = true;
 	graphics = App->textures->Load("Assets/Sprites/Main/PlayerSelect.png");
-	App->scene_intro->Disable();
 	musicPlSel = App->sounds->Load("Assets/Audio/Fx/FX_SelectHover.wav");
 	selectHover = App->sounds->Load("Assets/Audio/Fx/FX_SelectHover.wav");
 	chooseSelection = App->sounds->Load("Assets/Audio/Fx/FX_ChooseSelection.wav");
@@ -57,11 +56,9 @@ bool ModulePlayerSelect::Start()
 bool ModulePlayerSelect::CleanUp()
 {
 	LOG("Unloading ken scene");
-
-	SDL_DestroyTexture(graphics);
 	App->sounds->Unload();
 	App->sounds->Disable();
-
+	SDL_DestroyTexture(graphics);
 
 	return true;
 }

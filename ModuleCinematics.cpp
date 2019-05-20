@@ -51,6 +51,9 @@ bool ModuleCinematics::CleanUp()
 	LOG("Unloading intro scene");
 
 	App->textures->Unload(background);
+	App->textures->Unload(fatalfuryintro);
+	App->textures->Unload(fatalfuryintrowords);
+	App->textures->Unload(inscoins);
 
 	return true;
 }

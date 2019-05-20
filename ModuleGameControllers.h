@@ -27,6 +27,7 @@ public:
 	bool Y_pressed = false;
 	bool B_pressed = false;
 	bool Start_pressed = false;
+	bool Up_pressed = false;
 
 
 	int Controller_AxisX = 0;

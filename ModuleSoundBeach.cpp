@@ -83,11 +83,11 @@ bool ModuleSceneSoundBeach::CleanUp()
 {
 	LOG("Unloading ken scene");
 
-	App->soundBeach->Disable();
 	SDL_DestroyTexture(graphics);
 	App->player->Disable();
 	App->enemy->Disable();
 	App->hud->Disable();
+	App->soundBeach->Disable();
 
 	return true;
 }

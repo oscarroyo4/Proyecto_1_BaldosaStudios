@@ -62,7 +62,7 @@ ModulePlayer::ModulePlayer()
 	crouch.PushBack({ 133, 822, 63, 84 });
 	crouch.PushBack({ 74, 812, 58, 95 });
 	crouch.PushBack({ 200, 839, 57, 66 });
-	crouch.speed = 0.2f;
+	crouch.speed = 0.25f;
 	crouch.loop = false;
 
 	//SpecialAttack animation
@@ -155,12 +155,10 @@ update_status ModulePlayer::Update()
 		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 			status = PLAYER_FORWARD;
 
-
-		else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
+		else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
 			status = PLAYER_JUMP;
-		}
 
-		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 			status = PLAYER_CROUCH;
 
 		else if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
@@ -202,6 +200,8 @@ update_status ModulePlayer::Update()
 			if (position.x < 10) { position.x -= 0; }
 			else position.x -= speed;
 			current_animation = &backward;
+			colPlayer->type = COLLIDER_PLAYER;
+			colPlayerCrouch->type = COLLIDER_NONE;
 		}
 		break;
 
@@ -212,6 +212,8 @@ update_status ModulePlayer::Update()
 		{
 			position.x += speed;
 			current_animation = &forward;
+			colPlayer->type = COLLIDER_PLAYER;
+			colPlayerCrouch->type = COLLIDER_NONE;
 		}
 		break;
 

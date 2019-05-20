@@ -37,8 +37,6 @@ Application::Application()
 	modules[14] = sounds = new ModuleSounds();
 	modules[15] = collision = new ModuleCollision();
 	modules[16] = hud = new ModuleHUD();
-
-
 }	
 
 Application::~Application()

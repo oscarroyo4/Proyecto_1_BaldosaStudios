@@ -88,11 +88,16 @@ update_status  ModuleGameControllers::PreUpdate()
 
 		if (Controller_AxisY < -15000)
 		{
-			App->input->keyboard[SDL_SCANCODE_W] = KEY_STATE::KEY_DOWN;
+			if (!Up_pressed) {
+				App->input->keyboard[SDL_SCANCODE_W] = KEY_STATE::KEY_DOWN;
+				Up_pressed = true;
+			}
 		}
+		else Up_pressed = false;
+
 		if (Controller_AxisY > 6400)
 		{
-			App->input->keyboard[SDL_SCANCODE_S] = KEY_STATE::KEY_DOWN;
+				App->input->keyboard[SDL_SCANCODE_S] = KEY_STATE::KEY_DOWN;
 		}
 	}
 	
