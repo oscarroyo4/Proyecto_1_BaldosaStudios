@@ -26,7 +26,7 @@ public:
 	Animation* current_animation = nullptr;
 	Mix_Chunk* selectHover = nullptr;
 	Mix_Chunk* chooseSelection = nullptr;
-	Mix_Chunk* music = nullptr;
+	Mix_Chunk* musicPlSel = nullptr;
 };
 
 #endif

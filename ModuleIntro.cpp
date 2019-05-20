@@ -29,8 +29,8 @@ bool ModuleIntro::Start()
 	App->render->camera.y = 0;
 
 	background = App->textures->Load("Assets/Sprites/Main/welcome.png");
-	music = App->sounds->Load("Assets/Audio/Menu.ogg");
-	if (Mix_PlayChannel(-1, music, 0) == -1)
+	musicIntro = App->sounds->Load("Assets/Audio/Fx/FX_ChooseSelection.wav");
+	if (Mix_PlayChannel(-1, musicIntro, 0) == -1)
 	{
 		LOG("Could not play music. Mix_PlayChannel: %s", Mix_GetError());
 		return false;

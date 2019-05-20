@@ -20,7 +20,7 @@ public:
 public:
 
 	SDL_Texture * background = nullptr;
-	Mix_Chunk * music = nullptr;
+	Mix_Chunk * musicIntro = nullptr;
 	Animation intr;
 };
 

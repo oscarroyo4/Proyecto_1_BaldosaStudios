@@ -56,7 +56,7 @@ bool ModuleHUD::Start()
 	youWin = App->textures->Load("Assets/Sprites/Main/win.png");
 	youLose = App->textures->Load("Assets/Sprites/Main/gameover.png");
 	Round = App->textures->Load("Assets/Sprites/Main/Round indicator.png");
-	newround = App->textures->Load("Assets/Sprites/Main/round.png");
+	newround = App->textures->Load("Assets/Sprites/Main/rounds.png");
 
 	return true;
 }

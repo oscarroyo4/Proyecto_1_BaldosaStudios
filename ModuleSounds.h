@@ -21,6 +21,7 @@ public:
 
 public:
 	Mix_Chunk* sounds[MAX_SOUNDS];
+	Mix_Chunk* sound = nullptr;
 	uint last_sound = 0;
 	uint soundsCount = 0;
 };

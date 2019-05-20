@@ -33,12 +33,12 @@ bool ModuleScenePaoPao::Start()
 	LOG("Loading background assets");
 	bool ret = true;
 	graphics = App->textures->Load("Assets/Sprites/Pao Pao Cafe Tileset/Pao Pao Cafe Stage.png");
-	music = App->sounds->Load("Assets/Audio/PaoPao.ogg");
+	musicP = App->sounds->Load("Assets/Audio/PaoPao.ogg");
 	App->player->Enable();
 	App->enemy->Enable();
 	App->render->camera.x = -530;
 	//Play the music
-	if (Mix_PlayChannel(-1, music, 0) == -1)
+	if (Mix_PlayChannel(-1, musicP, 0) == -1)
 	{
 		LOG("Could not play music. Mix_PlayChannel: %s", Mix_GetError());
 		ret = false;

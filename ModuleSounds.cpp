@@ -41,7 +41,7 @@ bool ModuleSounds::CleanUp()
 {
 	LOG("Freeing sounds and Mixer library");
 
-	for (uint i = 0; i < MAX_SOUNDS; ++i)
+	for (uint i = 0; i < last_sound; ++i)
 		if (sounds[i] != nullptr)
 			//Destroy sounds
 			Mix_FreeChunk(sounds[i]);
@@ -54,13 +54,14 @@ bool ModuleSounds::CleanUp()
 // Load new sound from file path
 Mix_Chunk* const ModuleSounds::Load(const char* path)
 {
-	Mix_Chunk* sound = NULL;
+	sound = nullptr;
 
 	//Load audio file
 	sound = Mix_LoadWAV(path);
-	if (sound == NULL) {
+	//sound = Mix_LoadWAV_RW(SDL_RWFromFile(path, "rb"), 1);
+	if (sound == nullptr) {
 		LOG("Could not load sound with path: %s. Mix_LoadWAV: %s", path, Mix_GetError());
-		return NULL;
+		return nullptr;
 	}
 	else {
 		sounds[last_sound++] = sound;
@@ -76,9 +77,11 @@ bool ModuleSounds::Unload()
 
 	for (int i = 0; i < last_sound; i++)
 	{
-		//Destroy sound
-		Mix_FreeChunk(sounds[i]);
-		sounds[i] = nullptr;
+		if (sounds[i] != nullptr) {
+			//Destroy sound
+			Mix_FreeChunk(sounds[i]);
+			sounds[i] = nullptr;
+		}
 		if (sounds[i] != nullptr) ret = false;
 	}
 	last_sound = 0;

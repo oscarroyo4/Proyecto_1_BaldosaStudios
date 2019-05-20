@@ -42,10 +42,10 @@ bool ModulePlayerSelect::Start()
 	bool ret = true;
 	graphics = App->textures->Load("Assets/Sprites/Main/PlayerSelect.png");
 	App->scene_intro->Disable();
-	music = App->sounds->Load("Assets/Audio/CharacterSelection.ogg");
+	musicPlSel = App->sounds->Load("Assets/Audio/Fx/FX_SpecialAttack.ogg");
 	selectHover = App->sounds->Load("Assets/Audio/Fx/FX_SelectHover.wav");
 	chooseSelection = App->sounds->Load("Assets/Audio/Fx/FX_ChooseSelection.wav");
-	if (Mix_PlayChannel(-1, music, 0) == -1)
+	if (Mix_PlayChannel(-1, musicPlSel, 0) == -1)
 	{
 		LOG("Could not play music. Mix_PlayChannel: %s", Mix_GetError());
 		ret = false;
