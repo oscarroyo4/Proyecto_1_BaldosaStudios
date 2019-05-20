@@ -50,9 +50,8 @@ bool ModuleScenePaoPao::Start()
 bool ModuleScenePaoPao::CleanUp()
 {
 	LOG("Unloading ken scene");
-	App->paopao->Disable();
-	SDL_DestroyTexture(graphics);
 	App->sounds->Unload();
+	SDL_DestroyTexture(graphics);
 	App->player->Disable();
 	App->enemy->Disable();
 	App->collision->Disable();

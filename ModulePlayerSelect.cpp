@@ -42,7 +42,7 @@ bool ModulePlayerSelect::Start()
 	bool ret = true;
 	graphics = App->textures->Load("Assets/Sprites/Main/PlayerSelect.png");
 	App->scene_intro->Disable();
-	musicPlSel = App->sounds->Load("Assets/Audio/Fx/FX_SpecialAttack.ogg");
+	musicPlSel = App->sounds->Load("Assets/Audio/Fx/FX_SelectHover.wav");
 	selectHover = App->sounds->Load("Assets/Audio/Fx/FX_SelectHover.wav");
 	chooseSelection = App->sounds->Load("Assets/Audio/Fx/FX_ChooseSelection.wav");
 	if (Mix_PlayChannel(-1, musicPlSel, 0) == -1)
@@ -60,7 +60,8 @@ bool ModulePlayerSelect::CleanUp()
 
 	SDL_DestroyTexture(graphics);
 	App->sounds->Unload();
-	App->paopao->Enable();
+	App->sounds->Disable();
+
 
 	return true;
 }

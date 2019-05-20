@@ -65,6 +65,7 @@ public:
 	Animation win;
 	iPoint position;
 	Collider* colPlayer;
+	Collider* colPlayerCrouch;
 	Collider* punchCol;
 	Collider* kickCol;
 	Collider* specialCol1;

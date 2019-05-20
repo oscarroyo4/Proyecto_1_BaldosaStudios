@@ -77,11 +77,9 @@ bool ModuleSounds::Unload()
 
 	for (int i = 0; i < last_sound; i++)
 	{
-		if (sounds[i] != nullptr) {
-			//Destroy sound
-			Mix_FreeChunk(sounds[i]);
-			sounds[i] = nullptr;
-		}
+		//Destroy sound
+		Mix_FreeChunk(sounds[i]);
+		sounds[i] = nullptr;
 		if (sounds[i] != nullptr) ret = false;
 	}
 	last_sound = 0;

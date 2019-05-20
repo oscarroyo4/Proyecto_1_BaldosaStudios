@@ -62,7 +62,7 @@ ModulePlayer::ModulePlayer()
 	crouch.PushBack({ 133, 822, 63, 84 });
 	crouch.PushBack({ 74, 812, 58, 95 });
 	crouch.PushBack({ 200, 839, 57, 66 });
-	crouch.speed = 0.175f;
+	crouch.speed = 0.2f;
 	crouch.loop = false;
 
 	//SpecialAttack animation
@@ -124,6 +124,7 @@ bool ModulePlayer::Start()
 	//defeatfx = App->sounds->Load("Assets/Audio/Fx/FX_DefeatScream.ogg"); Not working
 	godMode = true;
 	colPlayer = App->collision->AddCollider({ position.x, position.y, 34, 106 }, COLLIDER_PLAYER);
+	colPlayerCrouch = App->collision->AddCollider({ position.x, position.y-46, 34, 60 }, COLLIDER_NONE);
 	Life = 100;
 
 	return true;
@@ -154,10 +155,12 @@ update_status ModulePlayer::Update()
 		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 			status = PLAYER_FORWARD;
 
-		else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
-			status = PLAYER_JUMP;
 
-		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+		else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
+			status = PLAYER_JUMP;
+		}
+
+		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 			status = PLAYER_CROUCH;
 
 		else if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
@@ -169,14 +172,15 @@ update_status ModulePlayer::Update()
 		else if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN)
 			status = PLAYER_SPECIAL;
 
-		else if (hit == true) {
-			status = PLAYER_DAMAGE;
-			hit = false;
-		}
-
 		else {
 			status = PLAYER_IDLE;
 			crouch.Reset();
+			jumpEnable = true;
+		}
+
+		if (hit == true) {
+			status = PLAYER_DAMAGE;
+			hit = false;
 		}
 	}
 	
@@ -185,6 +189,10 @@ update_status ModulePlayer::Update()
 	case PLAYER_IDLE:
 		current_animation = &idle;
 		position.y = 220;
+
+		colPlayer->type = COLLIDER_PLAYER;
+		colPlayerCrouch->type = COLLIDER_NONE;
+		
 		break;
 
 	case PLAYER_BACKWARD:
@@ -221,6 +229,8 @@ update_status ModulePlayer::Update()
 
 	case PLAYER_CROUCH:
 		current_animation = &crouch;
+		colPlayer->type = COLLIDER_NONE;
+		colPlayerCrouch->type = COLLIDER_PLAYER;
 		break;
 
 	case PLAYER_IN_JUMP_FINISH:
@@ -379,13 +389,13 @@ update_status ModulePlayer::Update()
 	{
 		jump_timer = jump_timer + 1;
 		current_animation = &jump; 
-		if (jump_timer < 12)colPlayer->SetPos(position.x + 12, position.y - 130);
-		else if (jump_timer < 29)colPlayer->SetPos(position.x + 12, position.y - 140);
-		else if (jump_timer < 38)colPlayer->SetPos(position.x + 12, position.y - 130);
+		if (jump_timer < 12){colPlayer->SetPos(position.x + 12, position.y - 130); position.y -= 10;}
+		else if (jump_timer < 29){colPlayer->SetPos(position.x + 12, position.y - 140); position.y -= 30;}
+		else if (jump_timer < 38){colPlayer->SetPos(position.x + 12, position.y - 130); position.y -= 20;}
 
 		if (jump_timer > 38)
 		{
-			jumpEnable = true;
+			//jumpEnable = true;
 			status = PLAYER_IN_JUMP_FINISH;
 			jump_timer = 0;
 		}
@@ -467,7 +477,12 @@ update_status ModulePlayer::Update()
 	}
 
 
-	if (jump_timer == 0) { colPlayer->SetPos(position.x + 12, position.y - 107); }
+	if (jump_timer == 0) { 
+		//Normal collider position
+		colPlayer->SetPos(position.x + 12, position.y - 107);
+		//Crouched collider position
+		colPlayerCrouch->SetPos(position.x + 12, position.y - 67);
+	}
 	// Draw everything --------------------------------------
 
 	r = current_animation->GetCurrentFrame();

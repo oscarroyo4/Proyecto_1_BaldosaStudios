@@ -29,7 +29,7 @@ bool ModuleIntro::Start()
 	App->render->camera.y = 0;
 
 	background = App->textures->Load("Assets/Sprites/Main/welcome.png");
-	musicIntro = App->sounds->Load("Assets/Audio/Fx/FX_ChooseSelection.wav");
+	musicIntro = App->sounds->Load("Assets/Audio/Fx/FX_WinScream.ogg");
 	if (Mix_PlayChannel(-1, musicIntro, 0) == -1)
 	{
 		LOG("Could not play music. Mix_PlayChannel: %s", Mix_GetError());
@@ -43,10 +43,10 @@ bool ModuleIntro::Start()
 bool ModuleIntro::CleanUp()
 {
 	LOG("Unloading intro scene");
-
-	App->textures->Unload(background);
 	App->sounds->Unload();
-
+	App->sounds->Disable();
+	
+	App->textures->Unload(background);
 
 	return true;
 }
