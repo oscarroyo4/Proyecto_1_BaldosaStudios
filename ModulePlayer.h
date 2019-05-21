@@ -23,6 +23,7 @@ enum player_status
 	PLAYER_DAMAGE,
 	PLAYER_IN_PUNCH_FINISH,
 	PLAYER_IN_KICK_FINISH,
+	PLAYER_CROUCH_PUNCH_FINISH,
 	PLAYER_IN_JUMP_FINISH,
 	PLAYER_DAMAGE_FINISH,
 	IN_SPECIAL_FINISH
@@ -43,6 +44,7 @@ public:
 
 	bool godMode;
 	bool punchEnable = true;
+	bool crouchPunchEnable = true;
 	bool kickEnable = true;
 	bool jumpEnable = true;
 	bool specialEnable = true;
@@ -60,24 +62,28 @@ public:
 	Animation specialAttack;
 	Animation specialAttackStatic;
 	Animation crouch;
+	Animation crouchPunch;
 	Animation damage;
 	Animation defeat;
 	Animation win;
 	iPoint position;
-	Collider* colPlayer;
-	Collider* colPlayerCrouch;
-	Collider* punchCol;
-	Collider* kickCol;
-	Collider* specialCol1;
-	Collider* specialCol2;
-	Collider* specialCol3;
+	Collider* colPlayer = nullptr;
+	Collider* colPlayerCrouch = nullptr;
+	Collider* punchCol = nullptr;
+	Collider* crouchPunchCol = nullptr;
+	Collider* kickCol = nullptr;
+	Collider* specialCol1 = nullptr;
+	Collider* specialCol2 = nullptr;
+	Collider* specialCol3 = nullptr;
 	int Life = 100;
 	int PlayerVict = 0;
 	bool hit = false;
 	bool punchHit = false;
+	bool crouchPunchHit = false;
 	bool kickHit = false;
 	player_status status = PLAYER_IDLE;
 	Uint32 punch_timer = 0;
+	Uint32 crouch_punch_timer = 0;
 	Uint32 jump_timer = 0;
 	Uint32 kick_timer = 0;
 	Uint32 damage_timer = 0;

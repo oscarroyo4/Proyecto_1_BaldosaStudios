@@ -65,6 +65,12 @@ ModulePlayer::ModulePlayer()
 	crouch.speed = 0.25f;
 	crouch.loop = false;
 
+	//crouch punch animation
+	crouchPunch.PushBack({ 339, 842, 49, 64 });
+	crouchPunch.PushBack({ 256, 841, 82, 63 });
+	crouchPunch.speed = 0.175f;
+	crouchPunch.loop = false;
+
 	//SpecialAttack animation
 	specialAttack.PushBack({ 421, 693, 52, 106 });
 	specialAttack.PushBack({ 362, 691, 55, 107 });
@@ -160,7 +166,7 @@ update_status ModulePlayer::Update()
 
 		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 			status = PLAYER_CROUCH;
-
+		
 		else if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 			status = PLAYER_PUNCH;
 
@@ -173,7 +179,6 @@ update_status ModulePlayer::Update()
 		else {
 			status = PLAYER_IDLE;
 			crouch.Reset();
-			jumpEnable = true;
 		}
 
 		if (hit == true) {
@@ -231,10 +236,23 @@ update_status ModulePlayer::Update()
 		break;
 
 	case PLAYER_CROUCH:
-		if (jumpEnable == true) {
-			current_animation = &crouch;
+		if (jumpEnable == true && crouchPunchEnable == true) {
+			
 			colPlayer->type = COLLIDER_NONE;
 			colPlayerCrouch->type = COLLIDER_PLAYER;
+
+			if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
+				crouchPunchEnable = false;
+				crouchPunch.Reset();
+				crouch_punch_timer = 1;
+				if (Mix_PlayChannel(-1, punchfx, 0) == -1)
+				{
+					LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+				}
+				crouchPunchCol = App->collision->AddCollider({ position.x + 46, position.y - 55, 40, 18 }, COLLIDER_PLAYER_SHOT);
+				crouchPunchHit = false;
+			}
+			else current_animation = &crouch;
 		}
 		break;
 
@@ -246,6 +264,11 @@ update_status ModulePlayer::Update()
 	case PLAYER_IN_PUNCH_FINISH:
 		status = PLAYER_IDLE;
 		punch.Reset();
+		break;
+
+	case PLAYER_CROUCH_PUNCH_FINISH:
+		status = PLAYER_CROUCH;
+		crouchPunch.Reset();
 		break;
 
 	case PLAYER_IN_KICK_FINISH:
@@ -389,6 +412,25 @@ update_status ModulePlayer::Update()
 		}
 	}
 
+	//
+	if (crouch_punch_timer > 0)
+	{
+		crouch_punch_timer = crouch_punch_timer + 1;
+		current_animation = &crouchPunch;
+		if (crouchPunchCol->CheckCollision(App->enemy->r) && crouchPunchHit == false) {
+			App->enemy->hit = true;
+			crouchPunchHit = true;
+		}
+		if (crouch_punch_timer > 20)
+		{
+			crouchPunchEnable = true;
+			status = PLAYER_CROUCH_PUNCH_FINISH;
+			crouchPunchCol->to_delete = true;
+			crouch_punch_timer = 0;
+		}
+	}
+	//
+
 
 	if (jump_timer > 0)
 	{
@@ -400,7 +442,7 @@ update_status ModulePlayer::Update()
 
 		if (jump_timer > 38)
 		{
-			//jumpEnable = true;
+			jumpEnable = true;
 			status = PLAYER_IN_JUMP_FINISH;
 			jump_timer = 0;
 		}
