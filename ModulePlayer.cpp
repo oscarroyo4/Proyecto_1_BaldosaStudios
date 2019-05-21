@@ -158,7 +158,7 @@ update_status ModulePlayer::Update()
 		else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
 			status = PLAYER_JUMP;
 
-		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 			status = PLAYER_CROUCH;
 
 		else if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
