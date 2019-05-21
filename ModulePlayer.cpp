@@ -436,9 +436,9 @@ update_status ModulePlayer::Update()
 	{
 		jump_timer = jump_timer + 1;
 		current_animation = &jump; 
-		if (jump_timer < 12){colPlayer->SetPos(position.x + 12, position.y - 130); position.y -= 10;}
-		else if (jump_timer < 29){colPlayer->SetPos(position.x + 12, position.y - 140); position.y -= 30;}
-		else if (jump_timer < 38){colPlayer->SetPos(position.x + 12, position.y - 130); position.y -= 20;}
+		if (jump_timer < 12){colPlayer->SetPos(position.x + 12, position.y - 160); position.y -= 15;}
+		else if (jump_timer < 29){colPlayer->SetPos(position.x + 12, position.y - 180); position.y -= 35;}
+		else if (jump_timer < 38){colPlayer->SetPos(position.x + 12, position.y - 165); position.y -= 25;}
 
 		if (jump_timer > 38)
 		{
