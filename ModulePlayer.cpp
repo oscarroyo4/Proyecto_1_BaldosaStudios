@@ -210,7 +210,8 @@ update_status ModulePlayer::Update()
 		if (specialEnable == false) { position.x += 0; }
 		else
 		{
-			position.x += speed;
+			if (position.x > 590) { position.x -= 0; }
+			else position.x += speed;
 			current_animation = &forward;
 			colPlayer->type = COLLIDER_PLAYER;
 			colPlayerCrouch->type = COLLIDER_NONE;
@@ -230,9 +231,11 @@ update_status ModulePlayer::Update()
 		break;
 
 	case PLAYER_CROUCH:
-		current_animation = &crouch;
-		colPlayer->type = COLLIDER_NONE;
-		colPlayerCrouch->type = COLLIDER_PLAYER;
+		if (jumpEnable == true) {
+			current_animation = &crouch;
+			colPlayer->type = COLLIDER_NONE;
+			colPlayerCrouch->type = COLLIDER_PLAYER;
+		}
 		break;
 
 	case PLAYER_IN_JUMP_FINISH:
