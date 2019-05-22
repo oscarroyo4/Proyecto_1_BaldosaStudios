@@ -39,7 +39,7 @@ bool ModuleCinematics::Start()
 
 	background = App->textures->Load("Assets/Sprites/Main/DevilMan1.png");
 	fatalfuryintro = App->textures->Load("Assets/Sprites/Main/FatalFuryIntro.png");
-	fatalfuryintrowords = App->textures->Load("Assets/Sprites/Main/FatalFuryIntro_words.png");
+	fatalfuryintrowords = App->textures->Load("Assets/Sprites/Main/FatalFuryIntro_words2.png");
 	inscoins = App->textures->Load("Assets/Sprites/Main/InsertCoin.png");
 
 	return true;
