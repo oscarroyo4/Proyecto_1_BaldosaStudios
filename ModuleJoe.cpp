@@ -53,11 +53,10 @@ ModuleJoe::ModuleJoe()
 	kick.speed = 0.12f;
 
 	//Jump animation *
-	jump.PushBack({ 15, 337, 60, 106 });
-	jump.PushBack({ 268, 183, 52, 140 });
-	jump.PushBack({ 328, 176, 65, 145 });
-	jump.PushBack({ 393, 205, 59, 130 });
-	jump.speed = 0.12f;
+	jump.PushBack({ 88, 367, 39, 126 });
+	jump.PushBack({ 145, 367, 49, 81 });
+	jump.PushBack({ 204, 367, 56, 121 });
+	jump.speed = 0.1f;
 
 	//crouch animation
 	crouch.PushBack({ 26, 288, 59, 69 });
@@ -119,7 +118,7 @@ bool ModuleJoe::Start()
 	LOG("Loading player");
 
 	App->collision->Enable();
-	graphicsJoe = App->textures->Load("Assets/Sprites/Joe Higashi/Sprites joe higashi.png"); //First Tery Bogard Sprite Sheet																				 
+	graphicsJoe = App->textures->Load("Assets/Sprites/Joe Higashi/Sprites joe higashi.png"); //Joe Higashi Sprite Sheet																				 
 	punchfx = App->sounds->Load("Assets/Audio/Fx/SFX_Punch.ogg");
 	kickfx = App->sounds->Load("Assets/Audio/Fx/SFX_Punch2.ogg");
 	jumpfx = App->sounds->Load("Assets/Audio/Fx/SFX_Landing.ogg");

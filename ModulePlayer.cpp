@@ -66,7 +66,7 @@ ModulePlayer::ModulePlayer()
 	crouch.loop = false;
 
 	//crouch punch animation
-	crouchPunch.PushBack({ 258, 1880, 56, 65 });
+	crouchPunch.PushBack({ 260, 1880, 54, 65 });
 	crouchPunch.PushBack({ 314, 1883, 81, 63 });
 	crouchPunch.speed = 0.175f;
 	crouchPunch.loop = false;

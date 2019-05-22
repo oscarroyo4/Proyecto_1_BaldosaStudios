@@ -90,9 +90,9 @@ update_status ModulePlayerSelect::Update()
 	if (App->input->keyboard[SDL_SCANCODE_D] == KEY_STATE::KEY_DOWN && posT == true)
 	{
 		current_animation = &selectA;
-		posA = true;
 		posJ = false;
 		posT = false;
+		posA = true;
 		if (Mix_PlayChannel(-1, selectHover, 0) == -1)
 		{
 			LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
@@ -102,9 +102,9 @@ update_status ModulePlayerSelect::Update()
 	if (App->input->keyboard[SDL_SCANCODE_A] == KEY_STATE::KEY_DOWN && posA == true)
 	{
 		current_animation = &selectT;
-		posA = false;
 		posJ = false;
 		posT = true;
+		posA = false;
 		if (Mix_PlayChannel(-1, selectHover, 0) == -1)
 		{
 			LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
