@@ -5,10 +5,11 @@
 #include "ModulePaoPao.h"
 #include "ModuleSoundBeach.h"
 #include "ModulePlayer.h"
+#include "ModuleJoe.h"
 #include "ModuleInput.h"
 #include "ModuleIntro.h"
 #include "ModuleCollision.h"
-#include "ModuleSounds.h"
+#include "ModuleAudio.h"
 #include "ModuleEnemy.h"
 #include "ModuleHUD.h"
 #include "ModuleFadeToBlack.h"
@@ -59,22 +60,38 @@ bool ModuleSceneSoundBeach::Start()
 	graphicsAnim = App->textures->Load("Assets/Sprites/Sound Beach Tileset/Day/SoundBeach_PeopleAnim.png");
 	graphics2 = App->textures->Load("Assets/Sprites/Sound Beach Tileset/Sunset/SoundBeach (sunset).png");
 	graphicsAnim2 = App->textures->Load("Assets/Sprites/Sound Beach Tileset/Sunset/PeopleAnimation_(sunset).png");
-	App->player->Enable();
+	music = App->sounds->Load_music("Assets/Fatal Fury King of Fighters - The Sea Knows (Michael Max Theme).ogg");
+	App->player->Disable();
+	if (JoeOnStage == true) { 
+		App->joe->Enable(); 
+		App->joe->input = true;
+		App->joe->win_timer = 0;
+		App->joe->defeat_timer = 0;
+		App->joe->Life = 100;
+		App->joe->position.x = 230;
+		App->joe->status = JOE_IDLE;
+	}
+	if (TerryOnStage == true) {
+		App->player->Enable(); 
+		App->player->input = true;
+		App->player->Life = 100;
+		App->player->win_timer = 0;
+		App->player->defeat_timer = 0;
+		App->player->status = PLAYER_IDLE;
+		App->player->position.x = 230;
+	}
 	App->enemy->Enable();
 	App->render->camera.x = -530;
 	App->enemy->input = true;
-	App->player->input = true;
-	App->player->win_timer = 0;
-	App->player->defeat_timer = 0;
 	App->enemy->win_timer = 0;
 	App->enemy->defeat_timer = 0;
 	App->hud->Win = false;
-	App->player->Life = 100;
 	App->enemy->Life = 100;
-	App->player->position.x = 230;
 	App->enemy->position.x = 375;
-	App->player->status = PLAYER_IDLE;
 	App->enemy->status = ENEMY_IDLE;
+	if (App->sounds->Play_music(music) == false) {
+		LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+	}
 	return ret;
 }
 
@@ -84,9 +101,11 @@ bool ModuleSceneSoundBeach::CleanUp()
 	LOG("Unloading ken scene");
 
 	SDL_DestroyTexture(graphics);
-	App->player->Disable();
+	if (JoeOnStage == true) App->player->Disable();
+	if (JoeOnStage == true) App->joe->Disable();
 	App->enemy->Disable();
 	App->hud->Disable();
+	App->sounds->Unload_music(music);
 	App->soundBeach->Disable();
 
 	return true;

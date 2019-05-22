@@ -18,7 +18,7 @@ class ModuleEnemy;
 class ModuleIntro;
 class ModulePlayerSelect;
 class ModuleFadeToBlack;
-class ModuleSounds;
+class ModuleAudio;
 class ModuleCollision;
 class ModuleHUD;
 class ModuleGameControllers;
@@ -45,7 +45,7 @@ public:
 	ModuleFadeToBlack* fade;
 	ModuleParticles* particles;
 	ModulePlayerSelect* select;
-	ModuleSounds* sounds;
+	ModuleAudio* sounds;
 	ModuleCollision* collision;
 	ModuleHUD* hud;
 	ModuleGameControllers* gamepad;

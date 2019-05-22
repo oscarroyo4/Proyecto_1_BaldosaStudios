@@ -42,10 +42,10 @@ bool ModulePlayerSelect::Start()
 	bool ret = true;
 	graphics = App->textures->Load("Assets/Sprites/Main/PlayerSelect.png");
 	App->scene_intro->Disable();
-	musicPlSel = App->sounds->Load("Assets/Audio/CharacterSelection.ogg");
-	selectHover = App->sounds->Load("Assets/Audio/Fx/FX_SelectHover.wav");
-	chooseSelection = App->sounds->Load("Assets/Audio/Fx/FX_ChooseSelection.wav");
-	if (Mix_PlayChannel(-1, musicPlSel, 0) == -1)
+	musicPlSel = App->sounds->Load_music("Assets/Audio/CharacterSelection.ogg");
+	selectHover = App->sounds->Load_effects("Assets/Audio/Fx/FX_SelectHover.wav");
+	chooseSelection = App->sounds->Load_effects("Assets/Audio/Fx/FX_ChooseSelection.wav");
+	if (App->sounds->Play_music(musicPlSel))
 	{
 		LOG("Could not play music. Mix_PlayChannel: %s", Mix_GetError());
 		ret = false;
@@ -59,7 +59,10 @@ bool ModulePlayerSelect::CleanUp()
 	LOG("Unloading ken scene");
 
 	SDL_DestroyTexture(graphics);
-	App->sounds->Unload();
+	//Audio
+	App->sounds->Unload_music(musicPlSel);
+	App->sounds->Unload_effects(selectHover);
+	App->sounds->Unload_effects(chooseSelection);
 	App->paopao->Enable();
 
 	return true;
@@ -81,7 +84,7 @@ update_status ModulePlayerSelect::Update()
 		posJ = true;
 		posT = false;
 		posA = false;
-		if (Mix_PlayChannel(-1, selectHover, 0) == -1)
+		if (App->sounds->Play_chunk(selectHover))
 		{
 			LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 		}
@@ -93,7 +96,7 @@ update_status ModulePlayerSelect::Update()
 		posJ = false;
 		posT = false;
 		posA = true;
-		if (Mix_PlayChannel(-1, selectHover, 0) == -1)
+		if (App->sounds->Play_chunk(selectHover))
 		{
 			LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 		}
@@ -105,7 +108,7 @@ update_status ModulePlayerSelect::Update()
 		posJ = false;
 		posT = true;
 		posA = false;
-		if (Mix_PlayChannel(-1, selectHover, 0) == -1)
+		if (App->sounds->Play_chunk(selectHover))
 		{
 			LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 		}
@@ -117,7 +120,7 @@ update_status ModulePlayerSelect::Update()
 		posA = false;
 		posJ = false;
 		posT = true;
-		if (Mix_PlayChannel(-1, selectHover, 0) == -1)
+		if (App->sounds->Play_chunk(selectHover))
 		{
 			LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 		}
@@ -127,7 +130,7 @@ update_status ModulePlayerSelect::Update()
 
 	if (App->input->keyboard[SDL_SCANCODE_SPACE])
 	{
-		if (Mix_PlayChannel(-1, chooseSelection, 0) == -1)
+		if (App->sounds->Play_chunk(chooseSelection))
 		{
 			LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 		}

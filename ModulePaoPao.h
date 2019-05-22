@@ -20,7 +20,7 @@ public:
 public:
 
 	SDL_Texture * graphics = nullptr;
-	Mix_Chunk * music = nullptr;
+	Mix_Music * music = nullptr;
 	Animation paopao;
 	int PlayerVictories = 0;
 	int EnemyVictories = 0;

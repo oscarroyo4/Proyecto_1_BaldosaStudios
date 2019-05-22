@@ -5,10 +5,9 @@
 #include "ModuleIntro.h"
 #include "ModuleInput.h"
 #include "ModulePaoPao.h"
-#include "ModuleSounds.h"
+#include "ModuleAudio.h"
 #include "ModulePlayerSelect.h"
 #include "ModuleFadeToBlack.h"
-
 
 ModuleIntro::ModuleIntro()
 {
@@ -29,10 +28,11 @@ bool ModuleIntro::Start()
 	App->render->camera.y = 0;
 
 	background = App->textures->Load("Assets/Sprites/Main/welcome.png");
-	musicIntro = App->sounds->Load("Assets/Audio/Fx/FX_WinScream.ogg");
-	if (Mix_PlayChannel(-1, musicIntro, 0) == -1)
+	musicIntro = App->sounds->Load_music("Assets/Audio/Menu.ogg");
+	if (App->sounds->Play_music(musicIntro))
 	{
 		LOG("Could not play music. Mix_PlayChannel: %s", Mix_GetError());
+
 		return false;
 	}
 
@@ -43,7 +43,7 @@ bool ModuleIntro::Start()
 bool ModuleIntro::CleanUp()
 {
 	LOG("Unloading intro scene");
-	App->sounds->Unload();
+	App->sounds->Unload_music(musicIntro);
 	App->sounds->Disable();
 	
 	App->textures->Unload(background);

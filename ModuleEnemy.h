@@ -4,7 +4,7 @@
 #include "Module.h"
 #include "Animation.h"
 #include "p2Point.h"
-#include "ModuleSounds.h"
+#include "ModuleAudio.h"
 
 struct SDL_Texture;
 struct Collider;

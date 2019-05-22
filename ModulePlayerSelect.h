@@ -5,6 +5,8 @@
 #include "Animation.h"
 
 struct SDL_Texture;
+struct Mix_Chunk;
+struct Mix_Music;
 
 class ModulePlayerSelect : public Module
 {
@@ -26,7 +28,7 @@ public:
 	Animation* current_animation = nullptr;
 	Mix_Chunk* selectHover = nullptr;
 	Mix_Chunk* chooseSelection = nullptr;
-	Mix_Chunk* musicPlSel = nullptr;
+	Mix_Music* musicPlSel = nullptr;
 };
 
 #endif

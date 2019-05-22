@@ -55,8 +55,8 @@ ModuleJoe::ModuleJoe()
 
 	//Jump animation *
 	jump.PushBack({ 88, 367, 39, 126 });
-	jump.PushBack({ 145, 367, 49, 81 });
-	jump.PushBack({ 204, 367, 56, 121 });
+	jump.PushBack({ 145, 367, 49, 126 });
+	jump.PushBack({ 204, 367, 56, 125 });
 	jump.speed = 0.1f;
 
 	//crouch animation

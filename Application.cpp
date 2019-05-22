@@ -13,7 +13,8 @@
 #include "ModuleCollision.h"
 #include "ModulePlayerSelect.h"
 #include "ModuleHUD.h"
-#include "ModuleSounds.h"
+#include "ModuleSounds.h"//Disbaled
+#include "ModuleAudio.h"
 #include "ModuleGameControllers.h"
 #include "ModuleCinematics.h"
 #include "ModuleJoe.h"
@@ -36,7 +37,7 @@ Application::Application()
 	modules[11] = enemy = new ModuleEnemy();
 	modules[12] = particles = new ModuleParticles();
 	modules[13] = fade = new ModuleFadeToBlack();
-	modules[14] = sounds = new ModuleSounds();
+	modules[14] = sounds = new ModuleAudio();
 	modules[15] = collision = new ModuleCollision();
 	modules[16] = hud = new ModuleHUD();
 	modules[17] = joe = new ModuleJoe();

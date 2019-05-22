@@ -5,7 +5,7 @@
 #include "Animation.h"
 
 struct SDL_Texture;
-struct Mix_Chunk;
+struct Mix_Music;
 
 class ModuleSceneSoundBeach : public Module
 {
@@ -23,7 +23,7 @@ public:
 	SDL_Texture * graphicsAnim = nullptr;
 	SDL_Texture * graphics2 = nullptr;
 	SDL_Texture * graphicsAnim2 = nullptr;
-	Mix_Chunk * music = nullptr;
+	Mix_Music * music = nullptr;
 	Animation soundBeachSky;
 	Animation soundBeachGround;
 	Animation backgroundPeople1;
@@ -32,6 +32,8 @@ public:
 	Animation backgroundPeople4;
 	int PlayerVictories = 0;
 	int EnemyVictories = 0;
+	bool JoeOnStage = false;
+	bool TerryOnStage = false;
 	int round = 1;
 };
 

@@ -3,9 +3,9 @@
 
 #include "Module.h"
 #include "Animation.h"
+#include "ModuleAudio.h"
 
 struct SDL_Texture;
-struct Mix_Chunk;
 
 class ModuleIntro : public Module
 {
@@ -20,7 +20,7 @@ public:
 public:
 
 	SDL_Texture * background = nullptr;
-	Mix_Chunk * musicIntro = nullptr;
+	Mix_Music * musicIntro = nullptr;
 	Animation intr;
 };
 

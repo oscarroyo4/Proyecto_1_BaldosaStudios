@@ -9,7 +9,7 @@
 #include "ModuleIntro.h"
 #include "ModuleCollision.h"
 #include "ModuleSoundBeach.h"
-#include "ModuleSounds.h"
+#include "ModuleAudio.h"
 #include "ModuleEnemy.h"
 #include "ModuleHUD.h"
 #include "ModuleFadeToBlack.h"
@@ -34,13 +34,13 @@ bool ModuleScenePaoPao::Start()
 	LOG("Loading background assets");
 	bool ret = true;
 	graphics = App->textures->Load("Assets/Sprites/Pao Pao Cafe Tileset/Pao Pao Cafe Stage.png");
-	music = App->sounds->Load("Assets/Audio/PaoPao.ogg");
+	music = App->sounds->Load_music("Assets/Audio/PaoPao.ogg");
 	if (JoeOnStage == true) { App->joe->Enable(); }
 	if (TerryOnStage == true) { App->player->Enable(); }
 	App->enemy->Enable();
 	App->render->camera.x = -530;
 	//Play the music
-	if (Mix_PlayChannel(-1, music, 0) == -1)
+	if (App->sounds->Play_music( music))
 	{
 		LOG("Could not play music. Mix_PlayChannel: %s", Mix_GetError());
 		ret = false;
@@ -54,7 +54,7 @@ bool ModuleScenePaoPao::CleanUp()
 	LOG("Unloading ken scene");
 	App->paopao->Disable();
 	SDL_DestroyTexture(graphics);
-	App->sounds->Unload();
+	App->sounds->Unload_music(music);
 	App->player->Disable();
 	App->enemy->Disable();
 	App->collision->Disable();
