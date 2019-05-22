@@ -41,7 +41,8 @@ bool ModulePlayerSelect::Start()
 	LOG("Loading background assets");
 	bool ret = true;
 	graphics = App->textures->Load("Assets/Sprites/Main/PlayerSelect.png");
-	musicPlSel = App->sounds->Load("Assets/Audio/Fx/FX_SelectHover.wav");
+	App->scene_intro->Disable();
+	musicPlSel = App->sounds->Load("Assets/Audio/CharacterSelection.ogg");
 	selectHover = App->sounds->Load("Assets/Audio/Fx/FX_SelectHover.wav");
 	chooseSelection = App->sounds->Load("Assets/Audio/Fx/FX_ChooseSelection.wav");
 	if (Mix_PlayChannel(-1, musicPlSel, 0) == -1)
@@ -56,9 +57,10 @@ bool ModulePlayerSelect::Start()
 bool ModulePlayerSelect::CleanUp()
 {
 	LOG("Unloading ken scene");
-	App->sounds->Unload();
-	App->sounds->Disable();
+
 	SDL_DestroyTexture(graphics);
+	App->sounds->Unload();
+	App->paopao->Enable();
 
 	return true;
 }
@@ -123,14 +125,16 @@ update_status ModulePlayerSelect::Update()
 
 
 
-
-	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1)
+	if (App->input->keyboard[SDL_SCANCODE_SPACE])
 	{
 		if (Mix_PlayChannel(-1, chooseSelection, 0) == -1)
 		{
 			LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 		}
 		App->fade->FadeToBlack(this, App->paopao, 0.5);
+		if (posJ == true) { App->paopao->JoeOnStage = true; }
+		if (posT == true) { App->paopao->TerryOnStage = true; }
+
 	}
 
 	return UPDATE_CONTINUE;
