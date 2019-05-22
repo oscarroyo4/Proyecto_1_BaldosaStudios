@@ -17,6 +17,7 @@
 #include "ModuleGameControllers.h"
 #include "ModuleCinematics.h"
 #include "ModuleJoe.h"
+#include "ModuleAndy.h"
 
 
 
@@ -40,6 +41,7 @@ Application::Application()
 	modules[15] = collision = new ModuleCollision();
 	modules[16] = hud = new ModuleHUD();
 	modules[17] = joe = new ModuleJoe();
+	modules[18] = andy = new ModuleAndy();
 
 }
 
@@ -57,6 +59,7 @@ bool Application::Init()
 	scene_intro->Disable();
 	player->Disable();
 	joe->Disable();
+	andy->Disable();
 	enemy->Disable();
 	select->Disable();
 	paopao->Disable();

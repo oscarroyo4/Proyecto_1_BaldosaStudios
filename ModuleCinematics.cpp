@@ -22,7 +22,7 @@ ModuleCinematics::ModuleCinematics()
 	GameIntroCinematicTerry.PushBack({ 0, 237, 150, 144 });
 	GameIntroCinematicTerry.PushBack({ 151, 237, 150, 144 });
 	GameIntroCinematicTerry.speed = 0.1;
-	GameIntroCinematicWords.PushBack({ 0, 0, 500, 58 });
+	GameIntroCinematicWords.PushBack({ 0, 0, 561, 63 });
 	insertcoins.PushBack({ 0, 0, 174, 64 });
 	insertcoins.PushBack({ 0, 64, 174, 64 });
 	insertcoins.speed = 0.04;
@@ -39,7 +39,7 @@ bool ModuleCinematics::Start()
 
 	background = App->textures->Load("Assets/Sprites/Main/DevilMan1.png");
 	fatalfuryintro = App->textures->Load("Assets/Sprites/Main/FatalFuryIntro.png");
-	fatalfuryintrowords = App->textures->Load("Assets/Sprites/Main/FatalFuryIntro_words2.png");
+	fatalfuryintrowords = App->textures->Load("Assets/Sprites/Main/FatalFuryIntro_words.png");
 	inscoins = App->textures->Load("Assets/Sprites/Main/InsertCoin.png");
 
 	return true;

@@ -130,7 +130,7 @@ bool ModulePlayer::Start()
 	//defeatfx = App->sounds->Load("Assets/Audio/Fx/FX_DefeatScream.ogg"); Not working
 	godMode = true;
 	colPlayer = App->collision->AddCollider({ position.x, position.y, 34, 106 }, COLLIDER_PLAYER);
-	colPlayerCrouch = App->collision->AddCollider({ position.x, position.y-46, 34, 60 }, COLLIDER_NONE);
+	colPlayerCrouch = App->collision->AddCollider({ position.x, position.y - 46, 34, 60 }, COLLIDER_NONE);
 	Life = 100;
 
 	return true;
@@ -152,7 +152,7 @@ bool ModulePlayer::CleanUp()
 }
 
 update_status ModulePlayer::Update()
-{	
+{
 	float speed = 2;
 	if (input) {
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
@@ -166,7 +166,7 @@ update_status ModulePlayer::Update()
 
 		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 			status = PLAYER_CROUCH;
-		
+
 		else if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 			status = PLAYER_PUNCH;
 
@@ -186,7 +186,7 @@ update_status ModulePlayer::Update()
 			hit = false;
 		}
 	}
-	
+
 	switch (status)
 	{
 	case PLAYER_IDLE:
@@ -195,7 +195,7 @@ update_status ModulePlayer::Update()
 
 		colPlayer->type = COLLIDER_PLAYER;
 		colPlayerCrouch->type = COLLIDER_NONE;
-		
+
 		break;
 
 	case PLAYER_BACKWARD:
@@ -237,7 +237,7 @@ update_status ModulePlayer::Update()
 
 	case PLAYER_CROUCH:
 		if (jumpEnable == true && crouchPunchEnable == true) {
-			
+
 			colPlayer->type = COLLIDER_NONE;
 			colPlayerCrouch->type = COLLIDER_PLAYER;
 
@@ -327,13 +327,13 @@ update_status ModulePlayer::Update()
 			specialEnable = false;
 		}
 		break;
-	
+
 
 	case PLAYER_DAMAGE:
 		damage.Reset();
 		Life = Life - 10;
-		if (Life <= 0) { 
-			Life = 0; 
+		if (Life <= 0) {
+			Life = 0;
 			defeat_timer = 1;
 			App->enemy->win_timer = 1;
 		}
@@ -341,11 +341,11 @@ update_status ModulePlayer::Update()
 		break;
 	}
 
-	if (defeat_timer > 0) 
-	{ 
+	if (defeat_timer > 0)
+	{
 		input = false;
 
-		defeat_timer = defeat_timer + 1; 
+		defeat_timer = defeat_timer + 1;
 		current_animation = &defeat;
 
 		if (win_timer == 4)
@@ -364,7 +364,7 @@ update_status ModulePlayer::Update()
 
 		win_timer = win_timer + 1;
 		current_animation = &win;
-		if (win_timer == 4) 
+		if (win_timer == 4)
 		{
 			PlayerVict = PlayerVict + 1;
 			if (Mix_PlayChannel(-1, winfx, 0) == -1)
@@ -412,7 +412,7 @@ update_status ModulePlayer::Update()
 		}
 	}
 
-	
+
 	if (crouch_punch_timer > 0)
 	{
 		crouch_punch_timer = crouch_punch_timer + 1;
@@ -429,16 +429,16 @@ update_status ModulePlayer::Update()
 			crouch_punch_timer = 0;
 		}
 	}
-	
+
 
 
 	if (jump_timer > 0)
 	{
 		jump_timer = jump_timer + 1;
-		current_animation = &jump; 
-		if (jump_timer < 12){colPlayer->SetPos(position.x + 12, position.y - 160); position.y -= 15;}
-		else if (jump_timer < 29){colPlayer->SetPos(position.x + 12, position.y - 180); position.y -= 35;}
-		else if (jump_timer < 38){colPlayer->SetPos(position.x + 12, position.y - 165); position.y -= 25;}
+		current_animation = &jump;
+		if (jump_timer < 12) { colPlayer->SetPos(position.x + 12, position.y - 160); position.y -= 15; }
+		else if (jump_timer < 29) { colPlayer->SetPos(position.x + 12, position.y - 180); position.y -= 35; }
+		else if (jump_timer < 38) { colPlayer->SetPos(position.x + 12, position.y - 165); position.y -= 25; }
 
 		if (jump_timer > 38)
 		{
@@ -475,27 +475,27 @@ update_status ModulePlayer::Update()
 		if (groundFire_timer > 30) { current_animation = &specialAttackStatic; }
 		if (groundFire_timer == 69)
 		{
-			App->particles->AddParticle(App->particles->smallfire, position.x + 26, position.y - 45, 0, 2800, 1.5, 0,1);
-			
+			App->particles->AddParticle(App->particles->smallfire, position.x + 26, position.y - 45, 0, 2800, 1.5, 0, 1);
+
 		}
 		if (groundFire_timer == 55)
 		{
-			App->particles->AddParticle(App->particles->midfire, position.x + 28, position.y - 72, 0, 2700, 1.5, 0,1);
-	
+			App->particles->AddParticle(App->particles->midfire, position.x + 28, position.y - 72, 0, 2700, 1.5, 0, 1);
+
 		}
 		if (groundFire_timer == 41)
 		{
-			App->particles->AddParticle(App->particles->bigfire, position.x + 29, position.y - 100, 0, 2600, 1.5, 0,1);
-			
+			App->particles->AddParticle(App->particles->bigfire, position.x + 29, position.y - 100, 0, 2600, 1.5, 0, 1);
+
 		}
 		if (groundFire_timer == 27)
 		{
-			App->particles->AddParticle(App->particles->midfire, position.x + 31, position.y - 72, 0, 2500, 1.5, 0,1);
+			App->particles->AddParticle(App->particles->midfire, position.x + 31, position.y - 72, 0, 2500, 1.5, 0, 1);
 
 		}
 		if (groundFire_timer == 13)
 		{
-			App->particles->AddParticle(App->particles->smallfire, position.x + 33, position.y - 45, 0, 2400, 1.5, 0,1);
+			App->particles->AddParticle(App->particles->smallfire, position.x + 33, position.y - 45, 0, 2400, 1.5, 0, 1);
 
 		}
 		if (groundFire_timer >= 120)
@@ -524,7 +524,7 @@ update_status ModulePlayer::Update()
 	}
 
 
-	if (jump_timer == 0) { 
+	if (jump_timer == 0) {
 		//Normal collider position
 		colPlayer->SetPos(position.x + 12, position.y - 107);
 		//Crouched collider position
@@ -534,7 +534,7 @@ update_status ModulePlayer::Update()
 
 	r = current_animation->GetCurrentFrame();
 
-	  
+
 	if (App->enemy->position.x < position.x) { App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r, 1, SDL_FLIP_HORIZONTAL); }
 	if (App->enemy->position.x > position.x &&  defeat_timer == 0) { App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r); }
 	if (defeat_timer > 0) { App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r, 1, SDL_FLIP_HORIZONTAL); }

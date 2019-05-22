@@ -101,6 +101,9 @@
     <ClInclude Include="ModuleJoe.h">
       <Filter>Modules\Players</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleAndy.h">
+      <Filter>Modules\Players</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -164,6 +167,9 @@
       <Filter>Modules\Cinematics</Filter>
     </ClCompile>
     <ClCompile Include="ModuleJoe.cpp">
+      <Filter>Modules\Players</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleAndy.cpp">
       <Filter>Modules\Players</Filter>
     </ClCompile>
   </ItemGroup>

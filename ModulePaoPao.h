@@ -24,8 +24,9 @@ public:
 	Animation paopao;
 	int PlayerVictories = 0;
 	int EnemyVictories = 0;
-	bool JoeOnStage = false;
-	bool TerryOnStage = false;
+	bool JoeOnStage;
+	bool TerryOnStage;
+	bool AndyOnStage;
 };
 
 #endif
