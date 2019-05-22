@@ -3,36 +3,32 @@
 #include "SDL/include/SDL.h"
 
 
-ModuleAudio::ModuleAudio() : Module() {}
+ModuleAudio::ModuleAudio() : Module() {
+	for (uint i = 0; i < MAX_MUS; ++i)
+		soundtrack[i] = nullptr;
+	for (uint i = 0; i < MAX_FX; ++i)
+		effects[i] = nullptr;
+}
 
 ModuleAudio::~ModuleAudio() {}
 
 
 bool ModuleAudio::Init()
 {
+	LOG("Init Sound library");
 	bool ret = true;
+	// load support for the mp3 and ogg audio format
+	int flags = MIX_INIT_OGG;
+	int init = Mix_Init(flags);
 
-	if (SDL_Init(SDL_INIT_AUDIO) < 0)
+	if ((init & flags) != flags)
 	{
-		SDL_Log("SDL_INIT_AUDIO could not initialitze! SDL_Mix Error: %s\n", Mix_GetError());
+		LOG("Could not initialize mixer lib. Mix_Init: %s", Mix_GetError());
 		ret = false;
 	}
-	else
-	{
-		LOG("SDL_INIT AUDIO correctly initialized!\n");
-		int flags = MIX_INIT_OGG;
-		int initted = Mix_Init(flags);
-		if (initted&flags != flags) {
-			SDL_Log("Mix_Init: Failed to init required ogg support! SDL_Mixer Error: %s \n", Mix_GetError());
-			SDL_Log("Mix_Init: %s\n", Mix_GetError());
-			ret = false;
-		}
-		else
-		{
-			LOG("Mix_Init correctly initialized!");
-			Mix_OpenAudio(48000, MIX_DEFAULT_FORMAT, 2, 1024);
-		}
-	}
+	//Initialize SDL_mixer
+	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 512);
+
 	return ret;
 }
 

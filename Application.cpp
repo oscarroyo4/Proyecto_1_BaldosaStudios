@@ -36,7 +36,6 @@ Application::Application()
 	modules[9] = select = new ModulePlayerSelect();
 	modules[10] = player = new ModulePlayer();
 	modules[11] = enemy = new ModuleEnemy();
-	modules[11] = andy = new ModuleAndy();
 	modules[12] = particles = new ModuleParticles();
 	modules[13] = fade = new ModuleFadeToBlack();
 	modules[14] = sounds = new ModuleAudio();
