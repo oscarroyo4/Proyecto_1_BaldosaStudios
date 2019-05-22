@@ -16,6 +16,8 @@
 #include "ModuleSounds.h"
 #include "ModuleGameControllers.h"
 #include "ModuleCinematics.h"
+#include "ModuleJoe.h"
+
 
 
 Application::Application()
@@ -37,11 +39,13 @@ Application::Application()
 	modules[14] = sounds = new ModuleSounds();
 	modules[15] = collision = new ModuleCollision();
 	modules[16] = hud = new ModuleHUD();
-}	
+	modules[17] = joe = new ModuleJoe();
+
+}
 
 Application::~Application()
 {
-	for(int i = NUM_MODULES - 1; i >= 0; --i)
+	for (int i = NUM_MODULES - 1; i >= 0; --i)
 		delete modules[i];
 }
 
@@ -52,6 +56,7 @@ bool Application::Init()
 	// Disable all stopped modules here
 	scene_intro->Disable();
 	player->Disable();
+	joe->Disable();
 	enemy->Disable();
 	select->Disable();
 	paopao->Disable();
@@ -60,10 +65,10 @@ bool Application::Init()
 
 	// ---
 
-	for(int i = 0; i < NUM_MODULES && ret == true; ++i)
+	for (int i = 0; i < NUM_MODULES && ret == true; ++i)
 		ret = modules[i]->Init();
 
-	for(int i = 0; i < NUM_MODULES && ret == true; ++i)
+	for (int i = 0; i < NUM_MODULES && ret == true; ++i)
 		ret = modules[i]->IsEnabled() ? modules[i]->Start() : true;
 
 	return ret;
@@ -73,13 +78,13 @@ update_status Application::Update()
 {
 	update_status ret = UPDATE_CONTINUE;
 
-	for(int i = 0; i < NUM_MODULES && ret == UPDATE_CONTINUE; ++i)
+	for (int i = 0; i < NUM_MODULES && ret == UPDATE_CONTINUE; ++i)
 		ret = modules[i]->IsEnabled() ? modules[i]->PreUpdate() : UPDATE_CONTINUE;
 
-	for(int i = 0; i < NUM_MODULES && ret == UPDATE_CONTINUE; ++i)
+	for (int i = 0; i < NUM_MODULES && ret == UPDATE_CONTINUE; ++i)
 		ret = modules[i]->IsEnabled() ? modules[i]->Update() : UPDATE_CONTINUE;
 
-	for(int i = 0; i < NUM_MODULES && ret == UPDATE_CONTINUE; ++i)
+	for (int i = 0; i < NUM_MODULES && ret == UPDATE_CONTINUE; ++i)
 		ret = modules[i]->IsEnabled() ? modules[i]->PostUpdate() : UPDATE_CONTINUE;
 
 	return ret;
@@ -89,7 +94,7 @@ bool Application::CleanUp()
 {
 	bool ret = true;
 
-	for(int i = NUM_MODULES - 1; i >= 0 && ret == true; --i)
+	for (int i = NUM_MODULES - 1; i >= 0 && ret == true; --i)
 		ret = modules[i]->CleanUp();
 
 	return ret;

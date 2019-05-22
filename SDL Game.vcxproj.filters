@@ -98,6 +98,9 @@
     <ClInclude Include="ModuleCinematics.h">
       <Filter>Modules\Cinematics</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleJoe.h">
+      <Filter>Modules\Players</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -159,6 +162,9 @@
     </ClCompile>
     <ClCompile Include="ModuleCinematics.cpp">
       <Filter>Modules\Cinematics</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleJoe.cpp">
+      <Filter>Modules\Players</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

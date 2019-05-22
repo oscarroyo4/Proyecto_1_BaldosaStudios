@@ -20,10 +20,12 @@ public:
 public:
 
 	SDL_Texture * graphics = nullptr;
-	Mix_Chunk * musicP = nullptr;
+	Mix_Chunk * music = nullptr;
 	Animation paopao;
 	int PlayerVictories = 0;
 	int EnemyVictories = 0;
+	bool JoeOnStage;
+	bool TerryOnStage;
 };
 
 #endif

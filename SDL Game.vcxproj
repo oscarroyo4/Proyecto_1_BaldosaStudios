@@ -93,6 +93,7 @@
     <ClInclude Include="ModuleHUD.h" />
     <ClInclude Include="ModuleInput.h" />
     <ClInclude Include="ModuleIntro.h" />
+    <ClInclude Include="ModuleJoe.h" />
     <ClInclude Include="ModulePaoPao.h" />
     <ClInclude Include="ModuleParticles.h" />
     <ClInclude Include="ModulePlayer.h" />
@@ -116,6 +117,7 @@
     <ClCompile Include="ModuleHUD.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModuleIntro.cpp" />
+    <ClCompile Include="ModuleJoe.cpp" />
     <ClCompile Include="ModulePaoPao.cpp" />
     <ClCompile Include="ModuleParticles.cpp" />
     <ClCompile Include="ModulePlayer.cpp" />
