@@ -37,14 +37,14 @@ ModuleJoe::ModuleJoe()
 	backward.PushBack({ 241, 140, 56, 106 });
 	backward.PushBack({ 315, 144, 60, 102 });
 	backward.speed = 0.125f;
-	/*
+	
 	//Punch animation
-	punch.PushBack({ 14, 585, 72, 100 });
-	punch.PushBack({ 87, 585, 62, 100 });
-	punch.PushBack({ 155, 585, 96, 100 });
+	punch.PushBack({ 23, 917, 61, 102 });
+	punch.PushBack({ 103, 917, 53, 102 });
+	punch.PushBack({ 175, 917, 85, 102 });
 	punch.speed = 0.12f;
 
-	//Kick animation
+	//Kick animation *
 	kick.PushBack({ 40, 56, 50, 95, });
 	kick.PushBack({ 93, 30, 58, 110 });
 	kick.PushBack({ 164, 39, 53, 108 });
@@ -52,7 +52,7 @@ ModuleJoe::ModuleJoe()
 	kick.PushBack({ 341, 37, 65, 112 });
 	kick.speed = 0.12f;
 
-	//Jump animation
+	//Jump animation *
 	jump.PushBack({ 15, 337, 60, 106 });
 	jump.PushBack({ 268, 183, 52, 140 });
 	jump.PushBack({ 328, 176, 65, 145 });
@@ -60,14 +60,11 @@ ModuleJoe::ModuleJoe()
 	jump.speed = 0.12f;
 
 	//crouch animation
-	crouch.PushBack({ 10, 808, 59, 98 });
-	crouch.PushBack({ 133, 822, 63, 84 });
-	crouch.PushBack({ 74, 812, 58, 95 });
-	crouch.PushBack({ 200, 839, 57, 66 });
-	crouch.speed = 0.175f;
+	crouch.PushBack({ 26, 288, 59, 69 });
+	crouch.speed = 0.25f;
 	crouch.loop = false;
 
-	//SpecialAttack animation
+	//SpecialAttack animation *
 	specialAttack.PushBack({ 421, 693, 52, 106 });
 	specialAttack.PushBack({ 362, 691, 55, 107 });
 	specialAttack.PushBack({ 297, 702, 61, 96 });
@@ -78,14 +75,20 @@ ModuleJoe::ModuleJoe()
 	specialAttack.PushBack({ 10, 717, 62, 81 });
 	specialAttack.speed = 0.175f;
 
-	// taking damage animation
+	// taking damage animation *
 	damage.PushBack({ 344, 342, 60, 100 });
 	damage.PushBack({ 407, 336, 68, 106 });
 	damage.PushBack({ 408, 346, 64, 96 });
 	damage.PushBack({ 555, 355, 69, 87 });
 	damage.speed = 0.15f;
 
-	// defeat animation
+	//crouch punch animation
+	crouchPunch.PushBack({ 97, 286, 55, 71 });
+	crouchPunch.PushBack({ 159, 288, 76, 70 });
+	crouchPunch.speed = 0.175f;
+	crouchPunch.loop = false;
+
+	// defeat animation *
 	defeat.PushBack({ 10, 921, 64, 96 });
 	defeat.PushBack({ 81, 930, 69, 87 });
 	defeat.PushBack({ 159, 912, 84, 105 });
@@ -97,14 +100,14 @@ ModuleJoe::ModuleJoe()
 	defeat.speed = 0.07f;
 	defeat.loop = false;
 
-	// win animation
+	// win animation *
 	win.PushBack({ 272, 491, 62, 97 });
 	win.PushBack({ 345, 488, 56, 100 });
 	win.PushBack({ 412, 489, 59, 99 });
 	win.PushBack({ 481, 452, 56, 136 });
 	win.speed = 0.05f;
 	win.loop = false;
-	*/
+	
 }
 
 ModuleJoe::~ModuleJoe()
@@ -116,7 +119,7 @@ bool ModuleJoe::Start()
 	LOG("Loading player");
 
 	App->collision->Enable();
-	graphicsJoe = App->textures->Load("Assets/Sprites/Joe Higashi/Sprites joe higashi.png"); //First Tery Bogard Sprite Sheet																				  //graphicsTerry2 = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites 2.png"); //Second Tery Bogard Sprite Sheet
+	graphicsJoe = App->textures->Load("Assets/Sprites/Joe Higashi/Sprites joe higashi.png"); //First Tery Bogard Sprite Sheet																				 
 	punchfx = App->sounds->Load("Assets/Audio/Fx/SFX_Punch.ogg");
 	kickfx = App->sounds->Load("Assets/Audio/Fx/SFX_Punch2.ogg");
 	jumpfx = App->sounds->Load("Assets/Audio/Fx/SFX_Landing.ogg");
@@ -125,6 +128,7 @@ bool ModuleJoe::Start()
 	//defeatfx = App->sounds->Load("Assets/Audio/Fx/FX_DefeatScream.ogg"); Not working
 	godMode = true;
 	colPlayer = App->collision->AddCollider({ position.x, position.y, 34, 106 }, COLLIDER_PLAYER);
+	colPlayerCrouch = App->collision->AddCollider({ position.x, position.y - 46, 34, 60 }, COLLIDER_NONE);
 	Life = 100;
 
 	return true;
@@ -158,7 +162,7 @@ update_status ModuleJoe::Update()
 		else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
 			status = JOE_JUMP;
 
-		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 			status = JOE_CROUCH;
 
 		else if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
@@ -186,6 +190,9 @@ update_status ModuleJoe::Update()
 	case JOE_IDLE:
 		current_animation = &idle;
 		position.y = 220;
+
+		colPlayer->type = COLLIDER_PLAYER;
+		colPlayerCrouch->type = COLLIDER_NONE;
 		break;
 
 	case JOE_BACKWARD:
@@ -195,6 +202,8 @@ update_status ModuleJoe::Update()
 			if (position.x < 10) { position.x -= 0; }
 			else position.x -= speed;
 			current_animation = &backward;
+			colPlayer->type = COLLIDER_PLAYER;
+			colPlayerCrouch->type = COLLIDER_NONE;
 		}
 		break;
 
@@ -205,6 +214,8 @@ update_status ModuleJoe::Update()
 		{
 			position.x += speed;
 			current_animation = &forward;
+			colPlayer->type = COLLIDER_PLAYER;
+			colPlayerCrouch->type = COLLIDER_NONE;
 		}
 		break;
 
@@ -221,12 +232,35 @@ update_status ModuleJoe::Update()
 		break;
 
 	case JOE_CROUCH:
-		current_animation = &crouch;
+		if (jumpEnable == true && crouchPunchEnable == true) {
+
+			colPlayer->type = COLLIDER_NONE;
+			colPlayerCrouch->type = COLLIDER_PLAYER;
+
+			if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
+				crouchPunchEnable = false;
+				crouchPunch.Reset();
+				crouch_punch_timer = 1;
+				if (Mix_PlayChannel(-1, punchfx, 0) == -1)
+				{
+					LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+				}
+				crouchPunchCol = App->collision->AddCollider({ position.x + 46, position.y - 55, 40, 18 }, COLLIDER_PLAYER_SHOT);
+				crouchPunchHit = false;
+			}
+			else current_animation = &crouch;
+		}
 		break;
+		
 
 	case JOE_IN_JUMP_FINISH:
 		status = JOE_IDLE;
 		jump.Reset();
+		break;
+
+	case JOE_CROUCH_PUNCH_FINISH:
+		status = JOE_CROUCH;
+		crouchPunch.Reset();
 		break;
 
 	case JOE_IN_PUNCH_FINISH:
@@ -358,6 +392,22 @@ update_status ModuleJoe::Update()
 		}
 	}
 
+	if (crouch_punch_timer > 0)
+	{
+		crouch_punch_timer = crouch_punch_timer + 1;
+		current_animation = &crouchPunch;
+		if (crouchPunchCol->CheckCollision(App->enemy->r) && crouchPunchHit == false) {
+			App->enemy->hit = true;
+			crouchPunchHit = true;
+		}
+		if (crouch_punch_timer > 20)
+		{
+			crouchPunchEnable = true;
+			status = JOE_CROUCH_PUNCH_FINISH;
+			crouchPunchCol->to_delete = true;
+			crouch_punch_timer = 0;
+		}
+	}
 	if (punch_timer > 0)
 	{
 		punch_timer = punch_timer + 1;
@@ -412,7 +462,7 @@ update_status ModuleJoe::Update()
 			special_timer = 0;
 		}
 	}
-
+	/*
 	if (groundFire_timer > 0)
 	{
 		groundFire_timer = groundFire_timer + 1;
@@ -452,7 +502,7 @@ update_status ModuleJoe::Update()
 			groundFire_timer = 0;
 		}
 	}
-
+*/
 	if (App->input->keyboard[SDL_SCANCODE_F5] == KEY_STATE::KEY_DOWN)
 	{
 		if (godMode) {
@@ -468,7 +518,12 @@ update_status ModuleJoe::Update()
 	}
 
 
-	if (jump_timer == 0) { colPlayer->SetPos(position.x + 12, position.y - 107); }
+	if (jump_timer == 0) { 
+
+	colPlayer->SetPos(position.x + 12, position.y - 107);
+	colPlayerCrouch->SetPos(position.x + 12, position.y - 67);
+
+	}
 	// Draw everything --------------------------------------
 
 	r = current_animation->GetCurrentFrame();

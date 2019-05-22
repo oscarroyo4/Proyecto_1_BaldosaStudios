@@ -25,7 +25,8 @@ enum joe_status
 	JOE_IN_KICK_FINISH,
 	JOE_IN_JUMP_FINISH,
 	JOE_DAMAGE_FINISH,
-	JOE_IN_SPECIAL_FINISH
+	JOE_IN_SPECIAL_FINISH,
+	JOE_CROUCH_PUNCH_FINISH
 };
 
 
@@ -46,6 +47,7 @@ public:
 	bool kickEnable = true;
 	bool jumpEnable = true;
 	bool specialEnable = true;
+	bool crouchPunchEnable = true;
 	bool input = true;
 	SDL_Event ev;
 	SDL_Texture * graphicsJoe = nullptr;
@@ -59,13 +61,16 @@ public:
 	Animation specialAttack;
 	Animation specialAttackStatic;
 	Animation crouch;
+	Animation crouchPunch;
 	Animation damage;
 	Animation defeat;
 	Animation win;
 	iPoint position;
-	Collider* colPlayer;
-	Collider* punchCol;
-	Collider* kickCol;
+	Collider* colPlayer=nullptr;
+	Collider* colPlayerCrouch = nullptr;
+	Collider* punchCol=nullptr;
+	Collider* kickCol=nullptr;
+	Collider* crouchPunchCol=nullptr;
 	Collider* specialCol1;
 	Collider* specialCol2;
 	Collider* specialCol3;
@@ -73,12 +78,14 @@ public:
 	int PlayerVict = 0;
 	bool hit = false;
 	bool punchHit = false;
+	bool crouchPunchHit = false;
 	bool kickHit = false;
 	joe_status status = JOE_IDLE;
 	Uint32 punch_timer = 0;
 	Uint32 jump_timer = 0;
 	Uint32 kick_timer = 0;
 	Uint32 damage_timer = 0;
+	Uint32 crouch_punch_timer = 0;
 	Uint32 special_timer = 0;
 	Uint32 groundFire_timer = 0;
 	Uint32 defeat_timer = 0;
