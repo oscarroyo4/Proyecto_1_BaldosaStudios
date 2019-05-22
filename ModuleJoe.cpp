@@ -118,12 +118,12 @@ bool ModuleJoe::Start()
 
 	App->collision->Enable();
 	graphicsJoe = App->textures->Load("Assets/Sprites/Joe Higashi/Sprites joe higashi.png"); //Joe Higashi Sprite Sheet																				 
-	punchfx = App->sounds->Load("Assets/Audio/Fx/SFX_Punch.ogg");
-	kickfx = App->sounds->Load("Assets/Audio/Fx/SFX_Punch2.ogg");
-	jumpfx = App->sounds->Load("Assets/Audio/Fx/SFX_Landing.ogg");
-	specialfx = App->sounds->Load("Assets/Audio/Fx/FX_SpecialAttack.ogg");
-	winfx = App->sounds->Load("Assets/Audio/Fx/FX_WinScream.ogg");
-	//defeatfx = App->sounds->Load("Assets/Audio/Fx/FX_DefeatScream.ogg"); Not working
+	punchfx = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Punch.ogg");
+	kickfx = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Punch2.ogg");
+	jumpfx = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Landing.ogg");
+	specialfx = App->sounds->Load_effects("Assets/Audio/Fx/FX_SpecialAttack.ogg");
+	winfx = App->sounds->Load_effects("Assets/Audio/Fx/FX_WinScream.ogg");
+	defeatfx = App->sounds->Load_effects("Assets/Audio/Fx/FX_DefeatScream.ogg");
 	godMode = true;
 	colPlayer = App->collision->AddCollider({ position.x, position.y, 34, 106 }, COLLIDER_PLAYER);
 	colPlayerCrouch = App->collision->AddCollider({ position.x, position.y - 46, 34, 60 }, COLLIDER_NONE);
@@ -139,6 +139,13 @@ bool ModuleJoe::CleanUp()
 	if (App->joe->IsEnabled()) {
 		App->collision->Disable();
 		SDL_DestroyTexture(graphicsJoe);
+		//Audio
+		App->sounds->Unload_effects(punchfx);
+		App->sounds->Unload_effects(kickfx);
+		App->sounds->Unload_effects(specialfx);
+		App->sounds->Unload_effects(jumpfx);
+		App->sounds->Unload_effects(winfx);
+		App->sounds->Unload_effects(defeatfx);
 		App->joe->Disable();
 	}
 
@@ -221,7 +228,7 @@ update_status ModuleJoe::Update()
 		if (jumpEnable == true) {
 			jumpEnable = false;
 			jump.Reset();
-			if (Mix_PlayChannel(-1, jumpfx, 0) == -1)
+			if (App->sounds->Play_chunk(jumpfx))
 			{
 				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 			}
@@ -239,7 +246,7 @@ update_status ModuleJoe::Update()
 				crouchPunchEnable = false;
 				crouchPunch.Reset();
 				crouch_punch_timer = 1;
-				if (Mix_PlayChannel(-1, punchfx, 0) == -1)
+				if (App->sounds->Play_chunk(punchfx))
 				{
 					LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 				}
@@ -286,7 +293,7 @@ update_status ModuleJoe::Update()
 			kickEnable = false;
 			kick.Reset();
 			kick_timer = 1;
-			if (Mix_PlayChannel(-1, kickfx, 0) == -1)
+			if (App->sounds->Play_chunk(kickfx))
 			{
 				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 			}
@@ -300,7 +307,7 @@ update_status ModuleJoe::Update()
 			punchEnable = false;
 			punch.Reset();
 			punch_timer = 1;
-			if (Mix_PlayChannel(-1, punchfx, 0) == -1)
+			if (App->sounds->Play_chunk(punchfx))
 			{
 				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 			}
@@ -313,7 +320,7 @@ update_status ModuleJoe::Update()
 	case JOE_SPECIAL:
 		if (specialEnable == true) {
 			specialAttack.Reset();
-			if (Mix_PlayChannel(-1, specialfx, 0) == -1)
+			if (App->sounds->Play_chunk(specialfx))
 			{
 				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 			}
@@ -345,7 +352,7 @@ update_status ModuleJoe::Update()
 
 		if (win_timer == 4)
 		{
-			if (Mix_PlayChannel(-1, defeatfx, 0) == -1)
+			if (App->sounds->Play_chunk(defeatfx))
 			{
 				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 			}
@@ -362,7 +369,7 @@ update_status ModuleJoe::Update()
 		if (win_timer == 4)
 		{
 			PlayerVict = PlayerVict + 1;
-			if (Mix_PlayChannel(-1, winfx, 0) == -1)
+			if (App->sounds->Play_chunk(winfx))
 			{
 				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 			}

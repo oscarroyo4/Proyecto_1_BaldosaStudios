@@ -42,7 +42,7 @@ bool ModuleScenePaoPao::Start()
 	App->enemy->Enable();
 	App->render->camera.x = -530;
 	//Play the music
-	if (App->sounds->Play_music( music))
+	if (App->sounds->Play_music(music))
 	{
 		LOG("Could not play music. Mix_PlayChannel: %s", Mix_GetError());
 		ret = false;

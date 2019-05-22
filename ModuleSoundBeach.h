@@ -5,7 +5,6 @@
 #include "Animation.h"
 
 struct SDL_Texture;
-struct Mix_Music;
 
 class ModuleSceneSoundBeach : public Module
 {

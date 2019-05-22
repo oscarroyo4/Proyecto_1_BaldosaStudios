@@ -3,9 +3,10 @@
 
 #include "Module.h"
 #include "Animation.h"
+#include "ModuleSounds.h"
+
 
 struct SDL_Texture;
-struct Mix_Chunk;
 
 class ModuleScenePaoPao : public Module
 {
@@ -20,7 +21,7 @@ public:
 public:
 
 	SDL_Texture * graphics = nullptr;
-	Mix_Music * music = nullptr;
+	Mix_Music* music = nullptr;
 	Animation paopao;
 	int PlayerVictories = 0;
 	int EnemyVictories = 0;

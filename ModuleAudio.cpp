@@ -30,7 +30,7 @@ bool ModuleAudio::Init()
 		else
 		{
 			LOG("Mix_Init correctly initialized!");
-			Mix_OpenAudio(48000, MIX_DEFAULT_FORMAT, 2, 4096);
+			Mix_OpenAudio(48000, MIX_DEFAULT_FORMAT, 2, 1024);
 		}
 	}
 	return ret;
@@ -70,7 +70,7 @@ Mix_Chunk* const ModuleAudio::Load_effects(const char *path)
 	Mix_Chunk* effect = Mix_LoadWAV(path);
 	if (effect == NULL)
 	{
-		LOG("Llepala");
+		LOG("Error loading effect!");
 	}
 	effects[last_effect++] = effect;
 
@@ -84,7 +84,7 @@ bool ModuleAudio::Play_music(Mix_Music* track)
 
 	if (Mix_FadeInMusic(track, 0, 2000) == -1)
 	{
-		SDL_Log("%s/n", SDL_GetError());
+		SDL_Log("%s/n", Mix_GetError());
 		return false;
 	}	
 	Mix_Volume(2, 0);

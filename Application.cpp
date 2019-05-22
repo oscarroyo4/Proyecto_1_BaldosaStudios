@@ -4,6 +4,7 @@
 #include "ModuleInput.h"
 #include "ModuleTextures.h"
 #include "ModulePlayer.h"
+#include "ModuleAndy.h"
 #include "ModuleFadeToBlack.h"
 #include "ModulePaoPao.h"
 #include "ModuleSoundBeach.h"
@@ -13,7 +14,6 @@
 #include "ModuleCollision.h"
 #include "ModulePlayerSelect.h"
 #include "ModuleHUD.h"
-#include "ModuleSounds.h"//Disbaled
 #include "ModuleAudio.h"
 #include "ModuleGameControllers.h"
 #include "ModuleCinematics.h"
@@ -36,6 +36,7 @@ Application::Application()
 	modules[9] = select = new ModulePlayerSelect();
 	modules[10] = player = new ModulePlayer();
 	modules[11] = enemy = new ModuleEnemy();
+	modules[11] = andy = new ModuleAndy();
 	modules[12] = particles = new ModuleParticles();
 	modules[13] = fade = new ModuleFadeToBlack();
 	modules[14] = sounds = new ModuleAudio();

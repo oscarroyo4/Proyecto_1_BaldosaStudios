@@ -106,17 +106,16 @@ ModuleAndy::~ModuleAndy()
 // Load assets
 bool ModuleAndy::Start()
 {
-	LOG("Loading player");
+	LOG("Loading andy");
 
 	App->collision->Enable();
 	graphicsAndy = App->textures->Load("Assets/Sprites/Andy Bogard/Sprites_Andy_Bogard.png"); //First Andy Bogard Sprite Sheet
-																						  //graphicsAndy2 = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites 2.png"); //Second Tery Bogard Sprite Sheet
-	punchfx = App->sounds->Load("Assets/Audio/Fx/SFX_Punch.ogg");
-	kickfx = App->sounds->Load("Assets/Audio/Fx/SFX_Punch2.ogg");
-	jumpfx = App->sounds->Load("Assets/Audio/Fx/SFX_Landing.ogg");
-	specialfx = App->sounds->Load("Assets/Audio/Fx/FX_Hishoken.ogg");
-	winfx = App->sounds->Load("Assets/Audio/Fx/FX_WinScream.ogg");
-	//defeatfx = App->sounds->Load("Assets/Audio/Fx/FX_DefeatScream.ogg"); Not working
+	punchfx = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Punch.ogg");
+	kickfx = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Punch2.ogg");
+	jumpfx = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Landing.ogg");
+	specialfx = App->sounds->Load_effects("Assets/Audio/Fx/FX_Hishoken.ogg");
+	winfx = App->sounds->Load_effects("Assets/Audio/Fx/FX_WinScream.ogg");
+	defeatfx = App->sounds->Load_effects("Assets/Audio/Fx/FX_DefeatScream.ogg");
 	godMode = true;
 	colPlayer = App->collision->AddCollider({ position.x, position.y, 34, 106 }, COLLIDER_PLAYER);
 	Life = 100;
@@ -127,11 +126,17 @@ bool ModuleAndy::Start()
 // Unload assets
 bool ModuleAndy::CleanUp()
 {
-	LOG("Unloading player");
-	if (App->player->IsEnabled()) {
+	LOG("Unloading andy");
+	if (App->andy->IsEnabled()) {
 		App->collision->Disable();
 		SDL_DestroyTexture(graphicsAndy);
-		App->player->Disable();
+		App->sounds->Unload_effects(punchfx);
+		App->sounds->Unload_effects(kickfx);
+		App->sounds->Unload_effects(specialfx);
+		App->sounds->Unload_effects(jumpfx);
+		App->sounds->Unload_effects(winfx);
+		App->sounds->Unload_effects(defeatfx);
+		App->andy->Disable();
 	}
 
 	//SDL_DestroyTexture(graphicsAndy2);

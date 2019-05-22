@@ -6,7 +6,6 @@
 
 struct SDL_Texture;
 struct Mix_Chunk;
-struct Mix_Music;
 
 class ModulePlayerSelect : public Module
 {

@@ -8,7 +8,6 @@
 #define MAX_MUS 20
 #define MAX_FX 20
 
-struct Mix_Music;
 struct Mix_Chunk;
 
 class ModuleAudio : public Module
