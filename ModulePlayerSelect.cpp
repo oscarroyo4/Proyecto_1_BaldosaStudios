@@ -93,6 +93,7 @@ update_status ModulePlayerSelect::Update()
 	if (App->input->keyboard[SDL_SCANCODE_D] == KEY_STATE::KEY_DOWN && posT == true)
 	{
 		current_animation = &selectA;
+		posA = true;
 		posJ = false;
 		posT = false;
 		posA = true;
@@ -105,6 +106,7 @@ update_status ModulePlayerSelect::Update()
 	if (App->input->keyboard[SDL_SCANCODE_A] == KEY_STATE::KEY_DOWN && posA == true)
 	{
 		current_animation = &selectT;
+		posA = false;
 		posJ = false;
 		posT = true;
 		posA = false;
@@ -127,7 +129,6 @@ update_status ModulePlayerSelect::Update()
 	}
 
 
-
 	if (App->input->keyboard[SDL_SCANCODE_SPACE])
 	{
 		if (App->sounds->Play_chunk(chooseSelection))
@@ -137,7 +138,7 @@ update_status ModulePlayerSelect::Update()
 		App->fade->FadeToBlack(this, App->paopao, 0.5);
 		if (posJ == true) { App->paopao->JoeOnStage = true; }
 		if (posT == true) { App->paopao->TerryOnStage = true; }
-
+		if (posA == true) { App->paopao->AndyOnStage = true; }
 	}
 
 	return UPDATE_CONTINUE;

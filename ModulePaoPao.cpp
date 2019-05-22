@@ -5,6 +5,7 @@
 #include "ModulePaoPao.h"
 #include "ModulePlayer.h"
 #include "ModuleJoe.h"
+#include "ModuleAndy.h"
 #include "ModuleInput.h"
 #include "ModuleIntro.h"
 #include "ModuleCollision.h"
@@ -37,6 +38,7 @@ bool ModuleScenePaoPao::Start()
 	music = App->sounds->Load_music("Assets/Audio/PaoPao.ogg");
 	if (JoeOnStage == true) { App->joe->Enable(); }
 	if (TerryOnStage == true) { App->player->Enable(); }
+	if (AndyOnStage == true) { App->andy->Enable(); }
 	App->enemy->Enable();
 	App->render->camera.x = -530;
 	//Play the music
