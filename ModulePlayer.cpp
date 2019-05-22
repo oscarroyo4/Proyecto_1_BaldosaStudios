@@ -412,7 +412,7 @@ update_status ModulePlayer::Update()
 		}
 	}
 
-	//
+	
 	if (crouch_punch_timer > 0)
 	{
 		crouch_punch_timer = crouch_punch_timer + 1;
@@ -429,7 +429,7 @@ update_status ModulePlayer::Update()
 			crouch_punch_timer = 0;
 		}
 	}
-	//
+	
 
 
 	if (jump_timer > 0)

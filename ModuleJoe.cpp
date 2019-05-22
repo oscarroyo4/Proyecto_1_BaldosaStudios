@@ -39,18 +39,19 @@ ModuleJoe::ModuleJoe()
 	backward.speed = 0.125f;
 	
 	//Punch animation
-	punch.PushBack({ 23, 917, 61, 102 });
-	punch.PushBack({ 103, 917, 53, 102 });
-	punch.PushBack({ 175, 917, 85, 102 });
-	punch.speed = 0.12f;
+	punch.PushBack({ 481, 610, 64, 102 });
+	punch.PushBack({ 553, 616, 63, 96 });
+	punch.PushBack({ 627, 616, 97, 96 });
+	punch.PushBack({ 553, 616, 63, 96 });
+	punch.PushBack({ 481, 610, 64, 102 });
+	punch.speed = 0.14f;
 
-	//Kick animation *
-	kick.PushBack({ 40, 56, 50, 95, });
-	kick.PushBack({ 93, 30, 58, 110 });
-	kick.PushBack({ 164, 39, 53, 108 });
-	kick.PushBack({ 218, 41, 121, 100 });
-	kick.PushBack({ 341, 37, 65, 112 });
-	kick.speed = 0.12f;
+	//Kick animation 
+	kick.PushBack({ 417, 163, 60, 84, });
+	kick.PushBack({ 495, 185, 52, 62 });
+	kick.PushBack({ 562, 153, 44, 94 });
+	kick.PushBack({ 631, 139, 110, 106 });
+	kick.speed = 0.14f;
 
 	//Jump animation *
 	jump.PushBack({ 88, 367, 39, 126 });
@@ -63,16 +64,13 @@ ModuleJoe::ModuleJoe()
 	crouch.speed = 0.25f;
 	crouch.loop = false;
 
-	//SpecialAttack animation *
-	specialAttack.PushBack({ 421, 693, 52, 106 });
-	specialAttack.PushBack({ 362, 691, 55, 107 });
-	specialAttack.PushBack({ 297, 702, 61, 96 });
-	specialAttack.PushBack({ 214, 720, 80, 78 });
-	specialAttack.PushBack({ 142, 721, 68, 77 });
-	specialAttackStatic.PushBack({ 142, 721, 68, 77 });
-	specialAttack.PushBack({ 75, 730, 66, 68 });
-	specialAttack.PushBack({ 10, 717, 62, 81 });
-	specialAttack.speed = 0.175f;
+	//SpecialAttack animation 
+	specialAttack.PushBack({ 12, 1078, 54, 102 });
+	specialAttack.PushBack({ 91, 1117, 80, 63 });
+	specialAttack.PushBack({ 197, 1096, 50, 84 });
+	specialAttack.PushBack({ 272, 1039, 47, 141 });
+	specialAttackStatic.PushBack({ 272, 1039, 47, 141 });
+	specialAttack.speed = 0.12f;
 
 	// taking damage animation *
 	damage.PushBack({ 344, 342, 60, 100 });
@@ -84,6 +82,7 @@ ModuleJoe::ModuleJoe()
 	//crouch punch animation
 	crouchPunch.PushBack({ 97, 286, 55, 71 });
 	crouchPunch.PushBack({ 159, 288, 76, 70 });
+	crouchPunch.PushBack({ 238, 288, 55, 71 });
 	crouchPunch.speed = 0.175f;
 	crouchPunch.loop = false;
 
@@ -291,7 +290,7 @@ update_status ModuleJoe::Update()
 			{
 				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 			}
-			kickCol = App->collision->AddCollider({ position.x + 46, position.y - 58, 55, 18 }, COLLIDER_PLAYER_SHOT);
+			kickCol = App->collision->AddCollider({ position.x + 46, position.y - 85, 55, 18 }, COLLIDER_PLAYER_SHOT);
 			kickHit = false;
 		}
 		break;
@@ -318,7 +317,7 @@ update_status ModuleJoe::Update()
 			{
 				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 			}
-			groundFire_timer = 1;
+			tornado_timer = 1;
 			special_timer = 1;
 			specialEnable = false;
 		}
@@ -461,47 +460,26 @@ update_status ModuleJoe::Update()
 			special_timer = 0;
 		}
 	}
-	/*
-	if (groundFire_timer > 0)
+	
+	if (tornado_timer > 0)
 	{
-		groundFire_timer = groundFire_timer + 1;
-		if (groundFire_timer > 30) { current_animation = &specialAttackStatic; }
-		if (groundFire_timer == 69)
+		tornado_timer = tornado_timer + 1;
+		if (tornado_timer > 30) { current_animation = &specialAttackStatic; }
+		if (tornado_timer == 69)
 		{
-			App->particles->AddParticle(App->particles->smallfire, position.x + 26, position.y - 45, 0, 2800, 1.5, 0, 1);
-
+			App->particles->AddParticle(App->particles->tornado, position.x + 26, position.y-100, 0, 2800, 2.2, 0, 1);
 		}
-		if (groundFire_timer == 55)
-		{
-			App->particles->AddParticle(App->particles->midfire, position.x + 28, position.y - 72, 0, 2700, 1.5, 0, 1);
-
-		}
-		if (groundFire_timer == 41)
-		{
-			App->particles->AddParticle(App->particles->bigfire, position.x + 29, position.y - 100, 0, 2600, 1.5, 0, 1);
-
-		}
-		if (groundFire_timer == 27)
-		{
-			App->particles->AddParticle(App->particles->midfire, position.x + 31, position.y - 72, 0, 2500, 1.5, 0, 1);
-
-		}
-		if (groundFire_timer == 13)
-		{
-			App->particles->AddParticle(App->particles->smallfire, position.x + 33, position.y - 45, 0, 2400, 1.5, 0, 1);
-
-		}
-		if (groundFire_timer >= 120)
+		if (tornado_timer >= 120)
 		{
 			status = JOE_IDLE;
 		}
-		if (groundFire_timer >= 180)
+		if (tornado_timer >= 180)
 		{
 			specialEnable = true;
-			groundFire_timer = 0;
+			tornado_timer = 0;
 		}
 	}
-*/
+
 	if (App->input->keyboard[SDL_SCANCODE_F5] == KEY_STATE::KEY_DOWN)
 	{
 		if (godMode) {

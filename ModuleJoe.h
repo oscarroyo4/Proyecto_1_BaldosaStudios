@@ -71,9 +71,7 @@ public:
 	Collider* punchCol=nullptr;
 	Collider* kickCol=nullptr;
 	Collider* crouchPunchCol=nullptr;
-	Collider* specialCol1;
-	Collider* specialCol2;
-	Collider* specialCol3;
+	Collider* specialCol;
 	int Life = 100;
 	int PlayerVict = 0;
 	bool hit = false;
@@ -87,7 +85,7 @@ public:
 	Uint32 damage_timer = 0;
 	Uint32 crouch_punch_timer = 0;
 	Uint32 special_timer = 0;
-	Uint32 groundFire_timer = 0;
+	Uint32 tornado_timer = 0;
 	Uint32 defeat_timer = 0;
 	Uint32 win_timer = 0;
 	Mix_Chunk* punchfx = nullptr;
