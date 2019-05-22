@@ -35,6 +35,19 @@ bool ModuleParticles::Start()
 	midfire.anim.speed = 0.01f;
 	bigfire.anim.speed = 0.01f;
 
+	//SDL_DestroyTexture(graphics);
+
+	//graphics2 = App->textures->Load("Assets/Sprites/Joe Higashi/Sprites joe higashi.png");
+
+	//tornado.anim.PushBack({378,1122,42,58});
+	//tornado.anim.PushBack({434,1092,51,88});
+	//tornado.anim.PushBack({497,1068,61,112});
+	//tornado.anim.PushBack({563,1068,58,112});
+	//tornado.anim.PushBack({630,1068,63,112});
+	//tornado.anim.PushBack({718,1068,64,112});
+
+	//tornado.anim.speed = 0.04f;
+
 	return true;
 }
 

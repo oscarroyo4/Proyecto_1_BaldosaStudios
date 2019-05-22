@@ -42,6 +42,7 @@ public:
 private:
 
 	SDL_Texture* graphics = nullptr;
+	SDL_Texture* graphics2 = nullptr;
 	Particle* active[MAX_ACTIVE_PARTICLES];
 	uint last_particle = 0;
 
@@ -50,6 +51,7 @@ public:
 	Particle bigfire;
 	Particle midfire;
 	Particle smallfire;
+	Particle tornado;
 };
 
 #endif // __MODULEPARTICLES_H__
