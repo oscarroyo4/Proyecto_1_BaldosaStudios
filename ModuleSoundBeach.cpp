@@ -46,6 +46,11 @@ ModuleSceneSoundBeach::ModuleSceneSoundBeach()
 	backgroundPeople4.PushBack({ 123, 97, 59, 93 });
 	backgroundPeople4.PushBack({ 182, 103, 60, 93 });
 	backgroundPeople4.speed = 0.07f;
+
+	rectShadowSB.x = 0;
+	rectShadowSB.y = 12;
+	rectShadowSB.w = 64;
+	rectShadowSB.h = 12;
 }
 
 ModuleSceneSoundBeach::~ModuleSceneSoundBeach()
@@ -61,6 +66,7 @@ bool ModuleSceneSoundBeach::Start()
 	graphicsAnim = App->textures->Load("Assets/Sprites/Sound Beach Tileset/Day/SoundBeach_PeopleAnim.png");
 	graphics2 = App->textures->Load("Assets/Sprites/Sound Beach Tileset/Sunset/SoundBeach (sunset).png");
 	graphicsAnim2 = App->textures->Load("Assets/Sprites/Sound Beach Tileset/Sunset/PeopleAnimation_(sunset).png");
+	ShadowSB = App->textures->Load("Assets/Sprites/Main/Shadow.png");
 	music = App->sounds->Load_music("Assets/Fatal Fury King of Fighters - The Sea Knows (Michael Max Theme).ogg");
 	App->player->Disable();
 	if (JoeOnStage == true) { 
@@ -112,6 +118,10 @@ bool ModuleSceneSoundBeach::CleanUp()
 
 	if (!IsEnabled()) {
 		SDL_DestroyTexture(graphics);
+		SDL_DestroyTexture(graphicsAnim);
+		SDL_DestroyTexture(graphics2);
+		SDL_DestroyTexture(graphicsAnim2);
+		SDL_DestroyTexture(ShadowSB);
 		if (TerryOnStage == true) App->player->Disable();
 		if (JoeOnStage == true) App->joe->Disable();
 		if (AndyOnStage == true) App->andy->Disable();
@@ -256,6 +266,11 @@ update_status ModuleSceneSoundBeach::Update()
 		App->render->Blit(App->hud->Round, 270, 42, &(App->hud->roundCircleWon.GetCurrentFrame()), -1 / 3);
 		App->render->Blit(App->hud->Round, 286, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
 	}
+
+	if (App->player->IsEnabled()) { App->render->Blit(ShadowSB, App->player->position.x - 5, 210, &rectShadowSB); }
+	if (App->enemy->IsEnabled()) { App->render->Blit(ShadowSB, App->enemy->position.x - 5, 210, &rectShadowSB); }
+	if (App->andy->IsEnabled()) { App->render->Blit(ShadowSB, App->andy->position.x - 5, 210, &rectShadowSB); }
+	if (App->joe->IsEnabled()) { App->render->Blit(ShadowSB, App->joe->position.x - 5, 210, &rectShadowSB); }
 
 	return UPDATE_CONTINUE;
 }
