@@ -397,23 +397,23 @@ update_status ModuleEnemy::Update()
 
 		if (groundFire_timer == 69)
 		{
-			App->particles->AddParticle(App->particles->smallfire, position.x + 19, position.y - 45, 0, 2800, -1, 0, 2);
+			App->particles->AddParticle(App->particles->smallfire, position.x + 19, position.y, 0, 2800, -1, 0, 2);
 		}
 		if (groundFire_timer == 55)
 		{
-			App->particles->AddParticle(App->particles->midfire, position.x + 17, position.y - 72, 0, 2700, -1, 0, 2);
+			App->particles->AddParticle(App->particles->midfire, position.x + 17, position.y, 0, 2700, -1, 0, 2);
 		}
 		if (groundFire_timer == 41)
 		{
-			App->particles->AddParticle(App->particles->bigfire, position.x + 16, position.y - 100, 0, 2600, -1, 0, 2);
+			App->particles->AddParticle(App->particles->bigfire, position.x + 16, position.y, 0, 2600, -1, 0, 2);
 		}
 		if (groundFire_timer == 27)
 		{
-			App->particles->AddParticle(App->particles->midfire, position.x + 15, position.y - 72, 0, 2500, -1, 0, 2);
+			App->particles->AddParticle(App->particles->midfire, position.x + 15, position.y, 0, 2500, -1, 0, 2);
 		}
 		if (groundFire_timer == 13)
 		{
-			App->particles->AddParticle(App->particles->smallfire, position.x + 12, position.y - 45, 0, 2400, -1, 0, 2);
+			App->particles->AddParticle(App->particles->smallfire, position.x + 12, position.y, 0, 2400, -1, 0, 2);
 		}
 		if (groundFire_timer == 180)
 		{

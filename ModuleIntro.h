@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Animation.h"
 #include "ModuleAudio.h"
+#include "ModuleCinematics.h"
 
 struct SDL_Texture;
 
@@ -20,7 +21,7 @@ public:
 public:
 
 	SDL_Texture * background = nullptr;
-	Mix_Music * musicIntro = nullptr;
+	//Mix_Music * musicIntro = nullptr;
 	Animation intr;
 };
 

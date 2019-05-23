@@ -125,8 +125,8 @@ bool ModuleJoe::Start()
 	winfx = App->sounds->Load_effects("Assets/Audio/Fx/FX_WinScream.wav");
 	defeatfx = App->sounds->Load_effects("Assets/Audio/Fx/FX_DefeatScream.wav");
 	godMode = true;
-	colPlayer = App->collision->AddCollider({ position.x, position.y, 34, 106 }, COLLIDER_PLAYER);
-	colPlayerCrouch = App->collision->AddCollider({ position.x, position.y - 46, 34, 60 }, COLLIDER_NONE);
+	colPlayer = App->collision->AddCollider({ position.x, position.y, 38, 104 }, COLLIDER_PLAYER);
+	colPlayerCrouch = App->collision->AddCollider({ position.x, position.y - 46, 38, 65 }, COLLIDER_NONE);
 	Life = 100;
 
 	return true;
@@ -179,14 +179,14 @@ update_status ModuleJoe::Update()
 		else if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN)
 			status = JOE_SPECIAL;
 
-		else if (hit == true) {
-			status = JOE_DAMAGE;
-			hit = false;
-		}
-
 		else {
 			status = JOE_IDLE;
 			crouch.Reset();
+		}
+
+		if (hit == true) {
+			status = JOE_DAMAGE;
+			hit = false;
 		}
 	}
 
@@ -201,7 +201,7 @@ update_status ModuleJoe::Update()
 		break;
 
 	case JOE_BACKWARD:
-		if (specialEnable == false) { position.x += 0; }
+		if (special_timer < 60 && special_timer > 0) { position.x += 0; }
 		else
 		{
 			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
@@ -224,7 +224,7 @@ update_status ModuleJoe::Update()
 
 	case JOE_FORWARD:
 
-		if (specialEnable == false) { position.x += 0; }
+		if (special_timer <= 60 && special_timer > 0) { position.x += 0; }
 		else
 		{
 			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
@@ -237,7 +237,8 @@ update_status ModuleJoe::Update()
 					}
 					jump_timer = 1;
 				}
-			position.x += speed;
+			if (position.x > 590) { position.x -= 0; }
+			else position.x += speed;
 			current_animation = &forward;
 			colPlayer->type = COLLIDER_PLAYER;
 			colPlayerCrouch->type = COLLIDER_NONE;
@@ -339,6 +340,7 @@ update_status ModuleJoe::Update()
 
 	case JOE_SPECIAL:
 		if (specialEnable == true) {
+			specialEnable = false;
 			specialAttack.Reset();
 			if (App->sounds->Play_chunk(specialfx))
 			{
@@ -346,7 +348,6 @@ update_status ModuleJoe::Update()
 			}
 			tornado_timer = 1;
 			special_timer = 1;
-			specialEnable = false;
 		}
 		break;
 
@@ -496,11 +497,11 @@ update_status ModuleJoe::Update()
 		{
 			App->particles->AddParticle(App->particles->tornado, position.x + 26, position.y, 0, 1100, 2.2, 0, 1);
 		}
-		if (tornado_timer >= 60)
+		if (tornado_timer >= 30)
 		{
 			status = JOE_IDLE;
 		}
-		if (tornado_timer >= 180)
+		if (tornado_timer >= 1000)
 		{
 			specialEnable = true;
 			tornado_timer = 0;
@@ -524,8 +525,8 @@ update_status ModuleJoe::Update()
 
 	if (jump_timer == 0) {
 
-		colPlayer->SetPos(position.x + 12, position.y - 107);
-		colPlayerCrouch->SetPos(position.x + 12, position.y - 67);
+		colPlayer->SetPos(position.x, position.y - 107);
+		colPlayerCrouch->SetPos(position.x, position.y - 67);
 
 	}
 	// Draw everything --------------------------------------

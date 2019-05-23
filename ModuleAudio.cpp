@@ -15,23 +15,6 @@ ModuleAudio::~ModuleAudio() {}
 
 bool ModuleAudio::Init()
 {
-	/*
-	LOG("Init Sound library");
-	bool ret = true;
-	// load support for the mp3 and ogg audio format
-	int flags = MIX_INIT_OGG;
-	int init = Mix_Init(flags);
-
-	if ((init & flags) != flags)
-	{
-		LOG("Could not initialize mixer lib. Mix_Init: %s", Mix_GetError());
-		ret = false;
-	}
-	//Initialize SDL_mixer
-	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 512);
-
-	return ret;
-	*/
 	bool ret = true;
 
 	if (SDL_Init(SDL_INIT_AUDIO) < 0)
@@ -44,7 +27,7 @@ bool ModuleAudio::Init()
 		LOG("SDL_INIT AUDIO correctly initialized!\n");
 		int flags = MIX_INIT_OGG;
 		int initted = Mix_Init(flags);
-		if (initted&flags != flags) {
+		if (initted & flags != flags) {
 			SDL_Log("Mix_Init: Failed to init required ogg support! SDL_Mixer Error: %s \n", Mix_GetError());
 			SDL_Log("Mix_Init: %s\n", Mix_GetError());
 			ret = false;
@@ -104,7 +87,7 @@ Mix_Chunk* const ModuleAudio::Load_effects(const char *path)
 bool ModuleAudio::Play_music(Mix_Music* track)
 {
 
-	if (Mix_FadeInMusic(track, 0, 2000) == -1)
+	if (Mix_FadeInMusic(track, -1, 2000) == -1)
 	{
 		SDL_Log("%s/n", Mix_GetError());
 		return false;

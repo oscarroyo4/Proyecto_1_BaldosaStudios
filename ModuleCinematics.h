@@ -23,6 +23,10 @@ public:
 	SDL_Texture * fatalfuryintro = nullptr;
 	SDL_Texture * fatalfuryintrowords = nullptr;
 	SDL_Texture * inscoins = nullptr;
+
+	Mix_Music* musicIntro = nullptr;
+	bool played = false;
+
 	Animation BetweenPaoPaoAndBeachAnimation;
 	Animation GameIntroCinematicBackground;
 	Animation GameIntroCinematicWords;

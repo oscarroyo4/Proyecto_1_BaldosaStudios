@@ -28,13 +28,7 @@ bool ModuleIntro::Start()
 	App->render->camera.y = 0;
 
 	background = App->textures->Load("Assets/Sprites/Main/welcome.png");
-	musicIntro = App->sounds->Load_music("Assets/Audio/Menu.ogg");
-	if (!App->sounds->Play_music(musicIntro))
-	{
-		LOG("Could not play music. Mix_PlayChannel: %s", Mix_GetError());
-
-		return false;
-	}
+	//musicIntro = App->sounds->Load_music("Assets/Audio/Menu.ogg");
 
 	return true;
 }
@@ -44,7 +38,7 @@ bool ModuleIntro::CleanUp()
 {
 	LOG("Unloading intro scene");
 	if (!IsEnabled()) {
-		App->sounds->Unload_music(musicIntro);
+		App->sounds->Unload_music(App->cinematics->musicIntro);
 		App->sounds->Disable();
 
 		App->textures->Unload(background);

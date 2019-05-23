@@ -215,6 +215,16 @@ update_status ModulePlayer::Update()
 		if (special_timer < 60 && special_timer > 0) { position.x += 0; }
 		else
 		{
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+				if (jumpEnable == true) {
+					jumpEnable = false;
+					jump.Reset();
+					if (App->sounds->Play_chunk(jumpfx))
+					{
+						LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+					}
+					jump_timer = 1;
+				}
 			if (position.x < 10) { position.x -= 0; }
 			else position.x -= speed;
 			current_animation = &backward;
@@ -225,11 +235,19 @@ update_status ModulePlayer::Update()
 
 	case PLAYER_FORWARD:
 
-		if (special_timer <= 60 && special_timer > 0) {
-			position.x += 0; 
-		}
+		if (special_timer <= 60 && special_timer > 0) {position.x += 0;}
 		else
 		{
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+				if (jumpEnable == true) {
+					jumpEnable = false;
+					jump.Reset();
+					if (App->sounds->Play_chunk(jumpfx))
+					{
+						LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+					}
+					jump_timer = 1;
+				}
 			if (position.x > 590) { position.x -= 0; }
 			else position.x += speed;
 			current_animation = &forward;

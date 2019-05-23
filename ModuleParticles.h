@@ -16,7 +16,7 @@ struct Particle
 	uint fx = 0;
 	iPoint position;
 	iPoint speed;
-	Collider* col;
+	Collider* col = nullptr;
 	Uint32 born = 0;
 	Uint32 life = 0;
 	bool fx_played = false;

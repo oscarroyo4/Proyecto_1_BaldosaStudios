@@ -43,6 +43,8 @@ bool ModuleCinematics::Start()
 	fatalfuryintrowords = App->textures->Load("Assets/Sprites/Main/FatalFuryIntro_words.png");
 	inscoins = App->textures->Load("Assets/Sprites/Main/InsertCoin.png");
 
+	musicIntro = App->sounds->Load_music("Assets/Audio/Menu.ogg");
+
 	return true;
 }
 
@@ -72,6 +74,16 @@ update_status ModuleCinematics::Update()
 		App->render->Blit(fatalfuryintrowords, 350, 52, &(GameIntroCinematicWords.GetCurrentFrame()), 6);
 		App->render->Blit(fatalfuryintro, -35, 70, &(GameIntroCinematicTerry.GetCurrentFrame()), -0.28f);
 		App->render->Blit(inscoins, 125, 160, &(insertcoins.GetCurrentFrame()), 0);
+
+		if (!played) {
+			if (!App->sounds->Play_music(musicIntro))
+			{
+				LOG("Could not play music. Mix_PlayChannel: %s", Mix_GetError());
+
+				return UPDATE_ERROR;
+			}
+			else played = true;
+		}
 
 		if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1)
 		{

@@ -8,6 +8,7 @@
 #include "ModuleEnemy.h"
 #include "ModulePlayer.h"
 #include "ModuleJoe.h"
+#include "ModuleAndy.h"
 
 #include "SDL/include/SDL_timer.h"
 
@@ -26,22 +27,22 @@ bool ModuleParticles::Start()
 	LOG("Loading particles");
 	graphics = App->textures->Load("Assets/Sprites/Particles.png");
 
-	smallfire.anim.PushBack({ 51, 65, 22, 44 });
-	midfire.anim.PushBack({ 17, 38, 27, 72 });
-	bigfire.anim.PushBack({ 85, 10, 18, 100 });
-	midfire.anim.PushBack({ 17, 38, 27, 72 });
-	smallfire.anim.PushBack({ 51, 65, 22, 44 });
+	smallfire.anim.PushBack({ 51, 9, 16, 100 });
+	midfire.anim.PushBack({ 17, 9, 16, 100 });
+	bigfire.anim.PushBack({ 85, 10, 16, 100 });
+	midfire.anim.PushBack({ 17, 9, 16, 100 });
+	smallfire.anim.PushBack({ 51, 9, 16, 100 });
 
 	smallfire.anim.speed = 0.01f;
 	midfire.anim.speed = 0.01f;
 	bigfire.anim.speed = 0.01f;
 
-	tornado.anim.PushBack({11,121,42,112});
-	tornado.anim.PushBack({67,121,51,112});
-	tornado.anim.PushBack({130,121,61,112});
-	tornado.anim.PushBack({196,121,58,112});
-	tornado.anim.PushBack({263,121,63,112});
-	tornado.anim.PushBack({351,121,64,112});
+	tornado.anim.PushBack({11,126,42,106});
+	tornado.anim.PushBack({67,126,51,106 });
+	tornado.anim.PushBack({130,124,61,104 });
+	tornado.anim.PushBack({196,122,58,102 });
+	tornado.anim.PushBack({263,122,63,102 });
+	tornado.anim.PushBack({351,122,64,102 });
 
 	tornado.anim.speed = 0.09f;
 
@@ -107,11 +108,11 @@ void ModuleParticles::AddParticle(const Particle& particle, int x, int y, Uint32
 	p->speed.x = speedX;
 	p->speed.y = speedY;
 	if (PlEnVar == 1) {
-		p->col = App->collision->AddCollider({ p->position.x - 3, p->position.y, p->anim.GetCurrentFrame().w,  p->anim.GetCurrentFrame().h }, COLLIDER_PLAYER_SHOT);
+		p->col = App->collision->AddCollider({ p->position.x , p->position.y, p->anim.GetCurrentFrame().w,  p->anim.GetCurrentFrame().h }, COLLIDER_PLAYER_SHOT);
 		p->PlEn = 1;
 	}
 	else if (PlEnVar == 2) {
-		p->col = App->collision->AddCollider({ p->position.x - 3, p->position.y, p->anim.GetCurrentFrame().w,  p->anim.GetCurrentFrame().h }, COLLIDER_ENEMY_SHOT);
+		p->col = App->collision->AddCollider({ p->position.x , p->position.y, p->anim.GetCurrentFrame().w,  p->anim.GetCurrentFrame().h }, COLLIDER_ENEMY_SHOT);
 		p->PlEn = 2;
 	}
 
@@ -147,19 +148,34 @@ bool Particle::Update()
 
 	position.x += speed.x;
 	position.y += speed.y;
-	col->SetPos(position.x, position.y-112);
-	if (col->CheckCollision(App->enemy->r) && PlEn == 1) {
-		App->enemy->hit = true;
-		col->to_delete = true;
-		ret = false;
+	col->SetPos(position.x, position.y-103);
+	if (App->enemy->IsEnabled()) {
+		if (col->CheckCollision(App->enemy->colEnemy->rect) && PlEn == 1) {
+			App->enemy->hit = true;
+			col->to_delete = true;
+			ret = false;
+		}
 	}
-	else if (col->CheckCollision(App->player->r) && PlEn == 2) {
-		App->player->hit = true;
-		col->to_delete = true;
-		ret = false;
+	if (App->player->IsEnabled()) {
+		if (col->CheckCollision(App->player->colPlayer->rect) && PlEn == 2) {
+			App->player->hit = true;
+			col->to_delete = true;
+			ret = false;
+		}
 	}
-	else LOG("No collision");
-
-
+	if (App->andy->IsEnabled()) {
+		if (col->CheckCollision(App->andy->colPlayer->rect) && PlEn == 2) {
+			App->andy->hit = true;
+			col->to_delete = true;
+			ret = false;
+		}
+	}
+	if (App->joe->IsEnabled()) {
+		if (col->CheckCollision(App->joe->colPlayer->rect) && PlEn == 2) {
+			App->joe->hit = true;
+			col->to_delete = true;
+			ret = false;
+		}
+	}
 	return ret;
 }
