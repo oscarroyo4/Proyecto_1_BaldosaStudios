@@ -201,7 +201,7 @@ update_status ModuleJoe::Update()
 		break;
 
 	case JOE_BACKWARD:
-		if (special_timer < 60 && special_timer > 0) { position.x += 0; }
+		if (special_timer < 50 && special_timer > 0) { position.x += 0; }
 		else
 		{
 			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
@@ -224,7 +224,7 @@ update_status ModuleJoe::Update()
 
 	case JOE_FORWARD:
 
-		if (special_timer <= 60 && special_timer > 0) { position.x += 0; }
+		if (special_timer <= 50 && special_timer > 0) { position.x += 0; }
 		else
 		{
 			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
@@ -482,7 +482,7 @@ update_status ModuleJoe::Update()
 		special_timer = special_timer + 1;
 		current_animation = &specialAttack;
 
-		if (special_timer > 30)
+		if (special_timer > 40)
 		{
 			status = JOE_IN_SPECIAL_FINISH;
 			special_timer = 0;
@@ -492,12 +492,12 @@ update_status ModuleJoe::Update()
 	if (tornado_timer > 0)
 	{
 		tornado_timer = tornado_timer + 1;
-		if (tornado_timer > 30) { current_animation = &specialAttackStatic; }
-		if (tornado_timer == 30)
+		if (tornado_timer > 30 && tornado_timer < 50) { current_animation = &specialAttackStatic; }
+		if (tornado_timer == 25)
 		{
 			App->particles->AddParticle(App->particles->tornado, position.x + 26, position.y, 0, 1100, 2.2, 0, 1);
 		}
-		if (tornado_timer >= 30)
+		if (tornado_timer >= 50)
 		{
 			status = JOE_IDLE;
 		}
