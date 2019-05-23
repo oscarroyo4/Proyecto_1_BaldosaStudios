@@ -77,10 +77,11 @@ ModulePlayer::ModulePlayer()
 	specialAttack.PushBack({ 297, 702, 61, 96 });
 	specialAttack.PushBack({ 214, 720, 80, 78 });
 	specialAttack.PushBack({ 142, 721, 68, 77 });
-	specialAttackStatic.PushBack({ 142, 721, 68, 77 });
 	specialAttack.PushBack({ 75, 730, 66, 68 });
 	specialAttack.PushBack({ 10, 717, 62, 81 });
 	specialAttack.speed = 0.175f;
+
+	specialAttackStatic.PushBack({ 142, 721, 68, 77 });
 
 	// taking damage animation
 	damage.PushBack({ 344, 342, 60, 100 });
@@ -206,7 +207,7 @@ update_status ModulePlayer::Update()
 		break;
 
 	case PLAYER_BACKWARD:
-		if (specialEnable == false) { position.x += 0; }
+		if (special_timer < 60 && special_timer > 0) { position.x += 0; }
 		else
 		{
 			if (position.x < 10) { position.x -= 0; }
@@ -219,7 +220,9 @@ update_status ModulePlayer::Update()
 
 	case PLAYER_FORWARD:
 
-		if (specialEnable == false) { position.x += 0; }
+		if (special_timer <= 60 && special_timer > 0) {
+			position.x += 0; 
+		}
 		else
 		{
 			if (position.x > 590) { position.x -= 0; }
@@ -324,6 +327,7 @@ update_status ModulePlayer::Update()
 
 	case PLAYER_SPECIAL:
 		if (specialEnable == true) {
+			specialEnable = false;
 			specialAttack.Reset();
 			if (App->sounds->Play_chunk(specialfx))
 			{
@@ -331,7 +335,6 @@ update_status ModulePlayer::Update()
 			}
 			groundFire_timer = 1;
 			special_timer = 1;
-			specialEnable = false;
 		}
 		break;
 
@@ -469,7 +472,7 @@ update_status ModulePlayer::Update()
 		special_timer = special_timer + 1;
 		current_animation = &specialAttack;
 
-		if (special_timer > 30)
+		if (special_timer > 60)
 		{
 			status = IN_SPECIAL_FINISH;
 			special_timer = 0;
@@ -479,37 +482,37 @@ update_status ModulePlayer::Update()
 	if (groundFire_timer > 0)
 	{
 		groundFire_timer = groundFire_timer + 1;
-		if (groundFire_timer > 30) { current_animation = &specialAttackStatic; }
-		if (groundFire_timer == 60)
+		if (groundFire_timer > 30 && groundFire_timer < 60) current_animation = &specialAttackStatic;
+		if (groundFire_timer == 56)
 		{
 			App->particles->AddParticle(App->particles->smallfire, position.x + 26, position.y - 45, 0, 2800, 3, 0, 1);
 
 		}
-		if (groundFire_timer == 48)
+		if (groundFire_timer == 50)
 		{
 			App->particles->AddParticle(App->particles->midfire, position.x + 26, position.y - 72, 0, 2700, 3, 0, 1);
 
 		}
-		if (groundFire_timer == 36)
+		if (groundFire_timer == 44)
 		{
 			App->particles->AddParticle(App->particles->bigfire, position.x + 26, position.y - 100, 0, 2600, 3, 0, 1);
 
 		}
-		if (groundFire_timer == 24)
+		if (groundFire_timer == 38)
 		{
 			App->particles->AddParticle(App->particles->midfire, position.x + 26, position.y - 72, 0, 2500, 3, 0, 1);
 
 		}
-		if (groundFire_timer == 12)
+		if (groundFire_timer == 32)
 		{
 			App->particles->AddParticle(App->particles->smallfire, position.x + 26, position.y - 45, 0, 2400, 3, 0, 1);
 
 		}
-		if (groundFire_timer >= 120)
+		if (groundFire_timer >= 60)
 		{
 			status = PLAYER_IDLE;
 		}
-		if (groundFire_timer >= 180)
+		if (groundFire_timer >= 1000)
 		{
 			specialEnable = true;
 			groundFire_timer = 0;
