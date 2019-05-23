@@ -121,7 +121,6 @@ bool ModulePlayer::Start()
 
 	App->collision->Enable();
 	graphicsTerry = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites.png"); //First Tery Bogard Sprite Sheet
-	//graphicsTerry2 = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites 2.png"); //Second Tery Bogard Sprite Sheet
 	punchfx = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Punch.wav");
 	kickfx = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Punch2.wav");
 	jumpfx = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Landing.wav");
@@ -481,29 +480,29 @@ update_status ModulePlayer::Update()
 	{
 		groundFire_timer = groundFire_timer + 1;
 		if (groundFire_timer > 30) { current_animation = &specialAttackStatic; }
-		if (groundFire_timer == 69)
+		if (groundFire_timer == 60)
 		{
-			App->particles->AddParticle(App->particles->smallfire, position.x + 26, position.y - 45, 0, 2800, 1.5, 0, 1);
+			App->particles->AddParticle(App->particles->smallfire, position.x + 26, position.y - 45, 0, 2800, 3, 0, 1);
 
 		}
-		if (groundFire_timer == 55)
+		if (groundFire_timer == 48)
 		{
-			App->particles->AddParticle(App->particles->midfire, position.x + 28, position.y - 72, 0, 2700, 1.5, 0, 1);
+			App->particles->AddParticle(App->particles->midfire, position.x + 26, position.y - 72, 0, 2700, 3, 0, 1);
 
 		}
-		if (groundFire_timer == 41)
+		if (groundFire_timer == 36)
 		{
-			App->particles->AddParticle(App->particles->bigfire, position.x + 29, position.y - 100, 0, 2600, 1.5, 0, 1);
+			App->particles->AddParticle(App->particles->bigfire, position.x + 26, position.y - 100, 0, 2600, 3, 0, 1);
 
 		}
-		if (groundFire_timer == 27)
+		if (groundFire_timer == 24)
 		{
-			App->particles->AddParticle(App->particles->midfire, position.x + 31, position.y - 72, 0, 2500, 1.5, 0, 1);
+			App->particles->AddParticle(App->particles->midfire, position.x + 26, position.y - 72, 0, 2500, 3, 0, 1);
 
 		}
-		if (groundFire_timer == 13)
+		if (groundFire_timer == 12)
 		{
-			App->particles->AddParticle(App->particles->smallfire, position.x + 33, position.y - 45, 0, 2400, 1.5, 0, 1);
+			App->particles->AddParticle(App->particles->smallfire, position.x + 26, position.y - 45, 0, 2400, 3, 0, 1);
 
 		}
 		if (groundFire_timer >= 120)
