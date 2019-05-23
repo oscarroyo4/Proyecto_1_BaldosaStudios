@@ -6,6 +6,8 @@
 #include "ModuleCollision.h"
 #include "ModuleRender.h"
 #include "ModuleEnemy.h"
+#include "ModuleJoe.h"
+#include "ModuleAndy.h"
 #include "ModulePlayer.h"
 #include "ModuleHUD.h"
 #include "SDL_image/include/SDL_image.h"
@@ -278,6 +280,8 @@ update_status ModuleEnemy::Update()
 			Life = 0;
 			defeat_timer = 1;
 			App->player->win_timer = 1;
+			App->joe->win_timer = 1;
+			App->andy->win_timer = 1;
 		}
 		damage_timer = 1;
 		break;

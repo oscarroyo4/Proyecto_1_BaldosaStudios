@@ -24,6 +24,8 @@ public:
 	Mix_Music* music = nullptr;
 	Animation paopao;
 	int PlayerVictories = 0;
+	int AndyVictories = 0;
+	int JoeVictories = 0;
 	int EnemyVictories = 0;
 	bool JoeOnStage = false;
 	bool TerryOnStage = false;
