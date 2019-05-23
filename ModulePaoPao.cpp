@@ -42,7 +42,7 @@ bool ModuleScenePaoPao::Start()
 	App->enemy->Enable();
 	App->render->camera.x = -530;
 	//Play the music
-	if (App->sounds->Play_music(music))
+	if (!App->sounds->Play_music(music))
 	{
 		LOG("Could not play music. Mix_PlayChannel: %s", Mix_GetError());
 		ret = false;
@@ -54,14 +54,16 @@ bool ModuleScenePaoPao::Start()
 bool ModuleScenePaoPao::CleanUp()
 {
 	LOG("Unloading ken scene");
-	App->paopao->Disable();
-	SDL_DestroyTexture(graphics);
-	App->sounds->Unload_music(music);
-	App->player->Disable();
-	App->enemy->Disable();
-	App->collision->Disable();
-	App->sounds->Disable();
-	App->hud->Disable();
+	if (!IsEnabled()) {
+		SDL_DestroyTexture(graphics);
+		App->sounds->Unload_music(music);
+		App->player->Disable();
+		App->enemy->Disable();
+		App->collision->Disable();
+		App->sounds->Disable();
+		App->hud->Disable();
+		App->paopao->Disable();
+	}
 
 	return true;
 }

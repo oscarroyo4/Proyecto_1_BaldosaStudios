@@ -118,12 +118,12 @@ bool ModuleJoe::Start()
 
 	App->collision->Enable();
 	graphicsJoe = App->textures->Load("Assets/Sprites/Joe Higashi/Sprites joe higashi.png"); //Joe Higashi Sprite Sheet																				 
-	punchfx = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Punch.ogg");
-	kickfx = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Punch2.ogg");
-	jumpfx = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Landing.ogg");
-	specialfx = App->sounds->Load_effects("Assets/Audio/Fx/FX_SpecialAttack.ogg");
-	winfx = App->sounds->Load_effects("Assets/Audio/Fx/FX_WinScream.ogg");
-	defeatfx = App->sounds->Load_effects("Assets/Audio/Fx/FX_DefeatScream.ogg");
+	punchfx = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Punch.wav");
+	kickfx = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Punch2.wav");
+	jumpfx = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Landing.wav");
+	specialfx = App->sounds->Load_effects("Assets/Audio/Fx/FX_Hishoken.wav");
+	winfx = App->sounds->Load_effects("Assets/Audio/Fx/FX_WinScream.wav");
+	defeatfx = App->sounds->Load_effects("Assets/Audio/Fx/FX_DefeatScream.wav");
 	godMode = true;
 	colPlayer = App->collision->AddCollider({ position.x, position.y, 34, 106 }, COLLIDER_PLAYER);
 	colPlayerCrouch = App->collision->AddCollider({ position.x, position.y - 46, 34, 60 }, COLLIDER_NONE);
@@ -136,7 +136,7 @@ bool ModuleJoe::Start()
 bool ModuleJoe::CleanUp()
 {
 	LOG("Unloading player");
-	if (App->joe->IsEnabled()) {
+	if (!IsEnabled()) {
 		App->collision->Disable();
 		SDL_DestroyTexture(graphicsJoe);
 		//Audio

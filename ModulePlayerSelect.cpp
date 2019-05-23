@@ -45,7 +45,7 @@ bool ModulePlayerSelect::Start()
 	musicPlSel = App->sounds->Load_music("Assets/Audio/CharacterSelection.ogg");
 	selectHover = App->sounds->Load_effects("Assets/Audio/Fx/FX_SelectHover.wav");
 	chooseSelection = App->sounds->Load_effects("Assets/Audio/Fx/FX_ChooseSelection.wav");
-	if (App->sounds->Play_music(musicPlSel))
+	if (!App->sounds->Play_music(musicPlSel))
 	{
 		LOG("Could not play music. Mix_PlayChannel: %s", Mix_GetError());
 		ret = false;
@@ -57,14 +57,14 @@ bool ModulePlayerSelect::Start()
 bool ModulePlayerSelect::CleanUp()
 {
 	LOG("Unloading ken scene");
-
-	SDL_DestroyTexture(graphics);
-	//Audio
-	App->sounds->Unload_music(musicPlSel);
-	App->sounds->Unload_effects(selectHover);
-	App->sounds->Unload_effects(chooseSelection);
-	App->paopao->Enable();
-
+	if (!IsEnabled()) {
+		SDL_DestroyTexture(graphics);
+		//Audio
+		App->sounds->Unload_music(musicPlSel);
+		App->sounds->Unload_effects(selectHover);
+		App->sounds->Unload_effects(chooseSelection);
+		App->paopao->Enable();
+	}
 	return true;
 }
 

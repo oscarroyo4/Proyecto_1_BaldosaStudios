@@ -111,12 +111,12 @@ bool ModuleEnemy::Start()
 {
 	LOG("Loading enemy");
 	graphicsTerry = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites.png");  //First Tery Bogard Sprite Sheet
-	punchfx1 = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Punch.ogg");
-	kickfx1 = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Punch2.ogg");
-	jumpfx1 = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Landing.ogg");
-	specialfx1 = App->sounds->Load_effects("Assets/Audio/Fx/FX_SpecialAttack.ogg");
-	winfx1 = App->sounds->Load_effects("Assets/Audio/Fx/FX_WinScream.ogg");
-	defeatfx1 = App->sounds->Load_effects("Assets/Audio/Fx/FX_DefeatScream.ogg");
+	punchfx1 = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Punch.wav");
+	kickfx1 = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Punch2.wav");
+	jumpfx1 = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Landing.wav");
+	specialfx1 = App->sounds->Load_effects("Assets/Audio/Fx/FX_SpecialAttack.wav");
+	winfx1 = App->sounds->Load_effects("Assets/Audio/Fx/FX_WinScream.wav");
+	defeatfx1 = App->sounds->Load_effects("Assets/Audio/Fx/FX_DefeatScream.wav");
 	colEnemy = App->collision->AddCollider({ position.x, position.y, 34, 106 }, COLLIDER_ENEMY);
 	godMode = true;
 	
@@ -128,7 +128,7 @@ bool ModuleEnemy::Start()
 bool ModuleEnemy::CleanUp()
 {
 	LOG("Unloading enemy");
-	if (App->enemy->IsEnabled()) {
+	if (!IsEnabled()) {
 		App->collision->Disable();
 		SDL_DestroyTexture(graphicsTerry);
 		//Audio

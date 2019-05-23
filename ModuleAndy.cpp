@@ -110,12 +110,12 @@ bool ModuleAndy::Start()
 
 	App->collision->Enable();
 	graphicsAndy = App->textures->Load("Assets/Sprites/Andy Bogard/Sprites_Andy_Bogard.png"); //First Andy Bogard Sprite Sheet
-	punchfx = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Punch.ogg");
-	kickfx = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Punch2.ogg");
-	jumpfx = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Landing.ogg");
-	specialfx = App->sounds->Load_effects("Assets/Audio/Fx/FX_Hishoken.ogg");
-	winfx = App->sounds->Load_effects("Assets/Audio/Fx/FX_WinScream.ogg");
-	defeatfx = App->sounds->Load_effects("Assets/Audio/Fx/FX_DefeatScream.ogg");
+	punchfx = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Punch.wav");
+	kickfx = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Punch2.wav");
+	jumpfx = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Landing.wav");
+	specialfx = App->sounds->Load_effects("Assets/Audio/Fx/FX_SpecialAttack.wav");
+	winfx = App->sounds->Load_effects("Assets/Audio/Fx/FX_WinScream.wav");
+	defeatfx = App->sounds->Load_effects("Assets/Audio/Fx/FX_DefeatScream.wav");
 	godMode = true;
 	colPlayer = App->collision->AddCollider({ position.x, position.y, 34, 106 }, COLLIDER_PLAYER);
 	Life = 100;
@@ -127,7 +127,7 @@ bool ModuleAndy::Start()
 bool ModuleAndy::CleanUp()
 {
 	LOG("Unloading andy");
-	if (App->andy->IsEnabled()) {
+	if (!IsEnabled()) {
 		App->collision->Disable();
 		SDL_DestroyTexture(graphicsAndy);
 		App->sounds->Unload_effects(punchfx);
