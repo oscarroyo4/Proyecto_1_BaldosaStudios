@@ -204,6 +204,16 @@ update_status ModuleJoe::Update()
 		if (specialEnable == false) { position.x += 0; }
 		else
 		{
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+				if (jumpEnable == true) {
+					jumpEnable = false;
+					jump.Reset();
+					if (App->sounds->Play_chunk(jumpfx))
+					{
+						LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+					}
+					jump_timer = 1;
+				}
 			if (position.x < 10) { position.x -= 0; }
 			else position.x -= speed;
 			current_animation = &backward;
@@ -217,6 +227,16 @@ update_status ModuleJoe::Update()
 		if (specialEnable == false) { position.x += 0; }
 		else
 		{
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+				if (jumpEnable == true) {
+					jumpEnable = false;
+					jump.Reset();
+					if (App->sounds->Play_chunk(jumpfx))
+					{
+						LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+					}
+					jump_timer = 1;
+				}
 			position.x += speed;
 			current_animation = &forward;
 			colPlayer->type = COLLIDER_PLAYER;
@@ -472,11 +492,11 @@ update_status ModuleJoe::Update()
 	{
 		tornado_timer = tornado_timer + 1;
 		if (tornado_timer > 30) { current_animation = &specialAttackStatic; }
-		if (tornado_timer == 69)
+		if (tornado_timer == 30)
 		{
-			App->particles->AddParticle(App->particles->tornado, position.x + 26, position.y - 100, 0, 2800, 2.2, 0, 1);
+			App->particles->AddParticle(App->particles->tornado, position.x + 26, position.y - 113, 0, 1100, 2.2, 0, 1);
 		}
-		if (tornado_timer >= 120)
+		if (tornado_timer >= 60)
 		{
 			status = JOE_IDLE;
 		}

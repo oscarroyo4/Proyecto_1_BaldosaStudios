@@ -35,14 +35,14 @@ bool ModuleParticles::Start()
 	midfire.anim.speed = 0.01f;
 	bigfire.anim.speed = 0.01f;
 
-	tornado.anim.PushBack({378,1122,42,58});
-	tornado.anim.PushBack({434,1092,51,88});
-	tornado.anim.PushBack({497,1068,61,112});
-	tornado.anim.PushBack({563,1068,58,112});
-	tornado.anim.PushBack({630,1068,63,112});
-	tornado.anim.PushBack({718,1068,64,112});
+	tornado.anim.PushBack({11,121,42,112});
+	tornado.anim.PushBack({67,121,51,112});
+	tornado.anim.PushBack({130,121,61,112});
+	tornado.anim.PushBack({196,121,58,112});
+	tornado.anim.PushBack({263,121,63,112});
+	tornado.anim.PushBack({351,121,64,112});
 
-	tornado.anim.speed = 0.04f;
+	tornado.anim.speed = 0.09f;
 
 	return true;
 }

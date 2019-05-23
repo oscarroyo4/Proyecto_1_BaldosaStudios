@@ -110,7 +110,7 @@ ModuleEnemy::~ModuleEnemy()
 bool ModuleEnemy::Start()
 {
 	LOG("Loading enemy");
-	graphicsTerry = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites.png");  //First Tery Bogard Sprite Sheet
+	graphicsTerry = App->textures->Load("Assets/Sprites/Terry Bogard (Enemy Skin)/Terry Bogard (enemy).png");  //First Tery Bogard Sprite Sheet
 	punchfx1 = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Punch.wav");
 	kickfx1 = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Punch2.wav");
 	jumpfx1 = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Landing.wav");
