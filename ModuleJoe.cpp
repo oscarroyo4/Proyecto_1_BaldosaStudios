@@ -114,7 +114,7 @@ ModuleJoe::~ModuleJoe()
 // Load assets
 bool ModuleJoe::Start()
 {
-	LOG("Loading player");
+	LOG("Loading JOE");
 
 	App->collision->Enable();
 	graphicsJoe = App->textures->Load("Assets/Sprites/Joe Higashi/Sprites joe higashi.png"); //Joe Higashi Sprite Sheet																				 
@@ -167,7 +167,7 @@ update_status ModuleJoe::Update()
 		else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
 			status = JOE_JUMP;
 
-		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 			status = JOE_CROUCH;
 
 		else if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)

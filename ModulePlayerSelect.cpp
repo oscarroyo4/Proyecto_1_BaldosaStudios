@@ -94,7 +94,7 @@ update_status ModulePlayerSelect::Update()
 		}
 	}
 
-	if (App->input->keyboard[SDL_SCANCODE_D] == KEY_STATE::KEY_DOWN && posT == true)
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_STATE::KEY_DOWN && posT == true)
 	{
 		current_animation = &selectA;
 		posA = true;
@@ -106,7 +106,7 @@ update_status ModulePlayerSelect::Update()
 		}
 	}
 
-	if (App->input->keyboard[SDL_SCANCODE_A] == KEY_STATE::KEY_DOWN && posA == true)
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_STATE::KEY_DOWN && posA == true)
 	{
 		current_animation = &selectT;
 		posA = false;
@@ -118,7 +118,7 @@ update_status ModulePlayerSelect::Update()
 		}
 	}
 
-	if (App->input->keyboard[SDL_SCANCODE_D] == KEY_STATE::KEY_DOWN && posJ == true)
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_STATE::KEY_DOWN && posJ == true)
 	{
 		current_animation = &selectT;
 		posA = false;
@@ -131,7 +131,7 @@ update_status ModulePlayerSelect::Update()
 	}
 
 
-	if (App->input->keyboard[SDL_SCANCODE_SPACE])
+	if (App->input->GetKey(SDL_SCANCODE_SPACE))
 	{
 		if (played == false) {
 			if (App->sounds->Play_chunk(chooseSelection))
