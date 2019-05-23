@@ -27,7 +27,7 @@ ModuleScenePaoPao::ModuleScenePaoPao()
 	rectShadowPaoPao.x = 0;
 	rectShadowPaoPao.y = 0;
 	rectShadowPaoPao.w = 64;
-	rectShadowPaoPao.h = 16;
+	rectShadowPaoPao.h = 12;
 }
 
 ModuleScenePaoPao::~ModuleScenePaoPao()

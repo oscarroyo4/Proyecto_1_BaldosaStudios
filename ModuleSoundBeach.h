@@ -22,6 +22,7 @@ public:
 	SDL_Texture * graphicsAnim = nullptr;
 	SDL_Texture * graphics2 = nullptr;
 	SDL_Texture * graphicsAnim2 = nullptr;
+	SDL_Texture * ShadowSB = nullptr;
 	Mix_Music * music = nullptr;
 	Animation soundBeachSky;
 	Animation soundBeachGround;
@@ -35,6 +36,7 @@ public:
 	bool TerryOnStage = false;
 	bool AndyOnStage = false;
 	int round = 1;
+	SDL_Rect rectShadowSB;
 };
 
 #endif
