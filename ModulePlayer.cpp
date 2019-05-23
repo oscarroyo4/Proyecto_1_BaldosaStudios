@@ -52,9 +52,9 @@ ModulePlayer::ModulePlayer()
 
 	//Jump animation
 	jump.PushBack({ 15, 337, 60, 106 });
-	jump.PushBack({ 268, 183, 52, 140 });
-	jump.PushBack({ 328, 176, 65, 145 });
-	jump.PushBack({ 393, 205, 59, 130 });
+	jump.PushBack({ 268, 163, 52, 160 });
+	jump.PushBack({ 328, 156, 65, 175 });
+	jump.PushBack({ 393, 185, 59, 150 });
 	jump.speed = 0.12f;
 
 	//crouch animation
@@ -451,9 +451,9 @@ update_status ModulePlayer::Update()
 	{
 		jump_timer = jump_timer + 1;
 		current_animation = &jump;
-		if (jump_timer < 12) { colPlayer->SetPos(position.x + 12, position.y - 160); position.y -= 15; }
-		else if (jump_timer < 29) { colPlayer->SetPos(position.x + 12, position.y - 180); position.y -= 35; }
-		else if (jump_timer < 38) { colPlayer->SetPos(position.x + 12, position.y - 165); position.y -= 25; }
+		if (jump_timer < 8) { colPlayer->SetPos(position.x + 12, position.y - 140); }
+		else if (jump_timer < 29) { colPlayer->SetPos(position.x + 12, position.y - 180); }
+		else if (jump_timer < 38) { colPlayer->SetPos(position.x + 12, position.y - 165); }
 
 		if (jump_timer > 38)
 		{
@@ -490,27 +490,27 @@ update_status ModulePlayer::Update()
 		if (groundFire_timer > 30 && groundFire_timer < 60) current_animation = &specialAttackStatic;
 		if (groundFire_timer == 56)
 		{
-			App->particles->AddParticle(App->particles->smallfire, position.x + 26, position.y - 45, 0, 2800, 3, 0, 1);
+			App->particles->AddParticle(App->particles->smallfire, position.x + 26, position.y, 0, 2800, 3, 0, 1);
 
 		}
 		if (groundFire_timer == 50)
 		{
-			App->particles->AddParticle(App->particles->midfire, position.x + 26, position.y - 72, 0, 2700, 3, 0, 1);
+			App->particles->AddParticle(App->particles->midfire, position.x + 26, position.y, 0, 2700, 3, 0, 1);
 
 		}
 		if (groundFire_timer == 44)
 		{
-			App->particles->AddParticle(App->particles->bigfire, position.x + 26, position.y - 100, 0, 2600, 3, 0, 1);
+			App->particles->AddParticle(App->particles->bigfire, position.x + 26, position.y, 0, 2600, 3, 0, 1);
 
 		}
 		if (groundFire_timer == 38)
 		{
-			App->particles->AddParticle(App->particles->midfire, position.x + 26, position.y - 72, 0, 2500, 3, 0, 1);
+			App->particles->AddParticle(App->particles->midfire, position.x + 26, position.y, 0, 2500, 3, 0, 1);
 
 		}
 		if (groundFire_timer == 32)
 		{
-			App->particles->AddParticle(App->particles->smallfire, position.x + 26, position.y - 45, 0, 2400, 3, 0, 1);
+			App->particles->AddParticle(App->particles->smallfire, position.x + 26, position.y, 0, 2400, 3, 0, 1);
 
 		}
 		if (groundFire_timer >= 60)

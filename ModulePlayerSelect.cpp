@@ -133,10 +133,14 @@ update_status ModulePlayerSelect::Update()
 
 	if (App->input->keyboard[SDL_SCANCODE_SPACE])
 	{
-		if (App->sounds->Play_chunk(chooseSelection))
-		{
-			LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+		if (played == false) {
+			if (App->sounds->Play_chunk(chooseSelection))
+			{
+				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+			}
+			else played = true;
 		}
+	
 		App->fade->FadeToBlack(this, App->paopao, 0.5);
 		if (posJ == true) { 
 			App->paopao->JoeOnStage = true; 

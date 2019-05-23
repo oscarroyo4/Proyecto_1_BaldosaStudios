@@ -17,7 +17,7 @@
 ModuleEnemy::ModuleEnemy()
 {
 	position.x = 375;
-	position.y = 223;
+	position.y = 220;
 
 	// idle animation (arcade sprite sheet)
 	idle.PushBack({ 28, 208, 62, 105 });

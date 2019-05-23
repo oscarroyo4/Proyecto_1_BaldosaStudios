@@ -494,7 +494,7 @@ update_status ModuleJoe::Update()
 		if (tornado_timer > 30) { current_animation = &specialAttackStatic; }
 		if (tornado_timer == 30)
 		{
-			App->particles->AddParticle(App->particles->tornado, position.x + 26, position.y - 113, 0, 1100, 2.2, 0, 1);
+			App->particles->AddParticle(App->particles->tornado, position.x + 26, position.y, 0, 1100, 2.2, 0, 1);
 		}
 		if (tornado_timer >= 60)
 		{

@@ -7,6 +7,7 @@
 #include "ModuleParticles.h"
 #include "ModuleEnemy.h"
 #include "ModulePlayer.h"
+#include "ModuleJoe.h"
 
 #include "SDL/include/SDL_timer.h"
 
@@ -52,7 +53,6 @@ bool ModuleParticles::CleanUp()
 {
 	LOG("Unloading particles");
 	App->textures->Unload(graphics);
-	App->textures->Unload(graphics2);
 
 	for(uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
@@ -84,7 +84,7 @@ update_status ModuleParticles::Update()
 		}
 		else if(SDL_GetTicks() >= p->born)
 		{
-			App->render->Blit(graphics, p->position.x, p->position.y, &(p->anim.GetCurrentFrame()));
+			App->render->Blit(graphics, p->position.x, p->position.y-p->col->rect.h, &(p->anim.GetCurrentFrame()));
 			if(p->fx_played == false)
 			{
 				p->fx_played = true;
@@ -147,8 +147,7 @@ bool Particle::Update()
 
 	position.x += speed.x;
 	position.y += speed.y;
-	
-	col->SetPos(position.x, position.y);
+	col->SetPos(position.x, position.y-112);
 	if (col->CheckCollision(App->enemy->r) && PlEn == 1) {
 		App->enemy->hit = true;
 		col->to_delete = true;
@@ -159,6 +158,8 @@ bool Particle::Update()
 		col->to_delete = true;
 		ret = false;
 	}
+	else LOG("No collision");
+
 
 	return ret;
 }
