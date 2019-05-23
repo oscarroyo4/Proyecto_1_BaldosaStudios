@@ -19,7 +19,6 @@ ModuleEnemy::ModuleEnemy()
 	position.x = 375;
 	position.y = 220;
 
-	// idle animation (arcade sprite sheet)
 	idle.PushBack({ 28, 208, 62, 105 });
 	idle.PushBack({ 97, 208, 60, 106 });
 	idle.PushBack({ 163, 208, 60, 105 });
@@ -54,9 +53,9 @@ ModuleEnemy::ModuleEnemy()
 
 	//Jump animation
 	jump.PushBack({ 15, 337, 60, 106 });
-	jump.PushBack({ 268, 183, 52, 140 });
-	jump.PushBack({ 328, 176, 65, 145 });
-	jump.PushBack({ 393, 205, 59, 130 });
+	jump.PushBack({ 268, 163, 52, 160 });
+	jump.PushBack({ 328, 156, 65, 175 });
+	jump.PushBack({ 393, 185, 59, 150 });
 	jump.speed = 0.12f;
 
 	//crouch animation
@@ -64,8 +63,14 @@ ModuleEnemy::ModuleEnemy()
 	crouch.PushBack({ 133, 822, 63, 84 });
 	crouch.PushBack({ 74, 812, 58, 95 });
 	crouch.PushBack({ 200, 839, 57, 66 });
-	crouch.speed = 0.175f;
+	crouch.speed = 0.25f;
 	crouch.loop = false;
+
+	//crouch punch animation
+	crouchPunch.PushBack({ 260, 1880, 54, 65 });
+	crouchPunch.PushBack({ 314, 1883, 81, 63 });
+	crouchPunch.speed = 0.175f;
+	crouchPunch.loop = false;
 
 	//SpecialAttack animation
 	specialAttack.PushBack({ 421, 693, 52, 106 });
@@ -76,6 +81,8 @@ ModuleEnemy::ModuleEnemy()
 	specialAttack.PushBack({ 75, 730, 66, 68 });
 	specialAttack.PushBack({ 10, 717, 62, 81 });
 	specialAttack.speed = 0.175f;
+
+	specialAttackStatic.PushBack({ 142, 721, 68, 77 });
 
 	// taking damage animation
 	damage.PushBack({ 344, 342, 60, 100 });
@@ -120,8 +127,8 @@ bool ModuleEnemy::Start()
 	winfx1 = App->sounds->Load_effects("Assets/Audio/Fx/FX_WinScream.wav");
 	defeatfx1 = App->sounds->Load_effects("Assets/Audio/Fx/FX_DefeatScream.wav");
 	colEnemy = App->collision->AddCollider({ position.x, position.y, 34, 106 }, COLLIDER_ENEMY);
+	colEnemyCrouch = App->collision->AddCollider({ position.x, position.y - 46, 34, 60 }, COLLIDER_NONE);
 	godMode = true;
-	
 	Life = 100;
 	return true;
 }
@@ -140,10 +147,9 @@ bool ModuleEnemy::CleanUp()
 		App->sounds->Unload_effects(specialfx1);
 		App->sounds->Unload_effects(winfx1);
 		App->sounds->Unload_effects(defeatfx1);
+		//Disable
 		App->enemy->Disable();
 	}
-
-	//SDL_DestroyTexture(graphicsTerry2);
 
 	return true;
 }
@@ -173,13 +179,15 @@ update_status ModuleEnemy::Update()
 		else if (App->input->GetKey(SDL_SCANCODE_RALT) == KEY_DOWN)
 			status = ENEMY_SPECIAL;
 
-		else if (hit == true) {
+		else {
+			status = ENEMY_IDLE;
+			crouch.Reset();
+		}
+
+		if (hit == true) {
 			status = ENEMY_DAMAGE;
 			hit = false;
 		}
-
-		else
-			status = ENEMY_IDLE;
 
 	}
 	
@@ -188,18 +196,54 @@ update_status ModuleEnemy::Update()
 	{
 	case ENEMY_IDLE:
 		current_animation = &idle;
+		position.y = 220;
+
+		colEnemy->type = COLLIDER_ENEMY;
+		colEnemyCrouch->type = COLLIDER_NONE;
 		break;
 
 	case ENEMY_BACKWARD:
-		if (position.x < 10) { position.x -= 0; }
-		else position.x -= speed;
-		current_animation = &forward;
+		if (special_timer < 60 && special_timer > 0) { position.x += 0; }
+		else
+		{
+			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
+				if (jumpEnable == true) {
+					jumpEnable = false;
+					jump.Reset();
+					if (App->sounds->Play_chunk(jumpfx1))
+					{
+						LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+					}
+					jump_timer = 1;
+				}
+			if (position.x < 10) { position.x -= 0; }
+			else position.x -= speed;
+			current_animation = &backward;
+			colEnemy->type = COLLIDER_ENEMY;
+			colEnemyCrouch->type = COLLIDER_NONE;
+		}
 		break;
 
 	case ENEMY_FORWARD:
-		position.x += speed;
-		current_animation = &backward;
-
+		if (special_timer < 60 && special_timer > 0) { position.x += 0; }
+		else
+		{
+			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
+				if (jumpEnable == true) {
+					jumpEnable = false;
+					jump.Reset();
+					if (App->sounds->Play_chunk(jumpfx1))
+					{
+						LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+					}
+					jump_timer = 1;
+				}
+			if (position.x > 590) { position.x -= 0; }
+			else position.x += speed;
+			current_animation = &forward;
+			colEnemy->type = COLLIDER_ENEMY;
+			colEnemyCrouch->type = COLLIDER_NONE;
+		}
 		break;
 
 	case ENEMY_JUMP:
@@ -214,6 +258,29 @@ update_status ModuleEnemy::Update()
 		}
 		break;
 
+	case ENEMY_CROUCH:
+		if (jumpEnable == true && crouchPunchEnable == true) {
+
+			colEnemy->type = COLLIDER_NONE;
+			colEnemyCrouch->type = COLLIDER_ENEMY;
+
+			if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+				crouchPunchEnable = false;
+				crouchPunch.Reset();
+				crouch_punch_timer = 1;
+				if (App->sounds->Play_chunk(punchfx1))
+				{
+					LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+				}
+				if (App->player->position.x < position.x) crouchPunchCol = App->collision->AddCollider({ position.x - 30, position.y - 55, 40, 18 }, COLLIDER_ENEMY_SHOT);
+				else crouchPunchCol = App->collision->AddCollider({ position.x + 46, position.y - 55, 40, 18 }, COLLIDER_ENEMY_SHOT);
+
+				crouchPunchHit = false;
+			}
+			else current_animation = &crouch;
+		}
+		break;
+
 	case ENEMY_IN_JUMP_FINISH:
 		status = ENEMY_IDLE;
 		jump.Reset();
@@ -222,6 +289,11 @@ update_status ModuleEnemy::Update()
 	case ENEMY_IN_PUNCH_FINISH:
 		status = ENEMY_IDLE;
 		punch.Reset();
+		break;
+
+	case ENEMY_CROUCH_PUNCH_FINISH:
+		status = ENEMY_CROUCH;
+		crouchPunch.Reset();
 		break;
 
 	case ENEMY_IN_KICK_FINISH:
@@ -243,7 +315,8 @@ update_status ModuleEnemy::Update()
 			{
 				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 			}
-			kickCol = App->collision->AddCollider({ position.x - 45, position.y - 58, 55, 18 }, COLLIDER_ENEMY_SHOT);
+			if (App->player->position.x < position.x) kickCol = App->collision->AddCollider({ position.x - 45, position.y - 58, 55, 18 }, COLLIDER_ENEMY_SHOT);
+			else kickCol = App->collision->AddCollider({ position.x + 46, position.y - 58, 55, 18 }, COLLIDER_ENEMY_SHOT);
 			kickHit = false;
 		}
 		break;
@@ -257,7 +330,9 @@ update_status ModuleEnemy::Update()
 			{
 				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 			}
-			punchCol = App->collision->AddCollider({ position.x - 30, position.y - 90, 40, 20 }, COLLIDER_ENEMY_SHOT);
+			if (App->player->position.x < position.x) punchCol = App->collision->AddCollider({ position.x - 30, position.y - 90, 40, 20 }, COLLIDER_ENEMY_SHOT);
+			else punchCol = App->collision->AddCollider({ position.x + 46, position.y - 90, 40, 20 }, COLLIDER_ENEMY_SHOT);
+
 			punchHit = false;
 		}
 		break;
@@ -266,6 +341,10 @@ update_status ModuleEnemy::Update()
 		if (specialEnable == true) {
 			specialEnable = false;
 			specialAttack.Reset();
+			if (App->sounds->Play_chunk(specialfx1))
+			{
+				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+			}
 			groundFire_timer = 1;
 			special_timer = 1;
 		}
@@ -289,6 +368,7 @@ update_status ModuleEnemy::Update()
 
 	if (defeat_timer > 0)
 	{
+		input = false;
 		defeat_timer = defeat_timer + 1;
 		current_animation = &defeat;
 		if (win_timer == 4)
@@ -317,7 +397,10 @@ update_status ModuleEnemy::Update()
 			}
 		}
 	}
-	if (win_timer >= 210) { App->hud->Win = true; }
+	if (win_timer >= 210) {
+		App->hud->Win = true; 
+		input = false;
+	}
 
 	if (win_timer >= 400) { win_timer = 0; }
 	if (defeat_timer >= 400) { defeat_timer = 0; }
@@ -357,10 +440,30 @@ update_status ModuleEnemy::Update()
 		}
 	}
 
+	if (crouch_punch_timer > 0)
+	{
+		crouch_punch_timer = crouch_punch_timer + 1;
+		current_animation = &crouchPunch;
+		if (crouchPunchCol->CheckCollision(App->player->r) && crouchPunchHit == false) {
+			App->player->hit = true;
+			crouchPunchHit = true;
+		}
+		if (crouch_punch_timer > 20)
+		{
+			crouchPunchEnable = true;
+			status = ENEMY_CROUCH_PUNCH_FINISH;
+			crouchPunchCol->to_delete = true;
+			crouch_punch_timer = 0;
+		}
+	}
+
 	if (jump_timer > 0)
 	{
 		jump_timer = jump_timer + 1;
 		current_animation = &jump;
+		if (jump_timer < 8) { colEnemy->SetPos(position.x + 12, position.y - 140); }
+		else if (jump_timer < 29) { colEnemy->SetPos(position.x + 12, position.y - 180); }
+		else if (jump_timer < 38) { colEnemy->SetPos(position.x + 12, position.y - 165); }
 
 		if (jump_timer > 38)
 		{
@@ -394,36 +497,50 @@ update_status ModuleEnemy::Update()
 	if (groundFire_timer > 0)
 	{
 		groundFire_timer = groundFire_timer + 1;
+		if (groundFire_timer > 30 && groundFire_timer < 60) current_animation = &specialAttackStatic;
+		if (groundFire_timer == 56)
+		{
+			if (App->player->position.x < position.x) App->particles->AddParticle(App->particles->smallfire, position.x + 18, position.y, 0, 2800, -3, 0, 2);
+			else App->particles->AddParticle(App->particles->smallfire, position.x + 26, position.y, 0, 2800, 3, 0, 2);
 
-		if (groundFire_timer == 69)
-		{
-			App->particles->AddParticle(App->particles->smallfire, position.x + 19, position.y, 0, 2800, -1, 0, 2);
 		}
-		if (groundFire_timer == 55)
+		if (groundFire_timer == 50)
 		{
-			App->particles->AddParticle(App->particles->midfire, position.x + 17, position.y, 0, 2700, -1, 0, 2);
+			if (App->player->position.x < position.x) App->particles->AddParticle(App->particles->midfire, position.x + 18, position.y, 0, 2700, -3, 0, 2);
+			else App->particles->AddParticle(App->particles->midfire, position.x + 26, position.y, 0, 2700, 3, 0, 2);
 		}
-		if (groundFire_timer == 41)
+		if (groundFire_timer == 44)
 		{
-			App->particles->AddParticle(App->particles->bigfire, position.x + 16, position.y, 0, 2600, -1, 0, 2);
+			if (App->player->position.x < position.x) App->particles->AddParticle(App->particles->bigfire, position.x + 18, position.y, 0, 2600, -3, 0, 2);
+			else App->particles->AddParticle(App->particles->bigfire, position.x + 26, position.y, 0, 2600, 3, 0, 2);
 		}
-		if (groundFire_timer == 27)
+		if (groundFire_timer == 38)
 		{
-			App->particles->AddParticle(App->particles->midfire, position.x + 15, position.y, 0, 2500, -1, 0, 2);
+			if (App->player->position.x < position.x)App->particles->AddParticle(App->particles->midfire, position.x + 18, position.y, 0, 2500, -3, 0, 2);
+			else App->particles->AddParticle(App->particles->midfire, position.x + 26, position.y, 0, 2500, 3, 0, 2);
 		}
-		if (groundFire_timer == 13)
+		if (groundFire_timer == 32) 
 		{
-			App->particles->AddParticle(App->particles->smallfire, position.x + 12, position.y, 0, 2400, -1, 0, 2);
+			if (App->player->position.x < position.x) App->particles->AddParticle(App->particles->smallfire, position.x + 18, position.y, 0, 2400, -3, 0, 2);
+			else App->particles->AddParticle(App->particles->smallfire, position.x + 26, position.y, 0, 2400, 3, 0, 2);
 		}
-		if (groundFire_timer == 180)
+		if (groundFire_timer >= 60)
+		{
+			status = ENEMY_IDLE;
+		}
+		if (groundFire_timer >= 1000)
 		{
 			specialEnable = true;
+			groundFire_timer = 0;
 		}
 	}
 
-	colEnemy->SetPos(position.x + 12, position.y - 107);
-	
-
+	if (jump_timer == 0) {
+		//Normal collider position
+		colEnemy->SetPos(position.x + 12, position.y - 107);
+		//Crouched collider position
+		colEnemyCrouch->SetPos(position.x + 12, position.y - 67);
+	}
 
 	// Draw everything --------------------------------------
 

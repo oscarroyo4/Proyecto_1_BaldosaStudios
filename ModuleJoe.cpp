@@ -271,7 +271,8 @@ update_status ModuleJoe::Update()
 				{
 					LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 				}
-				crouchPunchCol = App->collision->AddCollider({ position.x + 46, position.y - 55, 40, 18 }, COLLIDER_PLAYER_SHOT);
+				if (App->enemy->position.x > position.x) crouchPunchCol = App->collision->AddCollider({ position.x + 46, position.y - 55, 40, 18 }, COLLIDER_PLAYER_SHOT);
+				else crouchPunchCol = App->collision->AddCollider({ position.x - 30, position.y - 55, 40, 18 }, COLLIDER_PLAYER_SHOT);
 				crouchPunchHit = false;
 			}
 			else current_animation = &crouch;
@@ -318,7 +319,9 @@ update_status ModuleJoe::Update()
 			{
 				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 			}
-			kickCol = App->collision->AddCollider({ position.x + 46, position.y - 85, 55, 18 }, COLLIDER_PLAYER_SHOT);
+			
+			if (App->enemy->position.x > position.x) kickCol = App->collision->AddCollider({ position.x + 46, position.y - 85, 55, 18 }, COLLIDER_PLAYER_SHOT);
+			else kickCol = App->collision->AddCollider({ position.x - 45, position.y - 85, 55, 18 }, COLLIDER_PLAYER_SHOT);
 			kickHit = false;
 		}
 		break;
@@ -332,7 +335,8 @@ update_status ModuleJoe::Update()
 			{
 				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 			}
-			punchCol = App->collision->AddCollider({ position.x + 46, position.y - 90, 40, 20 }, COLLIDER_PLAYER_SHOT);
+			if (App->enemy->position.x > position.x) punchCol = App->collision->AddCollider({ position.x + 46, position.y - 90, 40, 20 }, COLLIDER_PLAYER_SHOT);
+			else punchCol = App->collision->AddCollider({ position.x - 30, position.y - 90, 40, 20 }, COLLIDER_PLAYER_SHOT);
 			punchHit = false;
 		}
 		break;
@@ -495,7 +499,9 @@ update_status ModuleJoe::Update()
 		if (tornado_timer > 30 && tornado_timer < 50) { current_animation = &specialAttackStatic; }
 		if (tornado_timer == 25)
 		{
-			App->particles->AddParticle(App->particles->tornado, position.x + 26, position.y, 0, 1100, 2.2, 0, 1);
+			if (App->enemy->position.x > position.x) App->particles->AddParticle(App->particles->tornado, position.x + 26, position.y, 0, 1100, 2.2, 0, 1);
+			else App->particles->AddParticle(App->particles->tornado, position.x - 5, position.y, 0, 1100, -2.2, 0, 1);
+
 		}
 		if (tornado_timer >= 50)
 		{

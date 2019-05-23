@@ -29,7 +29,6 @@ enum player_status
 	IN_SPECIAL_FINISH
 };
 
-
 class ModulePlayer : public Module
 {
 public:
@@ -49,10 +48,8 @@ public:
 	bool jumpEnable = true;
 	bool specialEnable = true;
 	bool input = true;
-	SDL_Event ev;
 	SDL_Texture * graphicsTerry = nullptr;
 	SDL_Texture * Shadow = nullptr;
-	SDL_Texture* graphicsTerry2 = nullptr;
 	Animation* current_animation = &idle;
 	Animation idle;
 	Animation forward;
@@ -73,9 +70,6 @@ public:
 	Collider* punchCol = nullptr;
 	Collider* crouchPunchCol = nullptr;
 	Collider* kickCol = nullptr;
-	Collider* specialCol1 = nullptr;
-	Collider* specialCol2 = nullptr;
-	Collider* specialCol3 = nullptr;
 	int Life = 100;
 	int PlayerVict = 0;
 	bool hit = false;
@@ -101,5 +95,4 @@ public:
 	SDL_Rect r;
 
 };
-
 #endif

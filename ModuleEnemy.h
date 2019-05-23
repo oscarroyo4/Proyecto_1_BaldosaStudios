@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Animation.h"
 #include "p2Point.h"
+#include "ModuleInput.h"
 #include "ModuleAudio.h"
 
 struct SDL_Texture;
@@ -22,6 +23,7 @@ enum enemy_status
 	ENEMY_DAMAGE,
 	ENEMY_IN_PUNCH_FINISH,
 	ENEMY_IN_KICK_FINISH,
+	ENEMY_CROUCH_PUNCH_FINISH,
 	ENEMY_IN_JUMP_FINISH,
 	ENEMY_DAMAGE_FINISH,
 	ENEMY_IN_SPECIAL_FINISH
@@ -41,11 +43,13 @@ public:
 
 	bool godMode;
 	bool punchEnable = true;
+	bool crouchPunchEnable = true;
 	bool kickEnable = true;
 	bool jumpEnable = true;
 	bool specialEnable = true;
 	bool input = true;
-	SDL_Texture * graphicsTerry = nullptr;	
+	SDL_Texture * graphicsTerry = nullptr;
+	SDL_Texture* Shadow = nullptr;
 	Animation* current_animation = &idle;
 	Animation idle;
 	Animation forward;
@@ -54,20 +58,26 @@ public:
 	Animation kick;
 	Animation jump;
 	Animation specialAttack;
+	Animation specialAttackStatic;
 	Animation crouch;
+	Animation crouchPunch;
 	Animation damage;
 	Animation defeat;
 	Animation win;
 	iPoint position;
 	Collider* colEnemy;
+	Collider* colEnemyCrouch;
 	Collider* punchCol;
+	Collider* crouchPunchCol = nullptr;
 	Collider* kickCol;
 	int Life = 100;
 	bool hit = false;
 	bool punchHit = false;
+	bool crouchPunchHit = false;
 	bool kickHit = false;
 	enemy_status status = ENEMY_IDLE;
 	Uint32 punch_timer = 0;
+	Uint32 crouch_punch_timer = 0;
 	Uint32 jump_timer = 0;
 	Uint32 kick_timer = 0;
 	Uint32 damage_timer = 0;
