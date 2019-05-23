@@ -106,7 +106,7 @@ bool ModuleAudio::Play_music(Mix_Music* track)
 
 	if (Mix_FadeInMusic(track, 0, 2000) == -1)
 	{
-		SDL_Log("%s/n", SDL_GetError());
+		SDL_Log("%s/n", Mix_GetError());
 		return false;
 	}
 	Mix_Volume(2, 0);
@@ -121,7 +121,7 @@ bool ModuleAudio::Play_chunk(Mix_Chunk* track)
 	//SDL_Log("%s/n", SDL_GetError());
 	//return false;
 
-	return true;
+	return false;
 }
 
 

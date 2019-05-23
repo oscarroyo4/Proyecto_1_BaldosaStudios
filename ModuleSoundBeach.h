@@ -33,6 +33,7 @@ public:
 	int EnemyVictories = 0;
 	bool JoeOnStage = false;
 	bool TerryOnStage = false;
+	bool AndyOnStage = false;
 	int round = 1;
 };
 

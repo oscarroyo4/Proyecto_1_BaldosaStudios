@@ -10,6 +10,7 @@
 #include "ModuleIntro.h"
 #include "ModuleCollision.h"
 #include "ModuleAudio.h"
+#include "ModuleAndy.h"
 #include "ModuleEnemy.h"
 #include "ModuleHUD.h"
 #include "ModuleFadeToBlack.h"
@@ -80,6 +81,15 @@ bool ModuleSceneSoundBeach::Start()
 		App->player->status = PLAYER_IDLE;
 		App->player->position.x = 230;
 	}
+	if (AndyOnStage == true) {
+		App->andy->Enable();
+		App->andy->input = true;
+		App->andy->Life = 100;
+		App->andy->win_timer = 0;
+		App->andy->defeat_timer = 0;
+		App->andy->status = ANDY_IDLE;
+		App->andy->position.x = 230;
+	}
 	App->enemy->Enable();
 	App->render->camera.x = -530;
 	App->enemy->input = true;
@@ -100,13 +110,16 @@ bool ModuleSceneSoundBeach::CleanUp()
 {
 	LOG("Unloading ken scene");
 
-	SDL_DestroyTexture(graphics);
-	if (JoeOnStage == true) App->player->Disable();
-	if (JoeOnStage == true) App->joe->Disable();
-	App->enemy->Disable();
-	App->hud->Disable();
-	App->sounds->Unload_music(music);
-	App->soundBeach->Disable();
+	if (!IsEnabled()) {
+		SDL_DestroyTexture(graphics);
+		if (TerryOnStage == true) App->player->Disable();
+		if (JoeOnStage == true) App->joe->Disable();
+		if (AndyOnStage == true) App->andy->Disable();
+		App->enemy->Disable();
+		App->hud->Disable();
+		App->sounds->Unload_music(music);
+		App->soundBeach->Disable();
+	}
 
 	return true;
 }

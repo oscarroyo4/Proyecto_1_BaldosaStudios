@@ -3,6 +3,7 @@
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
 #include "ModulePaoPao.h"
+#include "ModuleSoundBeach.h"
 #include "ModuleInput.h"
 #include "ModuleIntro.h"
 #include "ModuleSounds.h"
@@ -50,6 +51,9 @@ bool ModulePlayerSelect::Start()
 		LOG("Could not play music. Mix_PlayChannel: %s", Mix_GetError());
 		ret = false;
 	}
+	posA = false;
+	posT = true;
+	posJ = false;
 	return ret;
 }
 
@@ -96,7 +100,6 @@ update_status ModulePlayerSelect::Update()
 		posA = true;
 		posJ = false;
 		posT = false;
-		posA = true;
 		if (App->sounds->Play_chunk(selectHover))
 		{
 			LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
@@ -109,7 +112,6 @@ update_status ModulePlayerSelect::Update()
 		posA = false;
 		posJ = false;
 		posT = true;
-		posA = false;
 		if (App->sounds->Play_chunk(selectHover))
 		{
 			LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
@@ -136,9 +138,18 @@ update_status ModulePlayerSelect::Update()
 			LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 		}
 		App->fade->FadeToBlack(this, App->paopao, 0.5);
-		if (posJ == true) { App->paopao->JoeOnStage = true; }
-		if (posT == true) { App->paopao->TerryOnStage = true; }
-		if (posA == true) { App->paopao->AndyOnStage = true; }
+		if (posJ == true) { 
+			App->paopao->JoeOnStage = true; 
+			App->soundBeach->JoeOnStage = true; 
+		}
+		if (posT == true) { 
+			App->paopao->TerryOnStage = true; 
+			App->soundBeach->TerryOnStage = true;
+		}
+		if (posA == true) {
+			App->paopao->AndyOnStage = true; 
+			App->soundBeach->AndyOnStage = true;
+		}
 	}
 
 	return UPDATE_CONTINUE;
