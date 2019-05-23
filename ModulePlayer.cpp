@@ -110,10 +110,6 @@ ModulePlayer::ModulePlayer()
 	win.speed = 0.05f;
 	win.loop = false;
 
-	rectShadow.x = 0;
-	rectShadow.y = 0;
-	rectShadow.w = 64;
-	rectShadow.h = 16;
 }
 
 ModulePlayer::~ModulePlayer()
@@ -126,7 +122,6 @@ bool ModulePlayer::Start()
 
 	App->collision->Enable();
 	graphicsTerry = App->textures->Load("Assets/Sprites/Terry Bogard/Terry Sprites.png"); //First Tery Bogard Sprite Sheet
-	Shadow = App->textures->Load("Assets/Sprites/Main/Shadow.png"); 
 	punchfx = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Punch.wav");
 	kickfx = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Punch2.wav");
 	jumpfx = App->sounds->Load_effects("Assets/Audio/Fx/SFX_Landing.wav");
@@ -549,8 +544,6 @@ update_status ModulePlayer::Update()
 
 	r = current_animation->GetCurrentFrame();
 
-
-	App->render->Blit(Shadow, position.x - 5, 210 , &rectShadow);
 
 	if (App->enemy->position.x < position.x) { App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r, 1, SDL_FLIP_HORIZONTAL); }
 	if (App->enemy->position.x > position.x &&  defeat_timer == 0) { App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r); }

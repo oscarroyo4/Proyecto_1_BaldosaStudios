@@ -21,6 +21,7 @@ public:
 public:
 
 	SDL_Texture * graphics = nullptr;
+	SDL_Texture * ShadowPaoPao = nullptr;
 	Mix_Music* music = nullptr;
 	Animation paopao;
 	int PlayerVictories = 0;
@@ -30,6 +31,8 @@ public:
 	bool JoeOnStage = false;
 	bool TerryOnStage = false;
 	bool AndyOnStage = false;
+	SDL_Rect rectShadowPaoPao;
+
 };
 
 #endif

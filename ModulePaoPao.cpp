@@ -23,6 +23,11 @@ ModuleScenePaoPao::ModuleScenePaoPao()
 	paopao.PushBack({ 0, 0, 619, 224 });
 	paopao.PushBack({ 0, 224, 619, 224 });
 	paopao.speed = 0.08f;
+
+	rectShadowPaoPao.x = 0;
+	rectShadowPaoPao.y = 0;
+	rectShadowPaoPao.w = 64;
+	rectShadowPaoPao.h = 16;
 }
 
 ModuleScenePaoPao::~ModuleScenePaoPao()
@@ -36,6 +41,7 @@ bool ModuleScenePaoPao::Start()
 	bool ret = true;
 	graphics = App->textures->Load("Assets/Sprites/Pao Pao Cafe Tileset/Pao Pao Cafe Stage.png");
 	music = App->sounds->Load_music("Assets/Audio/PaoPao.ogg");
+	ShadowPaoPao = App->textures->Load("Assets/Sprites/Main/Shadow.png");
 	if (JoeOnStage == true) { App->joe->Enable(); }
 	if (TerryOnStage == true) { App->player->Enable(); }
 	if (AndyOnStage == true) { App->andy->Enable(); }
@@ -56,8 +62,11 @@ bool ModuleScenePaoPao::CleanUp()
 	LOG("Unloading ken scene");
 	if (!IsEnabled()) {
 		SDL_DestroyTexture(graphics);
+		SDL_DestroyTexture(ShadowPaoPao);
 		App->sounds->Unload_music(music);
 		App->player->Disable();
+		App->andy->Disable();
+		App->joe->Disable();
 		App->enemy->Disable();
 		App->collision->Disable();
 		App->sounds->Disable();
@@ -243,6 +252,11 @@ update_status ModuleScenePaoPao::Update()
 		App->render->Blit(App->hud->Round, 270, 42, &(App->hud->roundCircleWon.GetCurrentFrame()), -1 / 3);
 		App->render->Blit(App->hud->Round, 286, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
 	}
+
+	if (App->player->IsEnabled()) { App->render->Blit(ShadowPaoPao, App->player->position.x - 5, 210, &rectShadowPaoPao); }
+	if (App->enemy->IsEnabled()) { App->render->Blit(ShadowPaoPao, App->enemy->position.x - 5, 210, &rectShadowPaoPao); }
+	if (App->andy->IsEnabled()) { App->render->Blit(ShadowPaoPao, App->andy->position.x - 5, 210, &rectShadowPaoPao); }
+	if (App->joe->IsEnabled()) { App->render->Blit(ShadowPaoPao, App->joe->position.x - 5, 210, &rectShadowPaoPao); }
 
 	return UPDATE_CONTINUE;
 }
