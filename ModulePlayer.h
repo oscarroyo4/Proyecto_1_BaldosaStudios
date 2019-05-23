@@ -51,6 +51,7 @@ public:
 	bool input = true;
 	SDL_Event ev;
 	SDL_Texture * graphicsTerry = nullptr;
+	SDL_Texture * Shadow = nullptr;
 	SDL_Texture* graphicsTerry2 = nullptr;
 	Animation* current_animation = &idle;
 	Animation idle;
@@ -98,6 +99,7 @@ public:
 	Mix_Chunk* winfx = nullptr;
 	Mix_Chunk* defeatfx = nullptr;
 	SDL_Rect r;
+	SDL_Rect rectShadow;
 
 };
 

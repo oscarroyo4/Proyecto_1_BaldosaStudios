@@ -3,6 +3,7 @@
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
 #include "ModuleIntro.h"
+#include "ModuleInput.h"
 #include "ModuleCinematics.h"
 #include "ModulePaoPao.h"
 #include "ModuleSoundBeach.h"
@@ -71,6 +72,11 @@ update_status ModuleCinematics::Update()
 		App->render->Blit(fatalfuryintrowords, 350, 52, &(GameIntroCinematicWords.GetCurrentFrame()), 6);
 		App->render->Blit(fatalfuryintro, -35, 70, &(GameIntroCinematicTerry.GetCurrentFrame()), -0.28f);
 		App->render->Blit(inscoins, 125, 160, &(insertcoins.GetCurrentFrame()), 0);
+
+		if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1)
+		{
+			App->fade->FadeToBlack(this, App->scene_intro, 0.5);
+		}
 	}
 
 
