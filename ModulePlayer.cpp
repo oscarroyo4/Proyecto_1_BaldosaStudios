@@ -367,8 +367,10 @@ update_status ModulePlayer::Update()
 		Life = Life - 10;
 		if (Life <= 0) {
 			Life = 0;
-			defeat_timer = 1;
-			App->enemy->win_timer = 1;
+			if(defeat_timer == 0){
+				defeat_timer = 1;
+				App->enemy->win_timer = 1;
+			}
 		}
 		damage_timer = 1;
 		break;

@@ -82,7 +82,7 @@ update_status ModulePlayerSelect::Update()
 	if (posA == true) { App->render->Blit(graphics, 7, 0, &(selectA.GetCurrentFrame()), 0.75f); }
 
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN && posT == true)
+	if (App->input->GetKey(SDL_SCANCODE_A) && posT == true && changed == false)
 	{
 		current_animation = &selectJ;
 		posJ = true;
@@ -92,9 +92,10 @@ update_status ModulePlayerSelect::Update()
 		{
 			LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 		}
+		changed = true;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN && posT == true)
+	else if (App->input->GetKey(SDL_SCANCODE_D) && posT == true && changed == false)
 	{
 		current_animation = &selectA;
 		posA = true;
@@ -104,9 +105,10 @@ update_status ModulePlayerSelect::Update()
 		{
 			LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 		}
+		changed = true;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN && posA == true)
+	else if (App->input->GetKey(SDL_SCANCODE_A) && posA == true && changed == false)
 	{
 		current_animation = &selectT;
 		posA = false;
@@ -116,9 +118,10 @@ update_status ModulePlayerSelect::Update()
 		{
 			LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 		}
+		changed = true;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN && posJ == true)
+	else if (App->input->GetKey(SDL_SCANCODE_D) && posJ == true && changed == false)
 	{
 		current_animation = &selectT;
 		posA = false;
@@ -128,10 +131,11 @@ update_status ModulePlayerSelect::Update()
 		{
 			LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 		}
+		changed = true;
 	}
 
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE))
+	else if (App->input->GetKey(SDL_SCANCODE_SPACE))
 	{
 		if (played == false) {
 			if (App->sounds->Play_chunk(chooseSelection))
@@ -153,6 +157,15 @@ update_status ModulePlayerSelect::Update()
 		if (posA == true) {
 			App->paopao->AndyOnStage = true; 
 			App->soundBeach->AndyOnStage = true;
+		}
+	}
+	else {
+		if (changedTime > 25) {
+			changed = false;
+			changedTime = 0;
+		}
+		else {
+			changedTime += 1;
 		}
 	}
 

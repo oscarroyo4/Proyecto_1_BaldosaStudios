@@ -28,7 +28,6 @@ bool ModuleIntro::Start()
 	App->render->camera.y = 0;
 
 	background = App->textures->Load("Assets/Sprites/Main/welcome.png");
-	//musicIntro = App->sounds->Load_music("Assets/Audio/Menu.ogg");
 
 	return true;
 }

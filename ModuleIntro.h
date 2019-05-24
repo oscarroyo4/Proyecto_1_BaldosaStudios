@@ -21,7 +21,6 @@ public:
 public:
 
 	SDL_Texture * background = nullptr;
-	//Mix_Music * musicIntro = nullptr;
 	Animation intr;
 };
 

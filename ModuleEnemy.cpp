@@ -357,10 +357,12 @@ update_status ModuleEnemy::Update()
 		Life = Life - 10;
 		if (Life <= 0) {
 			Life = 0;
-			defeat_timer = 1;
-			App->player->win_timer = 1;
-			App->joe->win_timer = 1;
-			App->andy->win_timer = 1;
+			if (defeat_timer == 0) {
+				defeat_timer = 1;
+				App->player->win_timer = 1;
+				App->joe->win_timer = 1;
+				App->andy->win_timer = 1;
+			}
 		}
 		damage_timer = 1;
 		break;
@@ -371,18 +373,19 @@ update_status ModuleEnemy::Update()
 		input = false;
 		defeat_timer = defeat_timer + 1;
 		current_animation = &defeat;
-		if (win_timer == 4)
+		if (defeat_timer == 4)
 		{
 			if (App->sounds->Play_chunk(defeatfx1))
 			{
 				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 			}
 		}
+		else if (defeat_timer >= 210) {
+			App->hud->Win = true;
+			input = false;
+		}
 	}
-	if (defeat_timer >= 210) {
-		App->hud->Win = true; 
-		input = false;
-	}
+
 
 	if (win_timer > 0)
 	{

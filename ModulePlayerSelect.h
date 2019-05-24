@@ -22,6 +22,8 @@ public:
 	SDL_Texture * graphics = nullptr;
 	bool posT, posJ, posA;
 	bool played = false;
+	bool changed = false;
+	int changedTime = 0;
 	Animation selectT;
 	Animation selectA;
 	Animation selectJ;
