@@ -139,7 +139,10 @@ update_status ModuleSceneSoundBeach::Update()
 {
 	// Draw everything --------------------------------------
 	
-	App->render->camera.x = App->player->position.x  * -2;
+
+	if (App->player->IsEnabled()) App->render->camera.x = (App->enemy->position.x*-2) - (App->player->position.x * 2) + 700;
+	if (App->andy->IsEnabled()) App->render->camera.x = (App->enemy->position.x*-2) - (App->andy->position.x * 2) + 700;
+	if (App->joe->IsEnabled()) App->render->camera.x = (App->enemy->position.x*-2) - (App->joe->position.x * 2) + 700;
 
 	if (round == 1) 
 	{
