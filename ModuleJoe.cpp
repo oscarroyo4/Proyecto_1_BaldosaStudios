@@ -167,7 +167,7 @@ update_status ModuleJoe::Update()
 		else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
 			status = JOE_JUMP;
 
-		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 			status = JOE_CROUCH;
 
 		else if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
