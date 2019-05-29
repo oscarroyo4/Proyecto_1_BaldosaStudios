@@ -135,7 +135,7 @@ update_status ModulePlayerSelect::Update()
 	}
 
 
-	else if (App->input->GetKey(SDL_SCANCODE_SPACE))
+	else if (App->input->GetKey(SDL_SCANCODE_T))
 	{
 		if (played == false) {
 			if (App->sounds->Play_chunk(chooseSelection))
