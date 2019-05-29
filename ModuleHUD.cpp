@@ -9,13 +9,14 @@
 #include "ModulePlayer.h"
 #include "ModulePaoPao.h"
 #include "ModuleFadeToBlack.h"
+#include "ModuleFonts.h"
 
 
 ModuleHUD::ModuleHUD()
 {
 	lifebar.x = 0;
 	lifebar.y = 0;
-	lifebar.w = 320;
+	lifebar.w = 304;
 	lifebar.h = 224;
 
 	rectPlayer.w = 100;
@@ -52,11 +53,16 @@ bool ModuleHUD::Start()
 {
 	Win = false;
 	Lose = false;
-	life = App->textures->Load("Assets/Sprites/Main/life bar.png");
+	life = App->textures->Load("Assets/Sprites/Main/Life bar.png");
 	youWin = App->textures->Load("Assets/Sprites/Main/win.png");
 	youLose = App->textures->Load("Assets/Sprites/Main/gameover.png");
-	Round = App->textures->Load("Assets/Sprites/Main/Round indicator.png");
+	round = App->textures->Load("Assets/Sprites/Main/Round indicator.png");
 	newround = App->textures->Load("Assets/Sprites/Main/rounds.png");
+	fontID = App->fonts->Load("Assets/Sprites/Fonts/NumberTimerFont.png", "0123456789", 1, 15, 21, 10);
+	timer = 60;
+	ticks1 = 0;
+	ticks2 = SDL_GetTicks();
+	ticks3 = ticks2;
 
 	return true;
 }
@@ -69,8 +75,9 @@ bool ModuleHUD::CleanUp()
 	App->textures->Unload(life);
 	App->textures->Unload(youWin);
 	App->textures->Unload(youLose);
-	App->textures->Unload(Round);
+	App->textures->Unload(round);
 	App->textures->Unload(newround);
+	App->fonts->UnLoad(fontID);
 	this->Disable();
 
 	return true;
@@ -88,8 +95,31 @@ update_status ModuleHUD::Update()
 		Lose = true;
 	}
 
-	App->render->Blit(life, App->render->camera.x , App->render->camera.y, &lifebar, - 3);
-
+	App->render->Blit(life, App->render->camera.x+8 , App->render->camera.y, &lifebar, - 3);
+	if (ticks1 > 29000) {
+		timer -= 1;
+		ticks1 = 0;
+		ticks3 = ticks2;
+	}
+	else {
+		ticks1 += ticks2 - ticks3;
+		ticks2 = SDL_GetTicks();
+	}
+	SDL_snprintf(time, 3, "%d", timer);
+	App->fonts->BlitText(146, 18, fontID, time);
+	if (timer <= 0) {
+		ticks3 = 99999999;
+		if (App->player->Life > App->enemy->Life) {
+			Win = true;
+		} 
+		else if (App->enemy->Life > App->player->Life) {
+			Lose = true;
+		}
+		else {
+			//Empate
+			Win = true; //CHANGE!!!!!!!
+		}
+	}
 
 	rectPlayer.x = 34 + App->render->camera.x * -1 / 3;
 	rectPlayer.y = 25 + App->render->camera.y;

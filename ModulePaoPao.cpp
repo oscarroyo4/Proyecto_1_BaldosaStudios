@@ -226,34 +226,34 @@ update_status ModuleScenePaoPao::Update()
 
 	if (PlayerVictories == 0 && EnemyVictories == 0)
 	{
-		App->render->Blit(App->hud->Round, 18, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
-		App->render->Blit(App->hud->Round, 34, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
-		App->render->Blit(App->hud->Round, 270, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
-		App->render->Blit(App->hud->Round, 286, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
+		App->render->Blit(App->hud->round, 18, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
+		App->render->Blit(App->hud->round, 34, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
+		App->render->Blit(App->hud->round, 270, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
+		App->render->Blit(App->hud->round, 286, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
 	}
 
 	if (PlayerVictories == 1 && EnemyVictories == 0)
 	{
-		App->render->Blit(App->hud->Round, 18, 42, &(App->hud->roundCircleWon.GetCurrentFrame()), -1 / 3);
-		App->render->Blit(App->hud->Round, 34, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
-		App->render->Blit(App->hud->Round, 270, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
-		App->render->Blit(App->hud->Round, 286, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
+		App->render->Blit(App->hud->round, 18, 42, &(App->hud->roundCircleWon.GetCurrentFrame()), -1 / 3);
+		App->render->Blit(App->hud->round, 34, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
+		App->render->Blit(App->hud->round, 270, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
+		App->render->Blit(App->hud->round, 286, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
 	}
 
 	if (PlayerVictories == 0 && EnemyVictories == 1)
 	{
-		App->render->Blit(App->hud->Round, 18, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
-		App->render->Blit(App->hud->Round, 34, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
-		App->render->Blit(App->hud->Round, 270, 42, &(App->hud->roundCircleWon.GetCurrentFrame()), -1 / 3);
-		App->render->Blit(App->hud->Round, 286, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
+		App->render->Blit(App->hud->round, 18, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
+		App->render->Blit(App->hud->round, 34, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
+		App->render->Blit(App->hud->round, 270, 42, &(App->hud->roundCircleWon.GetCurrentFrame()), -1 / 3);
+		App->render->Blit(App->hud->round, 286, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
 	}
 
 	if (PlayerVictories == 1 && EnemyVictories == 1)
 	{
-		App->render->Blit(App->hud->Round, 18, 42, &(App->hud->roundCircleWon.GetCurrentFrame()), -1 / 3);
-		App->render->Blit(App->hud->Round, 34, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
-		App->render->Blit(App->hud->Round, 270, 42, &(App->hud->roundCircleWon.GetCurrentFrame()), -1 / 3);
-		App->render->Blit(App->hud->Round, 286, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
+		App->render->Blit(App->hud->round, 18, 42, &(App->hud->roundCircleWon.GetCurrentFrame()), -1 / 3);
+		App->render->Blit(App->hud->round, 34, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
+		App->render->Blit(App->hud->round, 270, 42, &(App->hud->roundCircleWon.GetCurrentFrame()), -1 / 3);
+		App->render->Blit(App->hud->round, 286, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
 	}
 
 	if (App->player->IsEnabled()) { App->render->Blit(ShadowPaoPao, App->player->position.x - 5, 210, &rectShadowPaoPao); }

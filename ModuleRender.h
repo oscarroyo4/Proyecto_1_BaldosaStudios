@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "SDL_image\include\SDL_image.h"
+#include "RectSprites.h"
 
 
 struct SDL_Renderer;

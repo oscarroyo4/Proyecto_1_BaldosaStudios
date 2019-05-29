@@ -19,6 +19,7 @@
 #include "ModuleCinematics.h"
 #include "ModuleJoe.h"
 #include "ModuleAndy.h"
+#include "ModuleFonts.h"
 
 
 
@@ -43,6 +44,7 @@ Application::Application()
 	modules[16] = hud = new ModuleHUD();
 	modules[17] = joe = new ModuleJoe();
 	modules[18] = andy = new ModuleAndy();
+	modules[19] = fonts = new ModuleFonts();
 
 }
 

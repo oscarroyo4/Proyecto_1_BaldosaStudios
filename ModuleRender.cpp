@@ -3,6 +3,7 @@
 #include "ModuleRender.h"
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
+#include "RectSprites.h"
 #include "SDL/include/SDL.h"
 
 ModuleRender::ModuleRender() : Module()
