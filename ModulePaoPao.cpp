@@ -261,5 +261,6 @@ update_status ModuleScenePaoPao::Update()
 	if (App->andy->IsEnabled()) { App->render->Blit(ShadowPaoPao, App->andy->position.x - 5, 210, &rectShadowPaoPao); }
 	if (App->joe->IsEnabled()) { App->render->Blit(ShadowPaoPao, App->joe->position.x - 5, 210, &rectShadowPaoPao); }
 
+
 	return UPDATE_CONTINUE;
 }
