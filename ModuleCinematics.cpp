@@ -22,11 +22,11 @@ ModuleCinematics::ModuleCinematics()
 	GameIntroCinematicBackground.PushBack({ 0, 0, 350, 237 });
 	GameIntroCinematicTerry.PushBack({ 0, 237, 150, 144 });
 	GameIntroCinematicTerry.PushBack({ 151, 237, 150, 144 });
-	GameIntroCinematicTerry.speed = 0.1;
+	GameIntroCinematicTerry.speed = 0.1f;
 	GameIntroCinematicWords.PushBack({ 0, 0, 561, 63 });
 	insertcoins.PushBack({ 0, 0, 174, 64 });
 	insertcoins.PushBack({ 0, 64, 174, 64 });
-	insertcoins.speed = 0.04;
+	insertcoins.speed = 0.04f;
 }
 
 ModuleCinematics::~ModuleCinematics()
@@ -70,7 +70,7 @@ update_status ModuleCinematics::Update()
 	{
 		GameIntroCinematic_timer++;
 		App->render->camera.x--;
-		App->render->Blit(fatalfuryintro, 0, -6, &(GameIntroCinematicBackground.GetCurrentFrame()), 0.17f);
+		App->render->Blit(fatalfuryintro, 0, -6, &(GameIntroCinematicBackground.GetCurrentFrame()), 0.15f);
 		App->render->Blit(fatalfuryintrowords, 350, 52, &(GameIntroCinematicWords.GetCurrentFrame()), 6);
 		App->render->Blit(fatalfuryintro, -35, 70, &(GameIntroCinematicTerry.GetCurrentFrame()), -0.28f);
 		App->render->Blit(inscoins, 125, 160, &(insertcoins.GetCurrentFrame()), 0);
