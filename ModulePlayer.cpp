@@ -508,36 +508,36 @@ update_status ModulePlayer::Update()
 	{
 		groundFire_timer = groundFire_timer + 1;
 		if (groundFire_timer > 30 && groundFire_timer < 60) current_animation = &specialAttackStatic;
-		if (groundFire_timer == 64)
-		{
-			if (App->enemy->position.x > position.x) App->particles->AddParticle(App->particles->smallfire, position.x + 26, position.y, 0, 2800, 2, 0, 1);
-			else App->particles->AddParticle(App->particles->smallfire, position.x + 18, position.y, 0, 2800, -3, 0, 1);
-		}
 		if (groundFire_timer == 56)
 		{
-			if (App->enemy->position.x > position.x) App->particles->AddParticle(App->particles->midfire, position.x + 26, position.y, 0, 2700, 2, 0, 1);
+			if (App->enemy->position.x > position.x) App->particles->AddParticle(App->particles->smallfire, position.x + 26, position.y, 0, 2800, 3, 0, 1);
+			else App->particles->AddParticle(App->particles->smallfire, position.x + 18, position.y, 0, 2800, -3, 0, 1);
+		}
+		if (groundFire_timer == 50)
+		{
+			if (App->enemy->position.x > position.x) App->particles->AddParticle(App->particles->midfire, position.x + 26, position.y, 0, 2700, 3, 0, 1);
 			else App->particles->AddParticle(App->particles->midfire, position.x + 18, position.y, 0, 2700, -3, 0, 1);
 		}
-		if (groundFire_timer == 48)
+		if (groundFire_timer == 44)
 		{
-			if (App->enemy->position.x > position.x) App->particles->AddParticle(App->particles->bigfire, position.x + 26, position.y, 0, 2600, 2, 0, 1);
+			if (App->enemy->position.x > position.x) App->particles->AddParticle(App->particles->bigfire, position.x + 26, position.y, 0, 2600, 3, 0, 1);
 			else App->particles->AddParticle(App->particles->bigfire, position.x + 18, position.y, 0, 2600, -3, 0, 1);
 		}
-		if (groundFire_timer == 40)
+		if (groundFire_timer == 38)
 		{
-			if (App->enemy->position.x > position.x) App->particles->AddParticle(App->particles->midfire, position.x + 26, position.y, 0, 2500, 2, 0, 1);
+			if (App->enemy->position.x > position.x) App->particles->AddParticle(App->particles->midfire, position.x + 26, position.y, 0, 2500, 3, 0, 1);
 			else App->particles->AddParticle(App->particles->midfire, position.x + 18, position.y, 0, 2500, -3, 0, 1);
 		}
 		if (groundFire_timer == 32)
 		{
-			if (App->enemy->position.x > position.x) App->particles->AddParticle(App->particles->smallfire, position.x + 26, position.y, 0, 2400, 2, 0, 1);
+			if (App->enemy->position.x > position.x) App->particles->AddParticle(App->particles->smallfire, position.x + 26, position.y, 0, 2400, 3, 0, 1);
 			else App->particles->AddParticle(App->particles->smallfire, position.x + 18, position.y, 0, 2400, -3, 0, 1);
 		}
 		if (groundFire_timer >= 60)
 		{
 			status = PLAYER_IDLE;
 		}
-		if (groundFire_timer >= 600)
+		if (groundFire_timer >= 1000)
 		{
 			specialEnable = true;
 			groundFire_timer = 0;

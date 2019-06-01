@@ -15,16 +15,16 @@
 
 ModulePlayerSelect::ModulePlayerSelect()
 {
-	selectT.PushBack({ 0, 100, 304, 224 });
-	selectT.PushBack({ 304, 100, 304, 224 });
+	selectT.PushBack({ 0, 0, 304, 224 });
+	selectT.PushBack({ 304, 0, 304, 224 });
 	selectT.speed = 0.1f;
 
-	selectJ.PushBack({ 0, 324, 304, 224 });
-	selectJ.PushBack({ 304, 324, 304, 224 });
+	selectJ.PushBack({ 0, 224, 304, 224 });
+	selectJ.PushBack({ 304, 224, 304, 224 });
 	selectJ.speed = 0.1f;
 
-	selectA.PushBack({ 0, 548, 304, 224 });
-	selectA.PushBack({ 304, 548, 304, 224 });
+	selectA.PushBack({ 0, 448, 304, 224 });
+	selectA.PushBack({ 304, 448, 304, 224 });
 	selectA.speed = 0.1f;
 
 	current_animation = &selectT;
@@ -135,7 +135,7 @@ update_status ModulePlayerSelect::Update()
 	}
 
 
-	else if (App->input->GetKey(SDL_SCANCODE_SPACE))
+	else if (App->input->GetKey(SDL_SCANCODE_T))
 	{
 		if (played == false) {
 			if (App->sounds->Play_chunk(chooseSelection))
