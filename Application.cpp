@@ -34,21 +34,22 @@ Application::Application()
 	modules[4] = textures = new ModuleTextures();
 	modules[5] = paopao = new ModuleScenePaoPao();
 	modules[6] = soundBeach = new ModuleSceneSoundBeach();
-	modules[7] = cinematics = new ModuleCinematics();
-	modules[8] = scene_intro = new ModuleIntro();
-	modules[9] = select = new ModulePlayerSelect();
-	modules[10] = player = new ModulePlayer();
-	modules[11] = enemy = new ModuleEnemy();
-	modules[12] = particles = new ModuleParticles();
-	modules[13] = fade = new ModuleFadeToBlack();
-	modules[14] = sounds = new ModuleAudio();
-	modules[15] = collision = new ModuleCollision();
-	modules[16] = hud = new ModuleHUD();
-	modules[17] = joe = new ModuleJoe();
-	modules[18] = andy = new ModuleAndy();
-	modules[19] = fonts = new ModuleFonts();
-	modules[20] = selectScene = new ModuleSceneSelect();
-	modules[21] = howardArena = new ModuleHowardArena();
+	modules[7] = howardArena = new ModuleHowardArena();
+	modules[8] = cinematics = new ModuleCinematics();
+	modules[9] = scene_intro = new ModuleIntro();
+	modules[10] = select = new ModulePlayerSelect();
+	modules[11] = player = new ModulePlayer();
+	modules[12] = enemy = new ModuleEnemy();
+	modules[13] = particles = new ModuleParticles();
+	modules[14] = fade = new ModuleFadeToBlack();
+	modules[15] = sounds = new ModuleAudio();
+	modules[16] = collision = new ModuleCollision();
+	modules[17] = hud = new ModuleHUD();
+	modules[18] = joe = new ModuleJoe();
+	modules[19] = andy = new ModuleAndy();
+	modules[20] = fonts = new ModuleFonts();
+	modules[21] = selectScene = new ModuleSceneSelect();
+	
 
 }
 

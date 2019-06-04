@@ -22,9 +22,11 @@ public:
 	SDL_Texture * graphics2 = nullptr;
 	SDL_Texture * ShadowHA = nullptr;
 	Animation HA_Sky;
+	Animation HA_SkyLightning;
 	Animation HA_Ground;
 	Animation HA_Tree;
 
+	int Lightning_counter = 0;
 	int PlayerVictories = 0;
 	int EnemyVictories = 0;
 	bool JoeOnStage = false;

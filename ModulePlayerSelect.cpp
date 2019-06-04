@@ -4,6 +4,7 @@
 #include "ModuleRender.h"
 #include "ModulePaoPao.h"
 #include "ModuleSoundBeach.h"
+#include "ModuleHowardArena.h"
 #include "ModuleInput.h"
 #include "ModuleIntro.h"
 #include "ModuleSounds.h"
@@ -149,16 +150,19 @@ update_status ModulePlayerSelect::Update()
 		if (posJ == true) { 
 			App->paopao->JoeOnStage = true; 
 			App->soundBeach->JoeOnStage = true; 
+			App->howardArena->JoeOnStage = true;
 			App->fade->FadeToBlack(this, App->selectScene, 1.5);
 		}
 		if (posT == true) { 
 			App->paopao->TerryOnStage = true; 
 			App->soundBeach->TerryOnStage = true;
+			App->howardArena->TerryOnStage = true;
 			App->fade->FadeToBlack(this, App->selectScene, 1.5);
 		}
 		if (posA == true) {
 			App->paopao->AndyOnStage = true; 
 			App->soundBeach->AndyOnStage = true;
+			App->howardArena->AndyOnStage = true;
 			App->fade->FadeToBlack(this, App->selectScene, 1.5);
 		}
 	}
