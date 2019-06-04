@@ -13,6 +13,7 @@
 #include "ModuleEnemy.h"
 #include "ModuleCollision.h"
 #include "ModulePlayerSelect.h"
+#include "ModuleSceneSelect.h"
 #include "ModuleHUD.h"
 #include "ModuleAudio.h"
 #include "ModuleGameControllers.h"
@@ -45,6 +46,7 @@ Application::Application()
 	modules[17] = joe = new ModuleJoe();
 	modules[18] = andy = new ModuleAndy();
 	modules[19] = fonts = new ModuleFonts();
+	modules[20] = selectScene = new ModuleSceneSelect();
 
 }
 
@@ -65,6 +67,7 @@ bool Application::Init()
 	andy->Disable();
 	enemy->Disable();
 	select->Disable();
+	selectScene->Disable();
 	paopao->Disable();
 	soundBeach->Disable();
 	hud->Disable();

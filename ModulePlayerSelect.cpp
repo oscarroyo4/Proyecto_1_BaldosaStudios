@@ -8,6 +8,7 @@
 #include "ModuleIntro.h"
 #include "ModuleSounds.h"
 #include "ModulePlayerSelect.h"
+#include "ModuleSceneSelect.h"
 #include "ModuleFadeToBlack.h"
 #include "SDL_image/include/SDL_image.h"
 
@@ -67,7 +68,7 @@ bool ModulePlayerSelect::CleanUp()
 		App->sounds->Unload_music(musicPlSel);
 		App->sounds->Unload_effects(selectHover);
 		App->sounds->Unload_effects(chooseSelection);
-		App->paopao->Enable();
+
 	}
 	return true;
 }
@@ -145,18 +146,20 @@ update_status ModulePlayerSelect::Update()
 			else played = true;
 		}
 	
-		App->fade->FadeToBlack(this, App->paopao, 0.5);
 		if (posJ == true) { 
 			App->paopao->JoeOnStage = true; 
 			App->soundBeach->JoeOnStage = true; 
+			App->fade->FadeToBlack(this, App->selectScene, 1.5);
 		}
 		if (posT == true) { 
 			App->paopao->TerryOnStage = true; 
 			App->soundBeach->TerryOnStage = true;
+			App->fade->FadeToBlack(this, App->selectScene, 1.5);
 		}
 		if (posA == true) {
 			App->paopao->AndyOnStage = true; 
 			App->soundBeach->AndyOnStage = true;
+			App->fade->FadeToBlack(this, App->selectScene, 1.5);
 		}
 	}
 	else {

@@ -113,6 +113,9 @@
     <ClInclude Include="RectSprites.h">
       <Filter>Modules</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleSceneSelect.h">
+      <Filter>Modules\Intro Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -186,6 +189,9 @@
     </ClCompile>
     <ClCompile Include="ModuleFonts.cpp">
       <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleSceneSelect.cpp">
+      <Filter>Modules\Intro Modules</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
