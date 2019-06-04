@@ -20,12 +20,13 @@ public:
 public:
 
 	SDL_Texture * graphics = nullptr;
-	bool posPaoPao, posSoundBeach;
+	bool posPaoPao, posSoundBeach, posHowardArena;
 	bool played = false;
 	bool changed = false;
 	int changedTime = 0;
 	Animation selectPP;
 	Animation selectSB;
+	Animation selectHA;
 	Animation Background;
 	Animation* current_animation = nullptr;
 };
