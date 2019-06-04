@@ -8,6 +8,7 @@
 #include "ModuleFadeToBlack.h"
 #include "ModulePaoPao.h"
 #include "ModuleSoundBeach.h"
+#include "ModuleHowardArena.h"
 #include "ModuleParticles.h"
 #include "ModuleIntro.h"
 #include "ModuleEnemy.h"
@@ -47,6 +48,7 @@ Application::Application()
 	modules[18] = andy = new ModuleAndy();
 	modules[19] = fonts = new ModuleFonts();
 	modules[20] = selectScene = new ModuleSceneSelect();
+	modules[21] = howardArena = new ModuleHowardArena();
 
 }
 
@@ -70,6 +72,7 @@ bool Application::Init()
 	selectScene->Disable();
 	paopao->Disable();
 	soundBeach->Disable();
+	howardArena->Disable();
 	hud->Disable();
 
 	// ---

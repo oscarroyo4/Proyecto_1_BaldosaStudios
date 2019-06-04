@@ -93,6 +93,7 @@
     <ClInclude Include="ModuleGameControllers.h" />
     <ClInclude Include="ModuleEnemy.h" />
     <ClInclude Include="ModuleFadeToBlack.h" />
+    <ClInclude Include="ModuleHowardArena.h" />
     <ClInclude Include="ModuleHUD.h" />
     <ClInclude Include="ModuleInput.h" />
     <ClInclude Include="ModuleIntro.h" />
@@ -122,6 +123,7 @@
     <ClCompile Include="ModuleGameControllers.cpp" />
     <ClCompile Include="ModuleEnemy.cpp" />
     <ClCompile Include="ModuleFadeToBlack.cpp" />
+    <ClCompile Include="ModuleHowardArena.cpp" />
     <ClCompile Include="ModuleHUD.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModuleIntro.cpp" />

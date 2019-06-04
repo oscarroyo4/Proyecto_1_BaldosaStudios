@@ -116,6 +116,9 @@
     <ClInclude Include="ModuleSceneSelect.h">
       <Filter>Modules\Intro Modules</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleHowardArena.h">
+      <Filter>Modules\Stages</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -192,6 +195,9 @@
     </ClCompile>
     <ClCompile Include="ModuleSceneSelect.cpp">
       <Filter>Modules\Intro Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleHowardArena.cpp">
+      <Filter>Modules\Stages</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
