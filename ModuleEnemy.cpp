@@ -549,9 +549,23 @@ update_status ModuleEnemy::Update()
 
 	r = current_animation->GetCurrentFrame();
 
-	if (App->player->position.x < position.x &&  defeat_timer == 0) {App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r, 1, SDL_FLIP_HORIZONTAL); }
-	if (App->player->position.x > position.x) {App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r);}
-	if (defeat_timer > 0) { App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r); }
+	if (App->player->IsEnabled())
+	{
+		if (App->player->position.x < position.x &&  defeat_timer == 0) { App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r, 1, SDL_FLIP_HORIZONTAL); }
+		if (App->player->position.x > position.x) { App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r); }
+	}
+
+	if (App->andy->IsEnabled())
+	{
+		if (App->andy->position.x < position.x &&  defeat_timer == 0) { App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r, 1, SDL_FLIP_HORIZONTAL); }
+		if (App->andy->position.x > position.x) { App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r); }
+	}
+
+	if (App->player->IsEnabled())
+	{
+		if (App->joe->position.x < position.x &&  defeat_timer == 0) { App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r, 1, SDL_FLIP_HORIZONTAL); }
+		if (App->joe->position.x > position.x) { App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r); }
+	}
 
 	r.x = position.x;
 	r.y = position.y;
