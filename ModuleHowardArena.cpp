@@ -132,13 +132,13 @@ update_status ModuleHowardArena::Update()
 
 	if (round == 1)
 	{
-		App->render->Blit(graphics, 20, 0, &(HA_Sky.GetCurrentFrame()), 0.45f);
+		App->render->Blit(graphics, 5, 0, &(HA_Sky.GetCurrentFrame()), 0.2f);
 		if (Lightning_counter > 180 && Lightning_counter < 240)
 		{
-			App->render->Blit(graphics, 20, 0, &(HA_SkyLightning.GetCurrentFrame()), 0.45f);
+			App->render->Blit(graphics, 5, 0, &(HA_SkyLightning.GetCurrentFrame()), 0.2f);
 		}
 		App->render->Blit(graphics, 0, 8, &(HA_Ground.GetCurrentFrame()), 0.75f);
-		App->render->Blit(graphics, 0, 100, &(HA_Tree.GetCurrentFrame()), 0.75f);
+		App->render->Blit(graphics, 0, 0, &(HA_Tree.GetCurrentFrame()), 0.75f);
 		
 	}
 
