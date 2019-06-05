@@ -21,6 +21,7 @@ public:
 
 	SDL_Event event_;
 	SDL_GameController *controller = nullptr;
+	SDL_GameController *controller2 = nullptr;
 
 	bool Controller_player1_Connected = false; 
 	bool A_pressed = false;
@@ -29,9 +30,19 @@ public:
 	bool Start_pressed = false;
 	bool Up_pressed = false;
 
-
 	int Controller_AxisX = 0;
 	int Controller_AxisY = 0;
+
+
+	bool Controller_player2_Connected = false;
+	bool A_pressed2 = false;
+	bool Y_pressed2 = false;
+	bool B_pressed2 = false;
+	bool Start_pressed2 = false;
+	bool Up_pressed2 = false;
+
+	int Controller2_AxisX = 0;
+	int Controller2_AxisY = 0;
 
 };
 

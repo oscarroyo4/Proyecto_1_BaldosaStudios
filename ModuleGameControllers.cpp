@@ -53,9 +53,42 @@ update_status  ModuleGameControllers::PreUpdate()
 
 					}
 				}
+
+				else if (i < 1) {
+
+					Controller_player2_Connected = false;
+					SDL_GameControllerClose(controller2);
+					controller2 = nullptr;
+
+				}
+
+				else if (i == 1 || i == 0 && Controller_player1_Connected == false) {
+
+					controller2 = SDL_GameControllerOpen(i);
+					if (SDL_GameControllerGetAttached(controller2)) {
+
+						Controller2_AxisX = SDL_GameControllerGetAxis(controller2, SDL_CONTROLLER_AXIS_LEFTX);
+						Controller2_AxisY = SDL_GameControllerGetAxis(controller2, SDL_CONTROLLER_AXIS_LEFTY);
+
+						A_pressed2 = SDL_GameControllerGetButton(controller2, SDL_CONTROLLER_BUTTON_A);
+						B_pressed2 = SDL_GameControllerGetButton(controller2, SDL_CONTROLLER_BUTTON_B);
+						Y_pressed2 = SDL_GameControllerGetButton(controller2, SDL_CONTROLLER_BUTTON_Y);
+						Start_pressed2 = SDL_GameControllerGetButton(controller2, SDL_CONTROLLER_BUTTON_START);
+
+						Controller_player2_Connected = true;
+						break;
+
+					}
+					else {
+
+						SDL_GameControllerClose(controller2);
+						controller2 = nullptr;
+					}		controller2 = false;
+				}
 			}
 		}
-
+	
+		//PLAYER 1 (player)
 
 		if (B_pressed == true)
 		{
@@ -98,6 +131,46 @@ update_status  ModuleGameControllers::PreUpdate()
 		if (Controller_AxisY > 6400)
 		{
 				App->input->keyboard[SDL_SCANCODE_S] = KEY_STATE::KEY_DOWN;
+		}
+
+		//PLAYER 2 (enemy)
+
+		if (B_pressed2 == true)
+		{
+			App->input->keyboard[SDL_SCANCODE_RETURN] = KEY_STATE::KEY_DOWN;
+		}
+
+		if (A_pressed2 == true)
+		{
+			App->input->keyboard[SDL_SCANCODE_RSHIFT] = KEY_STATE::KEY_DOWN;
+		}
+
+		if (Y_pressed2 == true)
+		{
+			App->input->keyboard[SDL_SCANCODE_RALT] = KEY_STATE::KEY_DOWN;
+		}
+
+		if (Controller2_AxisX > 6400)
+		{
+			App->input->keyboard[SDL_SCANCODE_RIGHT] = KEY_STATE::KEY_REPEAT;
+		}
+		if (Controller2_AxisX < -15000)
+		{
+			App->input->keyboard[SDL_SCANCODE_LEFT] = KEY_STATE::KEY_REPEAT;
+		}
+
+		if (Controller2_AxisY < -15000)
+		{
+			if (!Up_pressed) {
+				App->input->keyboard[SDL_SCANCODE_UP] = KEY_STATE::KEY_DOWN;
+				Up_pressed = true;
+			}
+		}
+		else Up_pressed2 = false;
+
+		if (Controller2_AxisY > 6400)
+		{
+			App->input->keyboard[SDL_SCANCODE_DOWN] = KEY_STATE::KEY_DOWN;
 		}
 	}
 	
