@@ -38,6 +38,26 @@ ModuleHowardArena::ModuleHowardArena()
 	HA_Tree.PushBack({ 383, 210, 104, 105 });
 	HA_Tree.speed = 0.1f;
 
+	HA_Sky2.PushBack({ 0, 0, 390, 136 });
+	HA_Sky2.PushBack({ 0, 136, 390, 136 });
+	HA_Sky2.PushBack({ 0, 272, 390, 136 });
+	HA_Sky2.PushBack({ 0, 408, 390, 136 });
+	HA_Sky2.PushBack({ 0, 544, 390, 136 });
+	HA_Sky2.PushBack({ 0, 680, 390, 136 });
+	HA_Sky2.PushBack({ 0, 816, 390, 136 });
+	HA_Sky2.PushBack({ 0, 952, 390, 136 });
+	HA_Sky2.speed = 0.04f;
+
+	HA_Ground2.PushBack({ 0, 1088, 618, 216 });
+
+	HA_Tree2.speed = 0.1f;
+
+	HA_Rain.PushBack({ 390, 0, 304, 224 });
+	HA_Rain.PushBack({ 390, 224, 304, 224 });
+	HA_Rain.PushBack({ 390, 448, 304, 224 });
+	HA_Rain.PushBack({ 390, 672, 304, 224 });
+	HA_Rain.speed = 0.1f;
+
 	rectShadowHA.x = 0;
 	rectShadowHA.y = 12;
 	rectShadowHA.w = 64;
@@ -54,7 +74,7 @@ bool ModuleHowardArena::Start()
 	LOG("Loading background assets");
 	bool ret = true;
 	graphics = App->textures->Load("Assets/Sprites/Howard Arena Tileset/night/Night_HowardArena.png");
-	graphics2 = App->textures->Load("Assets/Sprites/Howard Arena Tileset/night/NightRain_HowardArena.png");
+	graphics2 = App->textures->Load("Assets/Sprites/Howard Arena Tileset/night rain/NightRain_HowardArena.png");
 	ShadowHA = App->textures->Load("Assets/Sprites/Main/Shadow.png");
 
 	if (JoeOnStage == true) {
@@ -143,10 +163,11 @@ update_status ModuleHowardArena::Update()
 	}
 
 	if (round == 2)
-	{
-		App->render->Blit(graphics2, 45, 0, &(HA_Sky.GetCurrentFrame()), 0.65f);
-		App->render->Blit(graphics2, 0, 0, &(HA_Ground.GetCurrentFrame()), 0.75f);
-		App->render->Blit(graphics2, 0, 0, &(HA_Tree.GetCurrentFrame()), 0.75f);
+	{		
+		App->render->Blit(graphics2, 5, 0, &(HA_Sky2.GetCurrentFrame()), 0.2f);
+		App->render->Blit(graphics2, 0, 8, &(HA_Ground2.GetCurrentFrame()), 0.75f);
+		App->render->Blit(graphics2, 0, 0, &(HA_Tree2.GetCurrentFrame()), 0.75f);
+		App->render->Blit(graphics2, App->render->camera.x * - 1 / 3, 0, &(HA_Rain.GetCurrentFrame()), 0.75f);
 	}
 
 	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1)

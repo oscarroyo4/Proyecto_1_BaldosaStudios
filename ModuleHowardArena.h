@@ -21,10 +21,16 @@ public:
 	SDL_Texture * graphics = nullptr;
 	SDL_Texture * graphics2 = nullptr;
 	SDL_Texture * ShadowHA = nullptr;
+
 	Animation HA_Sky;
 	Animation HA_SkyLightning;
 	Animation HA_Ground;
 	Animation HA_Tree;
+
+	Animation HA_Sky2;
+	Animation HA_Ground2;
+	Animation HA_Tree2;
+	Animation HA_Rain;
 
 	int Lightning_counter = 0;
 	int PlayerVictories = 0;
