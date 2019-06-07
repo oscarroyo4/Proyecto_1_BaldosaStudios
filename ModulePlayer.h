@@ -20,13 +20,15 @@ enum player_status
 	PLAYER_PUNCH,
 	PLAYER_KICK,
 	PLAYER_SPECIAL,
+	PLAYER_SPECIAL_PUNCH,
 	PLAYER_DAMAGE,
 	PLAYER_IN_PUNCH_FINISH,
 	PLAYER_IN_KICK_FINISH,
 	PLAYER_CROUCH_PUNCH_FINISH,
 	PLAYER_IN_JUMP_FINISH,
 	PLAYER_DAMAGE_FINISH,
-	IN_SPECIAL_FINISH
+	IN_SPECIAL_FINISH,
+	IN_SPECIAL_PUNCH_FINISH
 };
 
 class ModulePlayer : public Module
@@ -46,6 +48,7 @@ public:
 	bool crouchPunchEnable = true;
 	bool kickEnable = true;
 	bool jumpEnable = true;
+	bool specialpunchEnable = true;
 	bool specialEnable = true;
 	bool input = true;
 	SDL_Texture * graphicsTerry = nullptr;
@@ -58,6 +61,7 @@ public:
 	Animation kick;
 	Animation jump;
 	Animation specialAttack;
+	Animation specialpunch;
 	Animation specialAttackStatic;
 	Animation crouch;
 	Animation crouchPunch;
@@ -78,6 +82,7 @@ public:
 	bool kickHit = false;
 	player_status status = PLAYER_IDLE;
 	Uint32 punch_timer = 0;
+	Uint32 special_punch_timer = 0;
 	Uint32 crouch_punch_timer = 0;
 	Uint32 jump_timer = 0;
 	Uint32 kick_timer = 0;

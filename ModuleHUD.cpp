@@ -131,12 +131,12 @@ update_status ModuleHUD::Update()
 		}
 	}
 
-	rectPlayer.x = 34 + App->render->camera.x * -1 / 3;
+	rectPlayer.x = 39 + App->render->camera.x * -1 / 3;
 	rectPlayer.y = 25 + App->render->camera.y;
 	rectPlayer.w = App->player->Life;
 	App->render->DrawQuad(rectPlayer, 250, 230, 30, 255, true);
 
-	rectEnemy.x = 186 + App->render->camera.x * -1 / 3;
+	rectEnemy.x = 177 + App->render->camera.x * -1 / 3;
 	rectEnemy.y = 25 + App->render->camera.y;
 	rectEnemy.w = App->enemy->Life;
 	App->render->DrawQuad(rectEnemy, 250, 230, 30, 255, true);

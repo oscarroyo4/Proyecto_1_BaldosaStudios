@@ -82,8 +82,15 @@ ModulePlayer::ModulePlayer()
 	specialAttack.PushBack({ 75, 730, 66, 68 });
 	specialAttack.PushBack({ 10, 717, 62, 81 });
 	specialAttack.speed = 0.175f;
-
 	specialAttackStatic.PushBack({ 142, 721, 68, 77 });
+
+	//Special Punch animation
+	specialpunch.PushBack({ 18, 1590, 88, 110 });
+	specialpunch.PushBack({ 120, 1600, 58, 98 });
+	specialpunch.PushBack({ 196, 1615, 62, 83 });
+	specialpunch.PushBack({ 265, 1607, 116, 63 });
+	specialpunch.PushBack({ 389, 1595, 57, 94 });
+	specialpunch.speed = 0.052f;
 
 	// taking damage animation
 	damage.PushBack({ 344, 342, 60, 100 });
@@ -181,6 +188,9 @@ update_status ModulePlayer::Update()
 
 		else if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN)
 			status = PLAYER_SPECIAL;
+
+		else if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
+			status = PLAYER_SPECIAL_PUNCH;
 
 		else {
 			status = PLAYER_IDLE;
@@ -316,6 +326,11 @@ update_status ModulePlayer::Update()
 		specialAttack.Reset();
 		break;
 
+	case IN_SPECIAL_PUNCH_FINISH:
+		status = PLAYER_IDLE;
+		specialpunch.Reset();
+		break;
+
 	case PLAYER_KICK:
 		if (kickEnable == true) {
 			kickEnable = false;
@@ -336,6 +351,21 @@ update_status ModulePlayer::Update()
 			punchEnable = false;
 			punch.Reset();
 			punch_timer = 1;
+			if (App->sounds->Play_chunk(punchfx))
+			{
+				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+			}
+			if (App->enemy->position.x > position.x) punchCol = App->collision->AddCollider({ position.x + 46, position.y - 90, 40, 20 }, COLLIDER_PLAYER_SHOT);
+			else punchCol = App->collision->AddCollider({ position.x - 30, position.y - 90, 40, 20 }, COLLIDER_PLAYER_SHOT);
+			punchHit = false;
+		}
+		break;
+
+	case PLAYER_SPECIAL_PUNCH:
+		if (specialpunchEnable == true) {
+			specialpunchEnable = false;
+			specialpunch.Reset();
+			special_punch_timer = 1;
 			if (App->sounds->Play_chunk(punchfx))
 			{
 				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
@@ -444,6 +474,23 @@ update_status ModulePlayer::Update()
 			status = PLAYER_IN_PUNCH_FINISH;
 			punchCol->to_delete = true;
 			punch_timer = 0;
+		}
+	}
+
+	if (special_punch_timer > 0)
+	{
+		special_punch_timer = special_punch_timer + 1;
+		current_animation = &specialpunch;
+		if (punchCol->CheckCollision(App->enemy->r) && punchHit == false) {
+			App->enemy->hit = true;
+			punchHit = true;
+		}
+		if (special_punch_timer > 85)
+		{
+			specialpunchEnable = true;
+			status = IN_SPECIAL_PUNCH_FINISH;
+			punchCol->to_delete = true;
+			special_punch_timer = 0;
 		}
 	}
 	
