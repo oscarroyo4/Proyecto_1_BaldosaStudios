@@ -16,32 +16,47 @@ ModuleHUD::ModuleHUD()
 {
 	lifebar.x = 0;
 	lifebar.y = 0;
-	lifebar.w = 304;
-	lifebar.h = 224;
+	lifebar.w = 154;
+	lifebar.h = 32;
+
+	lifebar2.x = 1;
+	lifebar2.y = 175;
+	lifebar2.w = 119;
+	lifebar2.h = 16;
+
+	win.x = 124;
+	win.y = 62;
+	win.w = 122;
+	win.h = 16;
 
 	rectPlayer.w = 100;
 	rectPlayer.h = 6;
 	rectEnemy.w = 100;
 	rectEnemy.h = 6;
 
-	win.x = 0;
-	win.y = 0;
-	win.w = 320;
-	win.h = 224;
+	fight.x = 0;
+	fight.y = 102;
+	fight.w = 172;
+	fight.h = 38;
 
-	lose.x = 0;
-	lose.y = 0;
-	lose.w = 320;
-	lose.h = 224;
+	round1.x = 0;
+	round1.y = 140;
+	round1.w = 106;
+	round1.h = 15;
+
+	round2.x = 0;
+	round2.y = 155;
+	round2.w = 106;
+	round2.h = 15;
 
 	r.x = 0;
 	r.y = 0;
 	r.w = 16;
 	r.y = 16;
 
-	roundCircle.PushBack({ 0, 0, 16, 16 });
-	roundCircleWon.PushBack({ 16, 0, 16, 16 });
-	roundCircleWon.PushBack({ 0, 16, 16, 16 });
+	roundCircle.PushBack({ 88, 51, 16, 16 });
+	roundCircleWon.PushBack({ 88, 51, 16, 16 });
+	roundCircleWon.PushBack({ 104, 67, 16, 16 });
 	roundCircleWon.speed = 0.08;     
 }
 
@@ -53,11 +68,7 @@ bool ModuleHUD::Start()
 {
 	Win = false;
 	Lose = false;
-	life = App->textures->Load("Assets/Sprites/Main/Life bar.png");
-	youWin = App->textures->Load("Assets/Sprites/Main/win.png");
-	youLose = App->textures->Load("Assets/Sprites/Main/gameover.png");
-	round = App->textures->Load("Assets/Sprites/Main/Round indicator.png");
-	newround = App->textures->Load("Assets/Sprites/Main/rounds.png");
+	hud = App->textures->Load("Assets/Sprites/Main/UI-HUD spritesheet.png");
 	fontID = App->fonts->Load("Assets/Sprites/Fonts/NumberTimerFont.png", "0123456789", 1, 15, 21, 10);
 	timer = 60;
 	ticks1 = 0;
@@ -72,11 +83,7 @@ bool ModuleHUD::CleanUp()
 {
 	LOG("Unloading intro scene");
 
-	App->textures->Unload(life);
-	App->textures->Unload(youWin);
-	App->textures->Unload(youLose);
-	App->textures->Unload(round);
-	App->textures->Unload(newround);
+	App->textures->Unload(hud);
 	App->fonts->UnLoad(fontID);
 	this->Disable();
 
@@ -95,7 +102,10 @@ update_status ModuleHUD::Update()
 		Lose = true;
 	}
 
-	App->render->Blit(life, App->render->camera.x+8 , App->render->camera.y, &lifebar, - 3);
+	App->render->Blit(hud, App->render->camera.x + 22 , App->render->camera.y + 8, &lifebar, - 3);
+	App->render->Blit(hud, App->render->camera.x + 175, App->render->camera.y + 16, &lifebar2, -3);
+
+
 	if (ticks1 > 29000) {
 		timer -= 1;
 		ticks1 = 0;
@@ -131,8 +141,8 @@ update_status ModuleHUD::Update()
 	rectEnemy.w = App->enemy->Life;
 	App->render->DrawQuad(rectEnemy, 250, 230, 30, 255, true);
 
-	if (Win) { App->render->Blit(youWin, App->render->camera.x, App->render->camera.y, &win, -3); }
-	if (Lose) { App->render->Blit(youLose, App->render->camera.x, App->render->camera.y, &lose, -3); }
+	if (Win) { App->render->Blit(hud, App->render->camera.x, App->render->camera.y, &win, -3); }
+	if (Lose) { App->render->Blit(hud, App->render->camera.x, App->render->camera.y, &lose, -3); }
 
 	return UPDATE_CONTINUE;
 }

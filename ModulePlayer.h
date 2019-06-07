@@ -93,6 +93,7 @@ public:
 	Mix_Chunk* winfx = nullptr;
 	Mix_Chunk* defeatfx = nullptr;
 	SDL_Rect r;
+	int ComboFireCounter = 0;
 
 };
 #endif

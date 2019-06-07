@@ -563,6 +563,21 @@ update_status ModulePlayer::Update()
 		colPlayerCrouch->SetPos(position.x + 12, position.y - 67);
 	}
 
+
+	//COMBOS
+
+	/*if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) {
+		ComboFireCounter++;
+	}
+
+	if (ComboFireCounter < 40) {
+		status = PLAYER_SPECIAL;
+	}
+	else if (ComboFireCounter >= 40) {
+		ComboFireCounter = 0;
+	}*/
+
+
 	// Draw everything --------------------------------------
 
 	r = current_animation->GetCurrentFrame();

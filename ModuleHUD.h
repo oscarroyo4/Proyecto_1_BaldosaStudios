@@ -18,13 +18,9 @@ public:
 public:
 
 	SDL_Renderer *renderer;
-	SDL_Texture * life = nullptr;
-	SDL_Texture * youWin = nullptr;
-	SDL_Texture * youLose = nullptr;
-	SDL_Texture * round = nullptr;
-	SDL_Texture * newround = nullptr;
-	SDL_Rect lifebar, rectPlayer, rectEnemy;
-	SDL_Rect win, lose, r;
+	SDL_Texture *hud = nullptr;
+	SDL_Rect lifebar, lifebar2, rectPlayer, rectEnemy;
+	SDL_Rect win, lose, r, fight, round1, round2;
 	Animation roundCircle;
 	Animation roundCircleWon;
 	bool Win, Lose;
