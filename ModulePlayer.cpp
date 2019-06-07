@@ -391,10 +391,7 @@ update_status ModulePlayer::Update()
 			}
 		}
 	}
-	if (defeat_timer >= 210) { 
-		App->hud->Lose = true; 
-		input = false;
-	}
+
 
 	if (win_timer > 0)
 	{

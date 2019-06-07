@@ -22,6 +22,8 @@ public:
 	SDL_Texture * graphicsAnim = nullptr;
 	SDL_Texture * graphics2 = nullptr;
 	SDL_Texture * graphicsAnim2 = nullptr;
+	SDL_Texture * graphics3 = nullptr;
+	SDL_Texture * graphicsAnim3 = nullptr;
 	SDL_Texture * ShadowSB = nullptr;
 	Mix_Music * music = nullptr;
 	Animation soundBeachSky;

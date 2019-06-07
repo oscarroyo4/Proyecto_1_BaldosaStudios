@@ -7,7 +7,7 @@
 #include "ModulePlayer.h"
 #include "ModuleJoe.h"
 #include "ModuleInput.h"
-#include "ModuleIntro.h"
+#include "ModuleHowardArena.h"
 #include "ModuleCollision.h"
 #include "ModuleAudio.h"
 #include "ModuleAndy.h"
@@ -16,7 +16,6 @@
 #include "ModuleFadeToBlack.h"
 #include "SDL_image/include/SDL_image.h"
 
-// Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
 ModuleSceneSoundBeach::ModuleSceneSoundBeach()
 {
@@ -62,12 +61,15 @@ bool ModuleSceneSoundBeach::Start()
 	App->hud->Enable();
 	LOG("Loading background assets");
 	bool ret = true;
-	graphics = App->textures->Load("Assets/Sprites/Sound Beach Tileset/Day/SoundBeach.png");
-	graphicsAnim = App->textures->Load("Assets/Sprites/Sound Beach Tileset/Day/SoundBeach_PeopleAnim.png");
-	graphics2 = App->textures->Load("Assets/Sprites/Sound Beach Tileset/Sunset/SoundBeach (sunset).png");
-	graphicsAnim2 = App->textures->Load("Assets/Sprites/Sound Beach Tileset/Sunset/PeopleAnimation_(sunset).png");
+	graphics = App->textures->Load("Assets/Sprites/Sound Beach Tileset/SoundBeach.png");
+	graphicsAnim = App->textures->Load("Assets/Sprites/Sound Beach Tileset/SoundBeach_PeopleAnim.png");
+	graphics2 = App->textures->Load("Assets/Sprites/Sound Beach Tileset/SoundBeach (sunset).png");
+	graphicsAnim2 = App->textures->Load("Assets/Sprites/Sound Beach Tileset/PeopleAnimation_(sunset).png");
+	graphics3 = App->textures->Load("Assets/Sprites/Sound Beach Tileset/SoundBeachNight.png");
+	graphicsAnim3 = App->textures->Load("Assets/Sprites/Sound Beach Tileset/PeopleAnimation (night).png");
 	ShadowSB = App->textures->Load("Assets/Sprites/Main/Shadow.png");
 	music = App->sounds->Load_music("Assets/Fatal Fury King of Fighters - The Sea Knows (Michael Max Theme).ogg");
+
 	App->player->Disable();
 	if (JoeOnStage == true) { 
 		App->joe->Enable(); 
@@ -167,11 +169,23 @@ update_status ModuleSceneSoundBeach::Update()
 		App->render->Blit(graphicsAnim2, 420, 107, &(backgroundPeople1.GetCurrentFrame()), 0.75f);
 	}
 
+
+	if (round == 3)
+	{
+		App->render->Blit(graphics3, 45, 0, &(soundBeachSky.GetCurrentFrame()), 0.45f);
+		App->render->Blit(graphics3, 0, 0, &(soundBeachGround.GetCurrentFrame()), 0.75f);
+		App->render->Blit(graphicsAnim3, 140, 107, &(backgroundPeople1.GetCurrentFrame()), 0.75f);
+		App->render->Blit(graphicsAnim3, 210, 107, &(backgroundPeople2.GetCurrentFrame()), 0.75f);
+		App->render->Blit(graphicsAnim3, 280, 107, &(backgroundPeople3.GetCurrentFrame()), 0.75f);
+		App->render->Blit(graphicsAnim3, 350, 107, &(backgroundPeople4.GetCurrentFrame()), 0.75f);
+		App->render->Blit(graphicsAnim3, 420, 107, &(backgroundPeople1.GetCurrentFrame()), 0.75f);
+	}
+
 	
 
 	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1)
 	{
-		App->fade->FadeToBlack(this, App->scene_intro, 2.5);
+		App->fade->FadeToBlack(this, App->howardArena, 2.5);
 	}
 
 	if (App->player->win_timer == 180 && PlayerVictories == 0)
@@ -187,7 +201,7 @@ update_status ModuleSceneSoundBeach::Update()
 	if (App->player->win_timer == 235 && PlayerVictories == 0)
 	{
 		PlayerVictories++;
-		round = 2;
+		round++;
 		App->render->camera.x = -530;
 		App->enemy->input = true;
 		App->player->input = true;
@@ -209,7 +223,7 @@ update_status ModuleSceneSoundBeach::Update()
 	if (App->enemy->win_timer == 235 && EnemyVictories == 0)
 	{
 		EnemyVictories++;
-		round = 2;
+		round++;
 		App->render->camera.x = -530;
 		App->enemy->input = true;
 		App->player->input = true;
@@ -226,16 +240,16 @@ update_status ModuleSceneSoundBeach::Update()
 		App->enemy->win.Reset();
 		App->player->status = PLAYER_IDLE;
 		App->enemy->status = ENEMY_IDLE;
-
 	}
+
 	if (App->player->win_timer == 210 && PlayerVictories == 1)
 	{
-		App->fade->FadeToBlack(this, App->scene_intro, 2.5);
+		App->fade->FadeToBlack(this, App->howardArena, 2.5);
 	}
 
 	if (App->enemy->win_timer == 210 && EnemyVictories == 1)
 	{
-		App->fade->FadeToBlack(this, App->scene_intro, 2.5);
+		App->fade->FadeToBlack(this, App->howardArena, 2.5);
 	}
 
 	if (PlayerVictories == 0 && EnemyVictories == 0)

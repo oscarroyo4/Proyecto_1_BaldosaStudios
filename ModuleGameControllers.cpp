@@ -177,10 +177,10 @@ update_status  ModuleGameControllers::PreUpdate()
 	return update_status::UPDATE_CONTINUE;
 }
 
-// Called before quitting
+
 bool  ModuleGameControllers::CleanUp()
 {
-	LOG("Quitting SDL input event subsystem");
+	LOG("Quitting controller input");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 
 	SDL_GameControllerClose(controller);
