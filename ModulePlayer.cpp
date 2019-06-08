@@ -88,9 +88,11 @@ ModulePlayer::ModulePlayer()
 	specialpunch.PushBack({ 18, 1590, 88, 110 });
 	specialpunch.PushBack({ 120, 1600, 58, 98 });
 	specialpunch.PushBack({ 196, 1615, 62, 83 });
-	specialpunch.PushBack({ 265, 1607, 116, 63 });
-	specialpunch.PushBack({ 389, 1595, 57, 94 });
-	specialpunch.speed = 0.052f;
+	specialpunch.PushBack({ 265, 1599, 116, 93 });
+	specialpunch.PushBack({ 265, 1599, 116, 93 });
+	specialpunch.PushBack({ 265, 1599, 116, 93 });
+	specialpunch.PushBack({ 389, 1595 , 57, 94 });
+	specialpunch.speed = 0.055f;
 
 	// taking damage animation
 	damage.PushBack({ 344, 342, 60, 100 });
@@ -485,7 +487,7 @@ update_status ModulePlayer::Update()
 			App->enemy->hit = true;
 			punchHit = true;
 		}
-		if (special_punch_timer > 85)
+		if (special_punch_timer > 123)
 		{
 			specialpunchEnable = true;
 			status = IN_SPECIAL_PUNCH_FINISH;
@@ -493,6 +495,9 @@ update_status ModulePlayer::Update()
 			special_punch_timer = 0;
 		}
 	}
+
+	if (special_punch_timer > 45 && special_punch_timer < 100 && position.x < App->enemy->position.x) { position.x = position.x + 3; }
+	if (special_punch_timer > 45 && special_punch_timer < 100 && position.x >= App->enemy->position.x) { position.x = position.x - 3; }
 	
 	if (crouch_punch_timer > 0)
 	{
