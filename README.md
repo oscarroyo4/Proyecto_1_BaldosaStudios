@@ -1,11 +1,34 @@
 ## Our project website
 
+#### This website was created to give a preview of our project about Fatal Fury.
 
-You can use the [editor on GitHub](https://github.com/victorbr2/Square/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+## Website Contents
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+- Description of the game
+- [Team members]()
+- [Gameplay Video]()
+- [Download link]()
+- [Link of our wiki](https://github.com/oscarroyo4/Proyecto_1_BaldosaStudios/wiki)
 
-### Markdown
+### Team members
+> ![](https://raw.githubusercontent.com/oscarroyo4/Proyecto_1_BaldosaStudios/picts-wiki/IMG20190315120333.jpg)
+* Pau Raurell
+  * Q&A
+  * Github account: [pauraurell](https://github.com/pauraurell)
+
+* Victor Bosch
+  * Management
+  * Github account: [victorbr2](https://github.com/victorbr2/)
+
+* Oscar Royo
+  * Code
+  * Github account: [oscarroyo4](https://github.com/oscarroyo4)
+
+* Carlos de Yzaguirre
+  * Art/Design
+  * Github account: [CarlosDYZAB](https://github.com/CarlosDYZAB/)
+  
+### 
 
 Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
