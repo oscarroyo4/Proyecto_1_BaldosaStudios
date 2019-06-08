@@ -6,11 +6,11 @@ For the past six months our team from BalsdosaStudio has been working on a video
 
 ## Website Contents
 
-- [Description of the game]()
-- [Team members]()
-- [Gameplay Video]()
-- [Download link]()
-- [Link of our wiki](https://github.com/oscarroyo4/Proyecto_1_BaldosaStudios/wiki)
+- Description of the game
+- Team members
+- Gameplay Video
+- Download link
+- Link of our Wiki
 
 ### Description of the game
 
@@ -32,3 +32,8 @@ For the past six months our team from BalsdosaStudio has been working on a video
   * Art/Design
   * Github account: [CarlosDYZAB](https://github.com/CarlosDYZAB/)
   
+### Gameplay Video
+
+### Download link
+
+### Link of our Wiki
