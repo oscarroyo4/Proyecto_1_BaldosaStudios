@@ -20,12 +20,14 @@ enum joe_status
 	JOE_PUNCH,
 	JOE_KICK,
 	JOE_SPECIAL,
+	JOE_SPECIAL_KICK,
 	JOE_DAMAGE,
 	JOE_IN_PUNCH_FINISH,
 	JOE_IN_KICK_FINISH,
 	JOE_IN_JUMP_FINISH,
 	JOE_DAMAGE_FINISH,
 	JOE_IN_SPECIAL_FINISH,
+	JOE_IN_SPECIAL_KICK_FINISH,
 	JOE_CROUCH_PUNCH_FINISH
 };
 
@@ -45,6 +47,7 @@ public:
 	bool godMode;
 	bool punchEnable = true;
 	bool kickEnable = true;
+	bool specialkickEnable = true;
 	bool jumpEnable = true;
 	bool specialEnable = true;
 	bool crouchPunchEnable = true;
@@ -57,6 +60,7 @@ public:
 	Animation backward;
 	Animation punch;
 	Animation kick;
+	Animation specialkick;
 	Animation jump;
 	Animation specialAttack;
 	Animation specialAttackStatic;
@@ -85,6 +89,7 @@ public:
 	Uint32 damage_timer = 0;
 	Uint32 crouch_punch_timer = 0;
 	Uint32 special_timer = 0;
+	Uint32 special_kick_timer = 0;
 	Uint32 tornado_timer = 0;
 	Uint32 defeat_timer = 0;
 	Uint32 win_timer = 0;

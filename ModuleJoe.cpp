@@ -72,6 +72,15 @@ ModuleJoe::ModuleJoe()
 	specialAttackStatic.PushBack({ 272, 1039, 47, 141 });
 	specialAttack.speed = 0.12f;
 
+	//Special Kick animation
+	specialkick.PushBack({ 5, 1439, 49, 89 });
+	specialkick.PushBack({ 63, 1442, 50, 80 });
+	specialkick.PushBack({ 125, 1435, 72, 93 });
+	specialkick.PushBack({ 205, 1433, 92, 93 });
+	specialkick.PushBack({ 305, 1429, 107, 93 });
+	specialkick.PushBack({ 305, 1429, 107, 93 });
+	specialkick.speed = 0.065f;
+
 	// taking damage animation *
 	damage.PushBack({ 344, 342, 60, 100 });
 	damage.PushBack({ 407, 336, 68, 106 });
@@ -178,6 +187,9 @@ update_status ModuleJoe::Update()
 
 		else if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN)
 			status = JOE_SPECIAL;
+
+		else if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
+			status = JOE_SPECIAL_KICK;
 
 		else {
 			status = JOE_IDLE;
@@ -326,6 +338,22 @@ update_status ModuleJoe::Update()
 		}
 		break;
 
+	case JOE_SPECIAL_KICK:
+		if (specialkickEnable == true) {
+			specialkickEnable = false;
+			specialkick.Reset();
+			special_kick_timer = 1;
+			if (App->sounds->Play_chunk(kickfx))
+			{
+				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+			}
+
+			if (App->enemy->position.x > position.x) kickCol = App->collision->AddCollider({ position.x + 46, position.y - 85, 55, 18 }, COLLIDER_PLAYER_SHOT);
+			else kickCol = App->collision->AddCollider({ position.x - 45, position.y - 85, 55, 18 }, COLLIDER_PLAYER_SHOT);
+			kickHit = false;
+		}
+		break;
+
 	case JOE_PUNCH:
 		if (punchEnable == true) {
 			punchEnable = false;
@@ -420,6 +448,35 @@ update_status ModuleJoe::Update()
 			kickCol->to_delete = true;
 			kick_timer = 0;
 		}
+	}
+
+	if (special_kick_timer > 0)
+	{
+		special_kick_timer = special_kick_timer + 1;
+		current_animation = &specialkick;
+		if (kickCol->CheckCollision(App->enemy->r) && kickHit == false) {
+			App->enemy->hit = true;
+			kickHit = true;
+		}
+		if (special_kick_timer > 95)
+		{
+			specialkickEnable = true;
+			status = JOE_IN_SPECIAL_KICK_FINISH;
+			kickCol->to_delete = true;
+			special_kick_timer = 0;
+		}
+	}
+
+	if (special_kick_timer > 40 && special_kick_timer < 82 && position.x < App->enemy->position.x)
+	{
+		position.x = position.x + 3;
+		kickCol->rect.x = kickCol->rect.x + 3;
+	}
+	else if (special_kick_timer > 40 && special_kick_timer < 82 && position.x >= App->enemy->position.x)
+	{
+		position.x = position.x - 3;
+		kickCol->rect.x = kickCol->rect.x - 3;
+
 	}
 
 	if (crouch_punch_timer > 0)
@@ -540,7 +597,7 @@ update_status ModuleJoe::Update()
 	r = current_animation->GetCurrentFrame();
 
 
-	if (App->enemy->position.x < position.x) { App->render->Blit(graphicsJoe, position.x, position.y - r.h, &r, 1, SDL_FLIP_HORIZONTAL); }
+	if (App->enemy->position.x <= position.x) { App->render->Blit(graphicsJoe, position.x, position.y - r.h, &r, 1, SDL_FLIP_HORIZONTAL); }
 	if (App->enemy->position.x > position.x &&  defeat_timer == 0) { App->render->Blit(graphicsJoe, position.x, position.y - r.h, &r); }
 	if (defeat_timer > 0) { App->render->Blit(graphicsJoe, position.x, position.y - r.h, &r, 1, SDL_FLIP_HORIZONTAL); }
 
