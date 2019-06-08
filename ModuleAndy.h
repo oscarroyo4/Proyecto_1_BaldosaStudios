@@ -19,9 +19,11 @@ enum andy_status
 	ANDY_CROUCH,
 	ANDY_PUNCH,
 	ANDY_KICK,
+	ANDY_SPECIAL_PUNCH,
 	ANDY_SPECIAL,
 	ANDY_DAMAGE,
 	ANDY_IN_PUNCH_FINISH,
+	ANDY_SPECIAL_PUNCH_FINISH,
 	ANDY_IN_KICK_FINISH,
 	ANDY_IN_JUMP_FINISH,
 	ANDY_DAMAGE_FINISH,
@@ -44,6 +46,7 @@ public:
 	bool godMode;
 	bool punchEnable = true;
 	bool kickEnable = true;
+	bool specialpunchEnable = true;
 	bool jumpEnable = true;
 	bool specialEnable = true;
 	bool input = true;
@@ -56,6 +59,7 @@ public:
 	Animation backward;
 	Animation punch;
 	Animation kick;
+	Animation specialpunch;
 	Animation jump;
 	Animation specialAttack;
 	Animation specialAttackStatic;
@@ -79,6 +83,7 @@ public:
 	Uint32 punch_timer = 0;
 	Uint32 jump_timer = 0;
 	Uint32 kick_timer = 0;
+	Uint32 special_punch_timer = 0;
 	Uint32 damage_timer = 0;
 	Uint32 special_timer = 0;
 	Uint32 groundFire_timer = 0;

@@ -189,8 +189,8 @@ update_status ModuleJoe::Update()
 		else if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN)
 			status = JOE_SPECIAL;
 
-		//else if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
-		//	status = JOE_SPECIAL_KICK;
+		else if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
+			status = JOE_SPECIAL_KICK;
 
 		else {
 			status = JOE_IDLE;
@@ -452,7 +452,7 @@ update_status ModuleJoe::Update()
 		}
 	}
 
-	/*if (special_kick_timer > 0)
+	if (special_kick_timer > 0)
 	{
 		special_kick_timer = special_kick_timer + 1;
 		current_animation = &specialkick;
@@ -480,7 +480,7 @@ update_status ModuleJoe::Update()
 		speciakickCol->rect.x = speciakickCol->rect.x - 3;
 
 	}
-	*/
+	
 
 	if (crouch_punch_timer > 0)
 	{

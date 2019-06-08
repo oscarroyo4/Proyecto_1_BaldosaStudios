@@ -77,6 +77,12 @@ ModuleAndy::ModuleAndy()
 	specialAttackStatic.PushBack({ 218, 367, 99, 89 });
 	specialAttack.speed = 0.175f;
 
+	//Special punch animation
+	specialpunch.PushBack({ 339, 481, 75, 88 });
+	specialpunch.PushBack({ 421, 481, 89, 88 });
+	specialpunch.PushBack({ 517, 485, 87, 84 });
+	specialpunch.speed = 0.03f;
+
 	// taking damage animation
 	damage.PushBack({ 864, 239, 60, 100 });
 	damage.PushBack({ 932, 256, 68, 106 });
@@ -169,6 +175,9 @@ update_status ModuleAndy::Update()
 		else if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN)
 			status = ANDY_SPECIAL;
 
+		else if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
+			status = ANDY_SPECIAL_PUNCH;
+
 		else if (hit == true) {
 			status = ANDY_DAMAGE;
 			hit = false;
@@ -248,6 +257,11 @@ update_status ModuleAndy::Update()
 		specialAttack.Reset();
 		break;
 
+	case ANDY_SPECIAL_PUNCH_FINISH:
+		status = ANDY_IDLE;
+		specialAttack.Reset();
+		break;
+
 	case ANDY_KICK:
 		if (kickEnable == true) {
 			kickEnable = false;
@@ -267,6 +281,20 @@ update_status ModuleAndy::Update()
 			punchEnable = false;
 			punch.Reset();
 			punch_timer = 1;
+			if (Mix_PlayChannel(-1, punchfx, 0) == -1)
+			{
+				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+			}
+			punchCol = App->collision->AddCollider({ position.x + 46, position.y - 90, 40, 20 }, COLLIDER_PLAYER_SHOT);
+			punchHit = false;
+		}
+		break;
+
+	case ANDY_SPECIAL_PUNCH:
+		if (specialpunchEnable == true) {
+			specialpunchEnable = false;
+			specialpunch.Reset();
+			special_punch_timer = 1;
 			if (Mix_PlayChannel(-1, punchfx, 0) == -1)
 			{
 				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
@@ -372,6 +400,35 @@ update_status ModuleAndy::Update()
 			punchCol->to_delete = true;
 			punch_timer = 0;
 		}
+	}
+
+	if (special_punch_timer > 0)
+	{
+		special_punch_timer = special_punch_timer + 1;
+		current_animation = &specialpunch;
+		if (punchCol->CheckCollision(App->enemy->r) && punchHit == false) {
+			App->enemy->hit = true;
+			punchHit = true;
+		}
+		if (special_punch_timer > 90)
+		{
+			specialpunchEnable = true;
+			status = ANDY_SPECIAL_PUNCH_FINISH;
+			punchCol->to_delete = true;
+			special_punch_timer = 0;
+		}
+	}
+
+	if (special_punch_timer > 25 && special_punch_timer < 80 && position.x < App->enemy->position.x)
+	{
+		position.x = position.x + 3;
+		punchCol->rect.x = punchCol->rect.x + 3;
+	}
+	else if (special_punch_timer > 25 && special_punch_timer < 80 && position.x >= App->enemy->position.x)
+	{
+		position.x = position.x - 3;
+		punchCol->rect.x = punchCol->rect.x - 3;
+
 	}
 
 
