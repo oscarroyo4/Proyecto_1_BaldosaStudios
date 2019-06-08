@@ -70,7 +70,7 @@ update_status ModuleCinematics::Update()
 	{
 		GameIntroCinematic_timer++;
 		App->render->camera.x--;
-		App->render->Blit(fatalfuryintro, 0, -6, &(GameIntroCinematicBackground.GetCurrentFrame()), 0.17f);
+		App->render->Blit(fatalfuryintro, 0, -6, &(GameIntroCinematicBackground.GetCurrentFrame()), 0.156f);
 		App->render->Blit(fatalfuryintrowords, 350, 52, &(GameIntroCinematicWords.GetCurrentFrame()), 6);
 		App->render->Blit(fatalfuryintro, -35, 70, &(GameIntroCinematicTerry.GetCurrentFrame()), -0.28f);
 		App->render->Blit(inscoins, 125, 160, &(insertcoins.GetCurrentFrame()), 0);

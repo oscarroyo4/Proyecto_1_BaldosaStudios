@@ -81,8 +81,17 @@ ModuleEnemy::ModuleEnemy()
 	specialAttack.PushBack({ 75, 730, 66, 68 });
 	specialAttack.PushBack({ 10, 717, 62, 81 });
 	specialAttack.speed = 0.175f;
-
 	specialAttackStatic.PushBack({ 142, 721, 68, 77 });
+
+	//Special Punch animation
+	specialpunch.PushBack({ 18, 1590, 88, 110 });
+	specialpunch.PushBack({ 120, 1600, 58, 98 });
+	specialpunch.PushBack({ 196, 1615, 62, 83 });
+	specialpunch.PushBack({ 265, 1599, 116, 93 });
+	specialpunch.PushBack({ 265, 1599, 116, 93 });
+	specialpunch.PushBack({ 265, 1599, 116, 93 });
+	specialpunch.PushBack({ 389, 1595 , 57, 94 });
+	specialpunch.speed = 0.055f;
 
 	// taking damage animation
 	damage.PushBack({ 344, 342, 60, 100 });
@@ -178,6 +187,9 @@ update_status ModuleEnemy::Update()
 
 		else if (App->input->GetKey(SDL_SCANCODE_RALT) == KEY_DOWN)
 			status = ENEMY_SPECIAL;
+
+		else if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+			status = ENEMY_SPECIAL_PUNCH;
 
 		else {
 			status = ENEMY_IDLE;
@@ -306,6 +318,11 @@ update_status ModuleEnemy::Update()
 		damage.Reset();
 		break;
 
+	case ENEMY_SPECIAL_PUNCH_FINISH:
+		status = ENEMY_IDLE;
+		specialpunch.Reset();
+		break;
+
 	case ENEMY_KICK:
 		if (kickEnable == true) {
 			kickEnable = false;
@@ -333,6 +350,21 @@ update_status ModuleEnemy::Update()
 			if (App->player->position.x < position.x) punchCol = App->collision->AddCollider({ position.x - 30, position.y - 90, 40, 20 }, COLLIDER_ENEMY_SHOT);
 			else punchCol = App->collision->AddCollider({ position.x + 46, position.y - 90, 40, 20 }, COLLIDER_ENEMY_SHOT);
 
+			punchHit = false;
+		}
+		break;
+
+	case ENEMY_SPECIAL_PUNCH:
+		if (specialpunchEnable == true) {
+			specialpunchEnable = false;
+			specialpunch.Reset();
+			special_punch_timer = 1;
+			if (App->sounds->Play_chunk(punchfx1))
+			{
+				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+			}
+			if (App->enemy->position.x > position.x) punchCol = App->collision->AddCollider({ position.x + 46, position.y - 90, 40, 20 }, COLLIDER_PLAYER_SHOT);
+			else punchCol = App->collision->AddCollider({ position.x - 30, position.y - 90, 40, 20 }, COLLIDER_PLAYER_SHOT);
 			punchHit = false;
 		}
 		break;
@@ -441,6 +473,35 @@ update_status ModuleEnemy::Update()
 			punchCol->to_delete = true;
 			punch_timer = 0;
 		}
+	}
+
+	if (special_punch_timer > 0)
+	{
+		special_punch_timer = special_punch_timer + 1;
+		current_animation = &specialpunch;
+		if (punchCol->CheckCollision(App->enemy->r) && punchHit == false) {
+			App->player->hit = true;
+			punchHit = true;
+		}
+		if (special_punch_timer > 123)
+		{
+			specialpunchEnable = true;
+			status = ENEMY_SPECIAL_PUNCH_FINISH;
+			punchCol->to_delete = true;
+			special_punch_timer = 0;
+		}
+	}
+
+	if (special_punch_timer > 45 && special_punch_timer < 100 && position.x < App->player->position.x)
+	{
+		position.x = position.x + 3;
+		punchCol->rect.x = punchCol->rect.x + 3;
+	}
+	else if (special_punch_timer > 45 && special_punch_timer < 100 && position.x >= App->player->position.x)
+	{
+		position.x = position.x - 3;
+		punchCol->rect.x = punchCol->rect.x - 3;
+
 	}
 
 	if (crouch_punch_timer > 0)

@@ -18,6 +18,7 @@ enum enemy_status
 	ENEMY_JUMP,
 	ENEMY_CROUCH,
 	ENEMY_PUNCH,
+	ENEMY_SPECIAL_PUNCH,
 	ENEMY_KICK,
 	ENEMY_SPECIAL,
 	ENEMY_DAMAGE,
@@ -26,7 +27,8 @@ enum enemy_status
 	ENEMY_CROUCH_PUNCH_FINISH,
 	ENEMY_IN_JUMP_FINISH,
 	ENEMY_DAMAGE_FINISH,
-	ENEMY_IN_SPECIAL_FINISH
+	ENEMY_IN_SPECIAL_FINISH,
+	ENEMY_SPECIAL_PUNCH_FINISH
 };
 
 class ModuleEnemy : public Module
@@ -44,6 +46,7 @@ public:
 	bool godMode;
 	bool punchEnable = true;
 	bool crouchPunchEnable = true;
+	bool specialpunchEnable = true;
 	bool kickEnable = true;
 	bool jumpEnable = true;
 	bool specialEnable = true;
@@ -58,6 +61,7 @@ public:
 	Animation kick;
 	Animation jump;
 	Animation specialAttack;
+	Animation specialpunch;
 	Animation specialAttackStatic;
 	Animation crouch;
 	Animation crouchPunch;
@@ -82,6 +86,7 @@ public:
 	Uint32 kick_timer = 0;
 	Uint32 damage_timer = 0;
 	Uint32 special_timer = 0;
+	Uint32 special_punch_timer = 0;
 	Uint32 groundFire_timer = 0;
 	Uint32 defeat_timer = 0;
 	Uint32 win_timer = 0;

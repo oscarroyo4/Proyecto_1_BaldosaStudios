@@ -55,8 +55,8 @@ ModuleHUD::ModuleHUD()
 	r.y = 16;
 
 	roundCircle.PushBack({ 88, 51, 16, 16 });
-	roundCircleWon.PushBack({ 88, 51, 16, 16 });
-	roundCircleWon.PushBack({ 104, 67, 16, 16 });
+	roundCircleWon.PushBack({ 104, 51, 16, 16 });
+	roundCircleWon.PushBack({ 88, 67, 16, 16 });
 	roundCircleWon.speed = 0.08;     
 }
 

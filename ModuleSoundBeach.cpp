@@ -148,7 +148,7 @@ update_status ModuleSceneSoundBeach::Update()
 
 	if (round == 1) 
 	{
-		App->render->Blit(graphics, 45, 0, &(soundBeachSky.GetCurrentFrame()), 0.45f);
+		App->render->Blit(graphics, 10, 0, &(soundBeachSky.GetCurrentFrame()), 0.40f);
 		App->render->Blit(graphics, 0, 0, &(soundBeachGround.GetCurrentFrame()), 0.75f);
 		App->render->Blit(graphicsAnim, 140, 107, &(backgroundPeople1.GetCurrentFrame()), 0.75f);
 		App->render->Blit(graphicsAnim, 210, 107, &(backgroundPeople2.GetCurrentFrame()), 0.75f);
@@ -160,7 +160,7 @@ update_status ModuleSceneSoundBeach::Update()
 
 	if (round == 2)
 	{
-		App->render->Blit(graphics2, 45, 0, &(soundBeachSky.GetCurrentFrame()), 0.45f);
+		App->render->Blit(graphics2, 10, 0, &(soundBeachSky.GetCurrentFrame()), 0.40f);
 		App->render->Blit(graphics2, 0, 0, &(soundBeachGround.GetCurrentFrame()), 0.75f);
 		App->render->Blit(graphicsAnim2, 140, 107, &(backgroundPeople1.GetCurrentFrame()), 0.75f);
 		App->render->Blit(graphicsAnim2, 210, 107, &(backgroundPeople2.GetCurrentFrame()), 0.75f);
@@ -172,7 +172,7 @@ update_status ModuleSceneSoundBeach::Update()
 
 	if (round == 3)
 	{
-		App->render->Blit(graphics3, 45, 0, &(soundBeachSky.GetCurrentFrame()), 0.45f);
+		App->render->Blit(graphics3, 10, 0, &(soundBeachSky.GetCurrentFrame()), 0.40f);
 		App->render->Blit(graphics3, 0, 0, &(soundBeachGround.GetCurrentFrame()), 0.75f);
 		App->render->Blit(graphicsAnim3, 140, 107, &(backgroundPeople1.GetCurrentFrame()), 0.75f);
 		App->render->Blit(graphicsAnim3, 210, 107, &(backgroundPeople2.GetCurrentFrame()), 0.75f);
