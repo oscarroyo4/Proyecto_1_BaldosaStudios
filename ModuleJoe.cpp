@@ -54,9 +54,10 @@ ModuleJoe::ModuleJoe()
 	kick.speed = 0.14f;
 
 	//Jump animation *
-	jump.PushBack({ 88, 367, 39, 126 });
-	jump.PushBack({ 145, 367, 49, 126 });
-	jump.PushBack({ 204, 367, 56, 125 });
+	jump.PushBack({ 21, 1639, 54, 90 });
+	jump.PushBack({ 87, 1565, 39, 164 });
+	jump.PushBack({ 145, 1559, 49, 171 });
+	jump.PushBack({ 203, 1590, 56, 141 });
 	jump.speed = 0.1f;
 
 	//crouch animation
@@ -522,6 +523,7 @@ update_status ModuleJoe::Update()
 		if (jump_timer < 8) { colPlayer->SetPos(position.x, position.y - 140); }
 		else if (jump_timer < 29) { colPlayer->SetPos(position.x, position.y - 180); }
 		else if (jump_timer < 38) { colPlayer->SetPos(position.x, position.y - 165); }
+
 
 		if (jump_timer > 38)
 		{

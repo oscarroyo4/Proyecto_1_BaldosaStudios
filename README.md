@@ -1,37 +1,39 @@
-## Welcome to GitHub Pages
+## Our project website
 
-You can use the [editor on GitHub](https://github.com/victorbr2/Square/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+#### This website was created to give a preview of our project about Fatal Fury.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+For the past six months our team from BalsdosaStudio has been working on a videogame project based on Fatal Fury a Neogeo game. Firs we made a research of the game, and we made a wiki page, you will find a link down below, then we worked on a first prototype that had few mechanics, finally we released the alpha, the link for the download it's also at the bottom of the website.
 
-### Markdown
+## Website Contents
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+- Description of the game
+- Team members
+- Gameplay Video
+- Download link
+- Link of our Wiki
 
-```markdown
-Syntax highlighted code block
+### Description of the game
 
-# Header 1
-## Header 2
-### Header 3
+### Team members
+> ![](https://raw.githubusercontent.com/oscarroyo4/Proyecto_1_BaldosaStudios/picts-wiki/IMG20190315120333.jpg)
+* Pau Raurell
+  * Q&A
+  * Github account: [pauraurell](https://github.com/pauraurell)
 
-- Bulleted
-- List
+* Victor Bosch
+  * Management
+  * Github account: [victorbr2](https://github.com/victorbr2/)
 
-1. Numbered
-2. List
+* Oscar Royo
+  * Code
+  * Github account: [oscarroyo4](https://github.com/oscarroyo4)
 
-**Bold** and _Italic_ and `Code` text
+* Carlos de Yzaguirre
+  * Art/Design
+  * Github account: [CarlosDYZAB](https://github.com/CarlosDYZAB/)
+  
+### Gameplay Video
 
-[Link](url) and ![Image](src)
-```
+### Download link
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/victorbr2/Square/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+### Link of our Wiki
