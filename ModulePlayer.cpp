@@ -481,6 +481,7 @@ update_status ModulePlayer::Update()
 
 	if (special_punch_timer > 0)
 	{
+		input = false;
 		special_punch_timer = special_punch_timer + 1;
 		current_animation = &specialpunch;
 		if (punchCol->CheckCollision(App->enemy->r) && punchHit == false) {
@@ -493,6 +494,7 @@ update_status ModulePlayer::Update()
 			status = IN_SPECIAL_PUNCH_FINISH;
 			punchCol->to_delete = true;
 			special_punch_timer = 0;
+			input = true;
 		}
 	}
 
@@ -646,6 +648,7 @@ update_status ModulePlayer::Update()
 	if (App->enemy->position.x < position.x) { App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r, 1, SDL_FLIP_HORIZONTAL); }
 	if (App->enemy->position.x > position.x &&  defeat_timer == 0) { App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r); }
 	if (defeat_timer > 0) { App->render->Blit(graphicsTerry, position.x, position.y - r.h, &r, 1, SDL_FLIP_HORIZONTAL); }
+
 
 	r.x = position.x;
 	r.y = position.y;
