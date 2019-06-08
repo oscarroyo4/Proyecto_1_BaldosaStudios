@@ -496,8 +496,17 @@ update_status ModulePlayer::Update()
 		}
 	}
 
-	if (special_punch_timer > 45 && special_punch_timer < 100 && position.x < App->enemy->position.x) { position.x = position.x + 3; }
-	if (special_punch_timer > 45 && special_punch_timer < 100 && position.x >= App->enemy->position.x) { position.x = position.x - 3; }
+	if (special_punch_timer > 45 && special_punch_timer < 100 && position.x < App->enemy->position.x)
+	{ 
+		position.x = position.x + 3; 
+		punchCol->rect.x = punchCol->rect.x + 3;
+	}
+	else if (special_punch_timer > 45 && special_punch_timer < 100 && position.x >= App->enemy->position.x) 
+	{ 
+		position.x = position.x - 3; 
+		punchCol->rect.x = punchCol->rect.x - 3;
+
+	}
 	
 	if (crouch_punch_timer > 0)
 	{
