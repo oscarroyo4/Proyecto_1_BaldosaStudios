@@ -56,7 +56,6 @@ ModuleAndy::ModuleAndy()
 	kick.speed = 0.12f;
 
 	//Jump animation
-	jump.PushBack({ 377, 123, 60, 101 });
 	jump.PushBack({ 442, 144, 54, 80 });
 	jump.PushBack({ 516, 120, 43, 105 });
 	jump.PushBack({ 578, 120, 50, 93 });

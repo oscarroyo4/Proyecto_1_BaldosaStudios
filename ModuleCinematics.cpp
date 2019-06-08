@@ -20,8 +20,8 @@ ModuleCinematics::ModuleCinematics()
 	BetweenPaoPaoAndBeachAnimation.loop = false;
 
 	GameIntroCinematicBackground.PushBack({ 0, 0, 350, 237 });
-	GameIntroCinematicTerry.PushBack({ 0, 237, 150, 144 });
-	GameIntroCinematicTerry.PushBack({ 151, 237, 150, 144 });
+	GameIntroCinematicTerry.PushBack({ 0, 238, 150, 143 });
+	GameIntroCinematicTerry.PushBack({ 151, 238, 150, 143 });
 	GameIntroCinematicTerry.speed = 0.1;
 	GameIntroCinematicWords.PushBack({ 0, 0, 561, 63 });
 	insertcoins.PushBack({ 0, 0, 174, 64 });
@@ -70,9 +70,9 @@ update_status ModuleCinematics::Update()
 	{
 		GameIntroCinematic_timer++;
 		App->render->camera.x--;
-		App->render->Blit(fatalfuryintro, 0, -6, &(GameIntroCinematicBackground.GetCurrentFrame()), 0.156f);
-		App->render->Blit(fatalfuryintrowords, 350, 52, &(GameIntroCinematicWords.GetCurrentFrame()), 6);
-		App->render->Blit(fatalfuryintro, -35, 70, &(GameIntroCinematicTerry.GetCurrentFrame()), -0.28f);
+		App->render->Blit(fatalfuryintro, 5, -8, &(GameIntroCinematicBackground.GetCurrentFrame()), 0.07f);
+		App->render->Blit(fatalfuryintrowords, 350, 52, &(GameIntroCinematicWords.GetCurrentFrame()), 2);
+		App->render->Blit(fatalfuryintro, -55, 70, &(GameIntroCinematicTerry.GetCurrentFrame()), -0.14f);
 		App->render->Blit(inscoins, 125, 160, &(insertcoins.GetCurrentFrame()), 0);
 
 		if (!played) {
