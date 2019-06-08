@@ -73,6 +73,7 @@ public:
 	Collider* colPlayer=nullptr;
 	Collider* colPlayerCrouch = nullptr;
 	Collider* punchCol=nullptr;
+	Collider* speciakickCol = nullptr;
 	Collider* kickCol=nullptr;
 	Collider* crouchPunchCol=nullptr;
 	Collider* specialCol;

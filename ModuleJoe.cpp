@@ -348,8 +348,8 @@ update_status ModuleJoe::Update()
 				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 			}
 
-			if (App->enemy->position.x > position.x) kickCol = App->collision->AddCollider({ position.x + 46, position.y - 85, 55, 18 }, COLLIDER_PLAYER_SHOT);
-			else kickCol = App->collision->AddCollider({ position.x - 45, position.y - 85, 55, 18 }, COLLIDER_PLAYER_SHOT);
+			if (App->enemy->position.x > position.x) speciakickCol = App->collision->AddCollider({ position.x + 46, position.y - 65, 45, 30 }, COLLIDER_PLAYER_SHOT);
+			else speciakickCol = App->collision->AddCollider({ position.x - 45, position.y - 65, 45, 30 }, COLLIDER_PLAYER_SHOT);
 			kickHit = false;
 		}
 		break;
@@ -454,7 +454,7 @@ update_status ModuleJoe::Update()
 	{
 		special_kick_timer = special_kick_timer + 1;
 		current_animation = &specialkick;
-		if (kickCol->CheckCollision(App->enemy->r) && kickHit == false) {
+		if (speciakickCol->CheckCollision(App->enemy->r) && kickHit == false) {
 			App->enemy->hit = true;
 			kickHit = true;
 		}
@@ -462,7 +462,7 @@ update_status ModuleJoe::Update()
 		{
 			specialkickEnable = true;
 			status = JOE_IN_SPECIAL_KICK_FINISH;
-			kickCol->to_delete = true;
+			speciakickCol->to_delete = true;
 			special_kick_timer = 0;
 		}
 	}
@@ -470,12 +470,12 @@ update_status ModuleJoe::Update()
 	if (special_kick_timer > 40 && special_kick_timer < 82 && position.x < App->enemy->position.x)
 	{
 		position.x = position.x + 3;
-		kickCol->rect.x = kickCol->rect.x + 3;
+		speciakickCol->rect.x = speciakickCol->rect.x + 3;
 	}
 	else if (special_kick_timer > 40 && special_kick_timer < 82 && position.x >= App->enemy->position.x)
 	{
 		position.x = position.x - 3;
-		kickCol->rect.x = kickCol->rect.x - 3;
+		speciakickCol->rect.x = speciakickCol->rect.x - 3;
 
 	}
 
