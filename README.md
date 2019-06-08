@@ -10,7 +10,7 @@ For the past six months our team from BalsdosaStudio has been working on a video
 - Team members
 - Gameplay Video
 - Download link
-- Link of our Wiki
+- Link to our Wiki
 
 ### Description of the game
 
@@ -37,7 +37,7 @@ For the past six months our team from BalsdosaStudio has been working on a video
 ### Gameplay Video
 
 
-Here is the link of the video :https://www.youtube.com/watch?v=1nzazt-GIqE <br/>
+Here is the link of the video : [Fatal Fury Gameplay](https://www.youtube.com/watch?v=1nzazt-GIqE) <br/>
 
 
 [![](https://img.youtube.com/vi/1nzazt-GIqE/0.jpg)](https://www.youtube.com/watch?v=1nzazt-GIqE)
@@ -45,4 +45,7 @@ Here is the link of the video :https://www.youtube.com/watch?v=1nzazt-GIqE <br/>
 
 ### Download link
 
-### Link of our Wiki
+### Link to our Wiki
+
+[BaldosaStudio Wiki](https://github.com/oscarroyo4/Proyecto_1_BaldosaStudios/wiki)
+
