@@ -22,6 +22,8 @@ public:
 	SDL_Texture * graphics2 = nullptr;
 	SDL_Texture * ShadowHA = nullptr;
 
+	Mix_Music * music = nullptr;
+
 	Animation HA_Sky;
 	Animation HA_SkyLightning;
 	Animation HA_Ground;
