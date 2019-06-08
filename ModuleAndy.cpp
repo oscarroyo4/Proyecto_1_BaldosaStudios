@@ -379,9 +379,9 @@ update_status ModuleAndy::Update()
 	{
 		jump_timer = jump_timer + 1;
 		current_animation = &jump;
-		if (jump_timer < 12)colPlayer->SetPos(position.x + 12, position.y - 130);
-		else if (jump_timer < 29)colPlayer->SetPos(position.x + 12, position.y - 140);
-		else if (jump_timer < 38)colPlayer->SetPos(position.x + 12, position.y - 130);
+		if (jump_timer < 8) { colPlayer->SetPos(position.x + 12, position.y - 140); }
+		else if (jump_timer < 29) { colPlayer->SetPos(position.x + 12, position.y - 180); }
+		else if (jump_timer < 38) { colPlayer->SetPos(position.x + 12, position.y - 165); }
 
 		if (jump_timer > 38)
 		{

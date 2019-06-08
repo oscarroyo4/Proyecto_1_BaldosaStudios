@@ -73,14 +73,14 @@ ModuleJoe::ModuleJoe()
 	specialAttack.speed = 0.12f;
 
 	//Special Kick animation
-	specialkick.PushBack({ 5, 1439, 49, 89 });
+	/*specialkick.PushBack({ 5, 1439, 49, 89 });
 	specialkick.PushBack({ 63, 1442, 50, 80 });
 	specialkick.PushBack({ 125, 1435, 72, 93 });
 	specialkick.PushBack({ 205, 1433, 92, 93 });
 	specialkick.PushBack({ 305, 1429, 107, 93 });
 	specialkick.PushBack({ 305, 1429, 107, 93 });
 	specialkick.speed = 0.065f;
-
+	*/
 	// taking damage animation *
 	damage.PushBack({ 344, 342, 60, 100 });
 	damage.PushBack({ 407, 336, 68, 106 });
@@ -188,8 +188,8 @@ update_status ModuleJoe::Update()
 		else if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN)
 			status = JOE_SPECIAL;
 
-		else if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
-			status = JOE_SPECIAL_KICK;
+		//else if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
+		//	status = JOE_SPECIAL_KICK;
 
 		else {
 			status = JOE_IDLE;
@@ -338,7 +338,7 @@ update_status ModuleJoe::Update()
 		}
 		break;
 
-	case JOE_SPECIAL_KICK:
+	/*case JOE_SPECIAL_KICK:
 		if (specialkickEnable == true) {
 			specialkickEnable = false;
 			specialkick.Reset();
@@ -353,6 +353,7 @@ update_status ModuleJoe::Update()
 			kickHit = false;
 		}
 		break;
+		*/
 
 	case JOE_PUNCH:
 		if (punchEnable == true) {
@@ -450,7 +451,7 @@ update_status ModuleJoe::Update()
 		}
 	}
 
-	if (special_kick_timer > 0)
+	/*if (special_kick_timer > 0)
 	{
 		special_kick_timer = special_kick_timer + 1;
 		current_animation = &specialkick;
@@ -478,6 +479,7 @@ update_status ModuleJoe::Update()
 		speciakickCol->rect.x = speciakickCol->rect.x - 3;
 
 	}
+	*/
 
 	if (crouch_punch_timer > 0)
 	{
@@ -517,9 +519,9 @@ update_status ModuleJoe::Update()
 	{
 		jump_timer = jump_timer + 1;
 		current_animation = &jump;
-		if (jump_timer < 12)colPlayer->SetPos(position.x + 12, position.y - 130);
-		else if (jump_timer < 29)colPlayer->SetPos(position.x + 12, position.y - 140);
-		else if (jump_timer < 38)colPlayer->SetPos(position.x + 12, position.y - 130);
+		if (jump_timer < 8) { colPlayer->SetPos(position.x, position.y - 140); }
+		else if (jump_timer < 29) { colPlayer->SetPos(position.x, position.y - 180); }
+		else if (jump_timer < 38) { colPlayer->SetPos(position.x, position.y - 165); }
 
 		if (jump_timer > 38)
 		{
