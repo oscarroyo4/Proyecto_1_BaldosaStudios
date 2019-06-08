@@ -33,7 +33,8 @@ For the past six months our team from BalsdosaStudio has been working on a video
   * Github account: [CarlosDYZAB](https://github.com/CarlosDYZAB/)
   
 ### Gameplay Video
-
+Here is the link of the video :https://www.youtube.com/watch?v=1nzazt-GIqE <br/>
+[![](https://img.youtube.com/vi/1nzazt-GIqE/0.jpg)](https://www.youtube.com/watch?v=1nzazt-GIqE)
 ### Download link
 
 ### Link of our Wiki
