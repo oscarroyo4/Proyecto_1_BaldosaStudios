@@ -2,7 +2,7 @@
 
 #### This website was created to give a preview of our project about Fatal Fury.
 
-For the past six months our team from BalsdosaStudio has been working on a videogame project based on Fatal Fury a Neogeo game. Firs we made a research of the game, and we made a wiki page, you will find a link down below, then we worked on a first prototype that had few mechanics, finally we released the alpha, the link for the download it's also at the bottom of the website.
+For the past six months our team from BalsdosaStudio has been working on a videogame project based on Fatal Fury a Neogeo game. Firs, we made a research of the game, and we made a wiki page, you will find a link down below, then we worked on a first prototype that had few mechanics, finally we released the alpha, the link of our game it's also at the bottom of the website.
 
 ## Website Contents
 
@@ -13,6 +13,9 @@ For the past six months our team from BalsdosaStudio has been working on a video
 - Link to our Wiki
 
 ### Description of the game
+
+Our project tried to mimic the classic Neogeo game Fatal Fury, our alpha contains the three playable characters, Joe, Terry and Andy, also three playable maps. the gameplay is based on a 1v1 mode where the player1 selects one of the three main characters and competes against player2 that uses Terry with another skin. 
+The game has the basic mechanics of a 2D fighting game.
 
 ### Team members
 
