@@ -50,6 +50,8 @@ Here is the link of the video : [Fatal Fury Gameplay](https://www.youtube.com/wa
 
 ### Download link
 
+[Download Alpha Here](https://github.com/oscarroyo4/Proyecto_1_BaldosaStudios/releases)
+
 ### Link to our Wiki
 
 [BaldosaStudio Wiki](https://github.com/oscarroyo4/Proyecto_1_BaldosaStudios/wiki)
