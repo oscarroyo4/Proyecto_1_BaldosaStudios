@@ -333,7 +333,8 @@ update_status ModuleAndy::Update()
 			{
 				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 			}
-			punchCol = App->collision->AddCollider({ position.x + 46, position.y - 90, 40, 20 }, COLLIDER_PLAYER_SHOT);
+			if (App->enemy->position.x > position.x) punchCol = App->collision->AddCollider({ position.x + 46, position.y - 90, 40, 20 }, COLLIDER_PLAYER_SHOT);
+			else punchCol = App->collision->AddCollider({ position.x - 30, position.y - 90, 40, 20 }, COLLIDER_PLAYER_SHOT);
 			punchHit = false;
 		}
 		break;
