@@ -184,44 +184,62 @@ update_status ModuleScenePaoPao::Update()
 		EnemyVictories++;
 		App->render->camera.x = -530;
 		App->enemy->input = true;
-		App->player->input = true;
-		App->player->win_timer = 0;
-		App->player->defeat_timer = 0;
+
+		if(App->player->IsEnabled())App->player->input = true;
+		if (App->player->IsEnabled())App->player->win_timer = 0;
+		if (App->player->IsEnabled())App->player->defeat_timer = 0;
+
+		if (App->andy->IsEnabled())App->andy->input = true;
+		if (App->andy->IsEnabled())App->andy->win_timer = 0;
+		if (App->andy->IsEnabled())App->andy->defeat_timer = 0;
+
+		if (App->joe->IsEnabled())App->joe->input = true;
+		if (App->joe->IsEnabled())App->joe->win_timer = 0;
+		if (App->joe->IsEnabled())App->joe->defeat_timer = 0;
+
 		App->enemy->win_timer = 0;
 		App->enemy->defeat_timer = 0;
 		App->hud->Win = false;
-		App->player->Life = 100;
+		if (App->player->IsEnabled())App->player->Life = 100;
+		if (App->andy->IsEnabled())App->andy->Life = 100;
+		if (App->joe->IsEnabled())App->joe->Life = 100;
 		App->enemy->Life = 100;
-		App->player->position.x = 230;
+		if (App->player->IsEnabled())App->player->position.x = 230;
+		if (App->andy->IsEnabled())App->andy->position.x = 230;
+		if (App->joe->IsEnabled())App->joe->position.x = 230;
 		App->enemy->position.x = 375;
-		App->player->defeat.Reset();
+		if (App->player->IsEnabled())App->player->defeat.Reset();
+		if (App->andy->IsEnabled())App->andy->defeat.Reset();
+		if (App->joe->IsEnabled())App->joe->defeat.Reset();
 		App->enemy->win.Reset();
-		App->player->status = PLAYER_IDLE;
+		if (App->player->IsEnabled())App->player->status = PLAYER_IDLE;
+		if (App->andy->IsEnabled())App->andy->status = ANDY_IDLE;
+		if (App->joe->IsEnabled())App->joe->status = JOE_IDLE;
 		App->enemy->status = ENEMY_IDLE;
 
 	}
 
 	if (App->player->win_timer == 210 && PlayerVictories == 1)
 	{
-		App->fade->FadeToBlack(this, App->cinematics, 2.5);
+		App->fade->FadeToBlack(this, App->scene_intro, 2.5);
 		App->cinematics->finalpaopao = true;
 	}
 
 	if (App->joe->win_timer == 210 && PlayerVictories == 1)
 	{
-		App->fade->FadeToBlack(this, App->cinematics, 2.5);
+		App->fade->FadeToBlack(this, App->scene_intro, 2.5);
 		App->cinematics->finalpaopao = true;
 	}
 
 	if (App->andy->win_timer == 210 && PlayerVictories == 1)
 	{
-		App->fade->FadeToBlack(this, App->cinematics, 2.5);
+		App->fade->FadeToBlack(this, App->scene_intro, 2.5);
 		App->cinematics->finalpaopao = true;
 	}
 
 	if (App->enemy->win_timer == 210 && EnemyVictories == 1)
 	{
-		App->fade->FadeToBlack(this, App->soundBeach, 2.5);
+		App->fade->FadeToBlack(this, App->scene_intro, 2.5);
 	}
 
 	if (PlayerVictories == 0 && EnemyVictories == 0)

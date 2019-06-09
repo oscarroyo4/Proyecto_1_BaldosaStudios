@@ -194,6 +194,16 @@ update_status ModuleSceneSoundBeach::Update()
 		App->fade->FadeToBlackVisualEffect(2.5);
 	}
 
+	if (App->andy->win_timer == 180 && PlayerVictories == 0)
+	{
+		App->fade->FadeToBlackVisualEffect(2.5);
+	}
+
+	if (App->joe->win_timer == 180 && PlayerVictories == 0)
+	{
+		App->fade->FadeToBlackVisualEffect(2.5);
+	}
+
 	if (App->enemy->win_timer == 180 && EnemyVictories == 0)
 	{
 		App->fade->FadeToBlackVisualEffect(2.5);
@@ -221,6 +231,50 @@ update_status ModuleSceneSoundBeach::Update()
 		App->enemy->status = ENEMY_IDLE;
 	}
 
+	if (App->andy->win_timer == 235 && PlayerVictories == 0)
+	{
+		PlayerVictories++;
+		round = 2;
+		App->render->camera.x = -530;
+		App->enemy->input = true;
+		App->andy->input = true;
+		App->andy->win_timer = 0;
+		App->andy->defeat_timer = 0;
+		App->enemy->win_timer = 0;
+		App->enemy->defeat_timer = 0;
+		App->hud->Win = false;
+		App->andy->Life = 100;
+		App->enemy->Life = 100;
+		App->andy->position.x = 230;
+		App->enemy->position.x = 375;
+		App->andy->win.Reset();
+		App->enemy->defeat.Reset();
+		App->andy->status = ANDY_IDLE;
+		App->enemy->status = ENEMY_IDLE;
+	}
+
+	if (App->joe->win_timer == 235 && PlayerVictories == 0)
+	{
+		PlayerVictories++;
+		round = 2;
+		App->render->camera.x = -530;
+		App->enemy->input = true;
+		App->joe->input = true;
+		App->joe->win_timer = 0;
+		App->joe->defeat_timer = 0;
+		App->enemy->win_timer = 0;
+		App->enemy->defeat_timer = 0;
+		App->hud->Win = false;
+		App->joe->Life = 100;
+		App->enemy->Life = 100;
+		App->joe->position.x = 230;
+		App->enemy->position.x = 375;
+		App->joe->win.Reset();
+		App->enemy->defeat.Reset();
+		App->joe->status = JOE_IDLE;
+		App->enemy->status = ENEMY_IDLE;
+	}
+
 	if (App->enemy->win_timer == 235 && EnemyVictories == 0)
 	{
 		EnemyVictories++;
@@ -244,6 +298,16 @@ update_status ModuleSceneSoundBeach::Update()
 	}
 
 	if (App->player->win_timer == 210 && PlayerVictories == 1)
+	{
+		App->fade->FadeToBlack(this, App->howardArena, 2.5);
+	}
+
+	if (App->andy->win_timer == 210 && PlayerVictories == 1)
+	{
+		App->fade->FadeToBlack(this, App->howardArena, 2.5);
+	}
+
+	if (App->joe->win_timer == 210 && PlayerVictories == 1)
 	{
 		App->fade->FadeToBlack(this, App->howardArena, 2.5);
 	}
