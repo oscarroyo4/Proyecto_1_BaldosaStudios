@@ -21,6 +21,8 @@ The game has the basic mechanics of a 2D fighting game.
 
 
 > ![](https://raw.githubusercontent.com/oscarroyo4/Proyecto_1_BaldosaStudios/picts-wiki/IMG20190315120333.jpg)
+
+
 * Pau Raurell
   * Q&A
   * Github account: [pauraurell](https://github.com/pauraurell)
