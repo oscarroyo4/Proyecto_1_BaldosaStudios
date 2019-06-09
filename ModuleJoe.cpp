@@ -108,10 +108,7 @@ ModuleJoe::ModuleJoe()
 	defeat.loop = false;
 
 	// win animation *
-	win.PushBack({ 272, 491, 62, 97 });
-	win.PushBack({ 345, 488, 56, 100 });
-	win.PushBack({ 412, 489, 59, 99 });
-	win.PushBack({ 481, 452, 56, 136 });
+	win.PushBack({ 518, 821, 85, 87 });
 	win.speed = 0.05f;
 	win.loop = false;
 
@@ -390,8 +387,10 @@ update_status ModuleJoe::Update()
 		Life = Life - 10;
 		if (Life <= 0) {
 			Life = 0;
-			defeat_timer = 1;
-			App->enemy->win_timer = 1;
+			if (defeat_timer == 0) {
+				defeat_timer = 1;
+				App->enemy->win_timer = 1;
+			}
 		}
 		damage_timer = 1;
 		break;

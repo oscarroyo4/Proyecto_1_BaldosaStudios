@@ -56,11 +56,11 @@ ModuleAndy::ModuleAndy()
 	kick.speed = 0.12f;
 
 	//Jump animation
-	jump.PushBack({ 442, 144, 54, 80 });
-	jump.PushBack({ 516, 120, 43, 105 });
-	jump.PushBack({ 578, 120, 50, 93 });
-	jump.PushBack({ 649, 123, 49, 85 });
-	jump.PushBack({ 709, 144, 54, 80 });
+	jump.PushBack({ 237, 1082, 53, 79 });
+	jump.PushBack({ 310, 1033, 42, 128 });
+	jump.PushBack({ 370, 1004, 50, 157 });
+	jump.PushBack({ 443, 1022, 49, 139 });
+	jump.PushBack({ 502, 1067, 53, 79 });
 	jump.speed = 0.12f;
 
 	//crouch animation
