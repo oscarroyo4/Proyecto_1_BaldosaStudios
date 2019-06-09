@@ -94,8 +94,8 @@ ModuleAndy::ModuleAndy()
 	damage.speed = 0.15f;
 
 	// defeat animation
-	defeat.PushBack({ 28, 934, 92, 80 });
-	defeat.PushBack({ 128, 941, 99, 59 });
+	defeat.PushBack({ 27, 935, 91, 79 });
+	defeat.PushBack({ 127, 942, 98, 58 });
 	defeat.PushBack({ 223, 941, 89, 55 });
 	defeat.PushBack({ 317, 948, 99, 42 });
 	defeat.PushBack({ 423, 953, 112, 37 });
@@ -539,8 +539,8 @@ update_status ModuleAndy::Update()
 		if (blast_timer > 30 && blast_timer < 50) { current_animation = &specialAttackStatic; }
 		if (blast_timer == 25)
 		{
-			if (App->enemy->position.x > position.x) App->particles->AddParticle(App->particles->blast, position.x + 35, position.y-80, 0, 1100, 2.2, 0, 1);
-			else App->particles->AddParticle(App->particles->blast, position.x - 5, position.y-80, 0, 1100, -2.2, 0, 1);
+			if (App->enemy->position.x > position.x) App->particles->AddParticle(App->particles->blast, position.x + 45, position.y-85, 0, 1600, 2.2, 0, 1);
+			else App->particles->AddParticle(App->particles->blast, position.x - 15, position.y-85, 0, 1600, -2.2, 0, 1);
 
 		}
 		if (blast_timer >= 50)
