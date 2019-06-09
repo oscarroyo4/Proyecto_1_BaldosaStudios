@@ -89,8 +89,8 @@ ModuleAndy::ModuleAndy()
 	specialpunch.speed = 0.03f;
 
 	// taking damage animation
-	damage.PushBack({ 864, 239, 60, 100 });
-	damage.PushBack({ 932, 256, 68, 106 });
+	damage.PushBack({ 865, 238, 62, 95 });
+	damage.PushBack({ 933, 251, 65, 82 });
 	damage.speed = 0.15f;
 
 	// defeat animation
@@ -202,16 +202,45 @@ update_status ModuleAndy::Update()
 		break;
 
 	case ANDY_BACKWARD:
-		if (position.x < 10) { position.x -= 0; }
-		else position.x -= speed;
-		current_animation = &backward;
+		if (special_timer < 50 && special_timer > 0) { position.x += 0; }
+		else
+		{
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+				if (jumpEnable == true) {
+					jumpEnable = false;
+					jump.Reset();
+					if (App->sounds->Play_chunk(jumpfx))
+					{
+						LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+					}
+					jump_timer = 1;
+				}
+			if (position.x < 10) { position.x -= 0; }
+			else position.x -= speed;
+			current_animation = &backward;
+		}
 		break;
 
 	case ANDY_FORWARD:
 
-		position.x += speed;
-		current_animation = &forward;
-
+		if (special_timer <= 50 && special_timer > 0) { position.x += 0; }
+		else
+		{
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+				if (jumpEnable == true) {
+					jumpEnable = false;
+					jump.Reset();
+					if (App->sounds->Play_chunk(jumpfx))
+					{
+						LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+					}
+					jump_timer = 1;
+				}
+			if (position.x > 590) { position.x -= 0; }
+			else position.x += speed;
+			current_animation = &forward;
+	
+		}
 		break;
 
 	case ANDY_JUMP:
@@ -278,7 +307,7 @@ update_status ModuleAndy::Update()
 
 	case ANDY_SPECIAL_PUNCH_FINISH:
 		status = ANDY_IDLE;
-		specialpunch.Reset();
+		specialAttack.Reset();
 		break;
 
 	case ANDY_KICK:
@@ -517,9 +546,8 @@ update_status ModuleAndy::Update()
 		if (blast_timer >= 50)
 		{
 			status = ANDY_IDLE;
-			input = true;
 		}
-		if (blast_timer >= 250)
+		if (blast_timer >= 1000)
 		{
 			specialEnable = true;
 			blast_timer = 0;

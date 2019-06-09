@@ -82,19 +82,18 @@ ModuleJoe::ModuleJoe()
 	specialkick.PushBack({ 305, 1429, 107, 93 });
 	specialkick.speed = 0.065f;
 	
-	// taking damage animation *
-	damage.PushBack({ 344, 342, 60, 100 });
-	damage.PushBack({ 407, 336, 68, 106 });
-	damage.PushBack({ 408, 346, 64, 96 });
-	damage.PushBack({ 555, 355, 69, 87 });
-	damage.speed = 0.15f;
-
 	//crouch punch animation
 	crouchPunch.PushBack({ 97, 286, 55, 71 });
 	crouchPunch.PushBack({ 159, 288, 76, 70 });
 	crouchPunch.PushBack({ 238, 288, 55, 71 });
 	crouchPunch.speed = 0.175f;
 	crouchPunch.loop = false;
+
+	// taking damage animation
+	damage.PushBack({ 787, 510, 68, 86 });
+	damage.PushBack({ 861, 495, 75, 101 });
+	damage.PushBack({ 944, 510, 68, 86 });
+	damage.speed = 0.15f;
 
 	// defeat animation *
 	defeat.PushBack({ 10, 921, 64, 96 });
