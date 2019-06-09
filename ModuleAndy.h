@@ -27,6 +27,7 @@ enum andy_status
 	ANDY_IN_KICK_FINISH,
 	ANDY_IN_JUMP_FINISH,
 	ANDY_DAMAGE_FINISH,
+	ANDY_CROUCH_PUNCH_FINISH,
 	ANDY_IN_SPECIAL_FINISH
 };
 
@@ -47,6 +48,7 @@ public:
 	bool punchEnable = true;
 	bool kickEnable = true;
 	bool specialpunchEnable = true;
+	bool crouchPunchEnable = true;
 	bool jumpEnable = true;
 	bool specialEnable = true;
 	bool input = true;
@@ -60,6 +62,7 @@ public:
 	Animation punch;
 	Animation kick;
 	Animation specialpunch;
+	Animation crouchPunch;
 	Animation jump;
 	Animation specialAttack;
 	Animation specialAttackStatic;
@@ -69,6 +72,8 @@ public:
 	Animation win;
 	iPoint position;
 	Collider* colPlayer;
+	Collider* colPlayerCrouch = nullptr;
+	Collider* crouchPunchCol = nullptr;
 	Collider* punchCol;
 	Collider* kickCol;
 	Collider* specialCol1;
@@ -78,11 +83,13 @@ public:
 	int PlayerVict = 0;
 	bool hit = false;
 	bool punchHit = false;
+	bool crouchpunchHit = false;
 	bool kickHit = false;
 	andy_status status = ANDY_IDLE;
 	Uint32 punch_timer = 0;
 	Uint32 jump_timer = 0;
 	Uint32 kick_timer = 0;
+	Uint32 crouch_punch_timer = 0;
 	Uint32 special_punch_timer = 0;
 	Uint32 damage_timer = 0;
 	Uint32 blast_timer = 0;

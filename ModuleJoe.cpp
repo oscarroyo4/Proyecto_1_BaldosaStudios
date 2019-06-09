@@ -74,14 +74,14 @@ ModuleJoe::ModuleJoe()
 	specialAttack.speed = 0.12f;
 
 	//Special Kick animation
-	/*specialkick.PushBack({ 5, 1439, 49, 89 });
+	specialkick.PushBack({ 5, 1439, 49, 89 });
 	specialkick.PushBack({ 63, 1442, 50, 80 });
 	specialkick.PushBack({ 125, 1435, 72, 93 });
 	specialkick.PushBack({ 205, 1433, 92, 93 });
 	specialkick.PushBack({ 305, 1429, 107, 93 });
 	specialkick.PushBack({ 305, 1429, 107, 93 });
 	specialkick.speed = 0.065f;
-	*/
+	
 	// taking damage animation *
 	damage.PushBack({ 344, 342, 60, 100 });
 	damage.PushBack({ 407, 336, 68, 106 });
@@ -177,7 +177,7 @@ update_status ModuleJoe::Update()
 		else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
 			status = JOE_JUMP;
 
-		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 			status = JOE_CROUCH;
 
 		else if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)

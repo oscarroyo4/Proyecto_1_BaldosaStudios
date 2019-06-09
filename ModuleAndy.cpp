@@ -69,6 +69,12 @@ ModuleAndy::ModuleAndy()
 	crouch.speed = 0.175f;
 	crouch.loop = false;
 
+	//crouch punch animation
+	crouchPunch.PushBack({ 881, 735, 49, 63 });
+	crouchPunch.PushBack({ 942, 736, 78, 62 });
+	crouchPunch.speed = 0.175f;
+	crouchPunch.loop = false;
+
 	//SpecialAttack animation
 	specialAttack.PushBack({ 25, 361, 65, 95 });
 	specialAttack.PushBack({ 95, 364, 49, 92 });
@@ -162,7 +168,7 @@ update_status ModuleAndy::Update()
 		else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
 			status = ANDY_JUMP;
 
-		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 			status = ANDY_CROUCH;
 
 		else if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
@@ -228,7 +234,28 @@ update_status ModuleAndy::Update()
 		break;
 
 	case ANDY_CROUCH:
-		current_animation = &crouch;
+		if (jumpEnable == true && crouchPunchEnable == true) {
+
+
+			if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
+				crouchPunchEnable = false;
+				crouchPunch.Reset();
+				crouch_punch_timer = 1;
+				if (App->sounds->Play_chunk(punchfx))
+				{
+					LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+				}
+				if (App->enemy->position.x > position.x) crouchPunchCol = App->collision->AddCollider({ position.x + 46, position.y - 55, 40, 18 }, COLLIDER_PLAYER_SHOT);
+				else crouchPunchCol = App->collision->AddCollider({ position.x - 30, position.y - 55, 40, 18 }, COLLIDER_PLAYER_SHOT);
+				crouchpunchHit = false;
+			}
+			else current_animation = &crouch;
+		}
+		break;
+
+	case ANDY_CROUCH_PUNCH_FINISH:
+		status = ANDY_CROUCH;
+		crouchPunch.Reset();
 		break;
 
 	case ANDY_IN_JUMP_FINISH:
@@ -401,6 +428,22 @@ update_status ModuleAndy::Update()
 		}
 	}
 
+	if (crouch_punch_timer > 0)
+	{
+		crouch_punch_timer = crouch_punch_timer + 1;
+		current_animation = &crouchPunch;
+		if (crouchPunchCol->CheckCollision(App->enemy->r) && crouchpunchHit == false) {
+			App->enemy->hit = true;
+			crouchpunchHit = true;
+		}
+		if (crouch_punch_timer > 20)
+		{
+			crouchPunchEnable = true;
+			status = ANDY_CROUCH_PUNCH_FINISH;
+			crouchPunchCol->to_delete = true;
+			crouch_punch_timer = 0;
+		}
+	}
 	if (special_punch_timer > 0)
 	{
 		special_punch_timer = special_punch_timer + 1;
