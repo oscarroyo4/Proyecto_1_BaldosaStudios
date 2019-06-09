@@ -89,6 +89,9 @@ update_status ModuleScenePaoPao::Update()
 	if (App->joe->IsEnabled()) App->render->CameraFollowingPlayers(App->joe->position.x, App->enemy->position.x);
 
 	if(App->player->win_timer > 40 && App->player->win_timer < 180)App->render->Blit(App->hud->Wwin, 0, 0, &(App->hud->win), -1 / 3);
+	if (App->joe->win_timer > 40 && App->joe->win_timer < 180)App->render->Blit(App->hud->Wwin, 0, 0, &(App->hud->win), -1 / 3);
+	if (App->andy->win_timer > 40 && App->andy->win_timer < 180)App->render->Blit(App->hud->Wwin, 0, 0, &(App->hud->win), -1 / 3);
+	if (App->enemy->win_timer > 40 && App->enemy->win_timer < 180)App->render->Blit(App->hud->Wwin, 0, 0, &(App->hud->win), -1 / 3);
 
 	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1)
 	{
