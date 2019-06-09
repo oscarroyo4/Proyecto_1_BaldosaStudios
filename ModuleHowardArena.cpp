@@ -151,6 +151,8 @@ update_status ModuleHowardArena::Update()
 	Lightning_counter++;
 	if (Lightning_counter == 240) { Lightning_counter = 0;  HA_SkyLightning.Reset(); }
 
+
+
 	if (App->player->IsEnabled()) App->render->CameraFollowingPlayers(App->player->position.x, App->enemy->position.x);
 	if (App->andy->IsEnabled()) App->render->CameraFollowingPlayers(App->andy->position.x, App->enemy->position.x);
 	if (App->joe->IsEnabled()) App->render->CameraFollowingPlayers(App->joe->position.x, App->enemy->position.x);
@@ -275,6 +277,8 @@ update_status ModuleHowardArena::Update()
 		App->render->Blit(App->hud->hud, 270, 42, &(App->hud->roundCircleWon.GetCurrentFrame()), -1 / 3);
 		App->render->Blit(App->hud->hud, 286, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
 	}
+
+	if (fight_timer >= 0 && fight_timer < 80) { App->render->Blit(App->hud->hud, 90, 52, &(App->hud->fight), -1 / 3); fight_timer++; }
 
 	if (App->player->IsEnabled()) { App->render->Blit(ShadowHA, App->player->position.x - 5, 210, &rectShadowHA); }
 	if (App->enemy->IsEnabled()) { App->render->Blit(ShadowHA, App->enemy->position.x - 5, 210, &rectShadowHA); }

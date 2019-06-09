@@ -33,6 +33,7 @@ public:
 	Animation HA_Ground2;
 	Animation HA_Tree2;
 	Animation HA_Rain;
+	int fight_timer = 0;
 
 	int Lightning_counter = 0;
 	int PlayerVictories = 0;

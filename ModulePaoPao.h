@@ -32,6 +32,7 @@ public:
 	bool TerryOnStage = false;
 	bool AndyOnStage = false;
 	SDL_Rect rectShadowPaoPao;
+	int fight_timer = 0;
 
 };
 
