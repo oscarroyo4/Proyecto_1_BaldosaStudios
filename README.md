@@ -2,7 +2,7 @@
 
 #### This website was created to give a preview of our project about Fatal Fury.
 
-For the past six months our team from BalsdosaStudio has been working on a videogame project based on Fatal Fury a Neogeo game. Firs, we made a research of the game, and we made a wiki page, you will find a link down below, then we worked on a first prototype that had few mechanics, finally we released the alpha, the link of our game it's also at the bottom of the website.
+For the past six months our team from BalsdosaStudio has been working on a videogame project based on Fatal Fury a Neogeo game. First, we made a research of the game, and we made a wiki page, you will find a link down below, then we worked on a first prototype that had few mechanics, finally we released the alpha, the link of our game it's also at the bottom of the website.
 
 ## Website Contents
 
