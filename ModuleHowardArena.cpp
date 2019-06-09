@@ -148,9 +148,9 @@ update_status ModuleHowardArena::Update()
 {
 	// Draw everything --------------------------------------
 
+
 	Lightning_counter++;
 	if (Lightning_counter == 240) { Lightning_counter = 0;  HA_SkyLightning.Reset(); }
-
 
 
 	if (App->player->IsEnabled()) App->render->CameraFollowingPlayers(App->player->position.x, App->enemy->position.x);
@@ -174,7 +174,17 @@ update_status ModuleHowardArena::Update()
 		App->render->Blit(graphics2, 5, 0, &(HA_Sky2.GetCurrentFrame()), 0.2f);
 		App->render->Blit(graphics2, 0, 8, &(HA_Ground2.GetCurrentFrame()), 0.75f);
 		App->render->Blit(graphics2, 0, 0, &(HA_Tree2.GetCurrentFrame()), 0.75f);
-		App->render->Blit(graphics2, App->render->camera.x * - 1 / 3, 0, &(HA_Rain.GetCurrentFrame()), 0.75f);
+	}
+
+	if (round == 2)
+	{
+		App->render->Blit(graphics, 5, 0, &(HA_Sky.GetCurrentFrame()), 0.2f);
+		if (Lightning_counter > 180 && Lightning_counter < 240)
+		{
+			App->render->Blit(graphics, 5, 0, &(HA_SkyLightning.GetCurrentFrame()), 0.2f);
+		}
+		App->render->Blit(graphics, 0, 8, &(HA_Ground.GetCurrentFrame()), 0.75f);
+		App->render->Blit(graphics, 0, 0, &(HA_Tree.GetCurrentFrame()), 0.75f);
 	}
 
 	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1)
@@ -345,6 +355,10 @@ update_status ModuleHowardArena::Update()
 	}
 
 	if (fight_timer >= 0 && fight_timer < 90) { App->render->Blit(App->hud->hud, 90, 52, &(App->hud->fight), -1 / 3); fight_timer++; }
+	if (App->player->win_timer > 40 && App->player->win_timer < 180)App->render->Blit(App->hud->Wwin, 0, 0, &(App->hud->win), -1 / 3);
+	if (App->joe->win_timer > 40 && App->joe->win_timer < 180)App->render->Blit(App->hud->Wwin, 0, 0, &(App->hud->win), -1 / 3);
+	if (App->andy->win_timer > 40 && App->andy->win_timer < 180)App->render->Blit(App->hud->Wwin, 0, 0, &(App->hud->win), -1 / 3);
+	if (App->enemy->win_timer > 40 && App->enemy->win_timer < 180)App->render->Blit(App->hud->Wwin, 0, 0, &(App->hud->win), -1 / 3);
 
 	if (App->player->IsEnabled()) { App->render->Blit(ShadowHA, App->player->position.x - 5, 210, &rectShadowHA); }
 	if (App->enemy->IsEnabled()) { App->render->Blit(ShadowHA, App->enemy->position.x - 5, 210, &rectShadowHA); }

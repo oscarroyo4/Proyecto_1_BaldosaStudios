@@ -348,6 +348,8 @@ update_status ModuleEnemy::Update()
 				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 			}
 			if (App->player->position.x < position.x) punchCol = App->collision->AddCollider({ position.x - 30, position.y - 90, 40, 20 }, COLLIDER_ENEMY_SHOT);
+			if (App->andy->position.x < position.x) punchCol = App->collision->AddCollider({ position.x - 30, position.y - 90, 40, 20 }, COLLIDER_ENEMY_SHOT);
+			if (App->joe->position.x < position.x) punchCol = App->collision->AddCollider({ position.x - 30, position.y - 90, 40, 20 }, COLLIDER_ENEMY_SHOT);
 			else punchCol = App->collision->AddCollider({ position.x + 46, position.y - 90, 40, 20 }, COLLIDER_ENEMY_SHOT);
 
 			punchHit = false;
