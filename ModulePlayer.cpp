@@ -410,7 +410,6 @@ update_status ModulePlayer::Update()
 
 	if (defeat_timer > 0)
 	{
-		input = false;
 
 		defeat_timer = defeat_timer + 1;
 		current_animation = &defeat;
@@ -424,6 +423,7 @@ update_status ModulePlayer::Update()
 		}
 	}
 
+	if(defeat_timer > 80) input = false;
 
 	if (win_timer > 0)
 	{
