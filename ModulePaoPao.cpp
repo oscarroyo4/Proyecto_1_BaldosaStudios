@@ -88,6 +88,8 @@ update_status ModuleScenePaoPao::Update()
 	if (App->andy->IsEnabled()) App->render->CameraFollowingPlayers(App->andy->position.x, App->enemy->position.x);
 	if (App->joe->IsEnabled()) App->render->CameraFollowingPlayers(App->joe->position.x, App->enemy->position.x);
 
+	if(App->player->win_timer > 40 && App->player->win_timer < 180)App->render->Blit(App->hud->Wwin, 0, 0, &(App->hud->win), -1 / 3);
+
 	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1)
 	{
 		App->fade->FadeToBlack(this, App->soundBeach, 2.5);

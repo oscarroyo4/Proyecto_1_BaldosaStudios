@@ -26,15 +26,17 @@ ModuleHUD::ModuleHUD()
 	lifebar2.w = 119;
 	lifebar2.h = 16;
 
-	win.x = 124;
-	win.y = 62;
-	win.w = 122;
-	win.h = 16;
-
 	rectPlayer.w = 100;
 	rectPlayer.h = 6;
 	rectEnemy.w = 100;
 	rectEnemy.h = 6;
+
+	win.x = 0;
+	win.y = 0;
+	win.w = 304;
+	win.h = 224;
+
+
 
 	fight.x = 0;
 	fight.y = 102;
@@ -71,6 +73,7 @@ bool ModuleHUD::Start()
 	Win = false;
 	Lose = false;
 	hud = App->textures->Load("Assets/Sprites/Main/UI-HUD spritesheet.png");
+	Wwin = App->textures->Load("Assets/Sprites/Main/win.png");
 	fontID = App->fonts->Load("Assets/Sprites/Fonts/NumberTimerFont.png", "0123456789", 1, 15, 21, 10);
 	timer = 60;
 	ticks1 = 0;
@@ -105,7 +108,7 @@ update_status ModuleHUD::Update()
 	}
 
 	App->render->Blit(hud, App->render->camera.x + 22 , App->render->camera.y + 8, &lifebar, - 1);
-	App->render->Blit(hud, App->render->camera.x + 175, App->render->camera.y + 16, &lifebar2, -1);
+	App->render->Blit(hud, App->render->camera.x + 180, App->render->camera.y + 16, &lifebar2, -1);
 
 
 	if (ticks1 > 29000) {
@@ -140,7 +143,7 @@ update_status ModuleHUD::Update()
 	if (App->andy->IsEnabled())rectPlayer.w = App->andy->Life;
 	App->render->DrawQuad(rectPlayer, 250, 230, 30, 255, true);
 
-	rectEnemy.x = 177 + App->render->camera.x * -1 ;
+	rectEnemy.x = 182 + App->render->camera.x * -1 ;
 	rectEnemy.y = 25 + App->render->camera.y;
 	rectEnemy.w = App->enemy->Life;
 	App->render->DrawQuad(rectEnemy, 250, 230, 30, 255, true);

@@ -19,6 +19,7 @@ public:
 
 	SDL_Renderer *renderer;
 	SDL_Texture *hud = nullptr;
+	SDL_Texture *Wwin = nullptr;
 	SDL_Rect lifebar, lifebar2, rectPlayer, rectEnemy;
 	SDL_Rect win, lose, r, fight, round1, round2;
 	Animation roundCircle;
