@@ -82,10 +82,9 @@ update_status ModuleScenePaoPao::Update()
 	// Draw everything --------------------------------------
 	App->render->Blit(graphics, 0, 0, &(paopao.GetCurrentFrame()), 0.75f);
 
-	if (App->player->IsEnabled()) App->render->camera.x = (App->enemy->position.x*-2) - (App->player->position.x*2) * 1/2 + 900;
-	//if (App->player->IsEnabled()) App->render->camera.x = (App->enemy->position.x/2) + (App->player->position.x / 2);
-	if (App->andy->IsEnabled()) App->render->camera.x = (App->enemy->position.x*-2) - (App->andy->position.x*2) + 700;
-	if (App->joe->IsEnabled()) App->render->camera.x = (App->enemy->position.x*-2) - (App->joe->position.x*2) + 700;
+	if (App->player->IsEnabled()) App->render->CameraFollowingPlayers(App->player->position.x, App->enemy->position.x);
+	if (App->andy->IsEnabled()) App->render->CameraFollowingPlayers(App->andy->position.x, App->enemy->position.x);
+	if (App->joe->IsEnabled()) App->render->CameraFollowingPlayers(App->joe->position.x, App->enemy->position.x);
 
 	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1)
 	{

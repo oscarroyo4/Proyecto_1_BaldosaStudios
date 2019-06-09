@@ -140,11 +140,10 @@ bool ModuleSceneSoundBeach::CleanUp()
 update_status ModuleSceneSoundBeach::Update()
 {
 	// Draw everything --------------------------------------
-	
 
-	if (App->player->IsEnabled()) App->render->camera.x = (App->enemy->position.x*-2) - (App->player->position.x * 2) + 700;
-	if (App->andy->IsEnabled()) App->render->camera.x = (App->enemy->position.x*-2) - (App->andy->position.x * 2) + 700;
-	if (App->joe->IsEnabled()) App->render->camera.x = (App->enemy->position.x*-2) - (App->joe->position.x * 2) + 700;
+	if (App->player->IsEnabled()) App->render->CameraFollowingPlayers(App->player->position.x, App->enemy->position.x);
+	if (App->andy->IsEnabled()) App->render->CameraFollowingPlayers(App->andy->position.x, App->enemy->position.x);
+	if (App->joe->IsEnabled()) App->render->CameraFollowingPlayers(App->joe->position.x, App->enemy->position.x);
 
 	if (round == 1) 
 	{

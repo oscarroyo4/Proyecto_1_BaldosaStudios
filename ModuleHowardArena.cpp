@@ -151,9 +151,9 @@ update_status ModuleHowardArena::Update()
 	Lightning_counter++;
 	if (Lightning_counter == 240) { Lightning_counter = 0;  HA_SkyLightning.Reset(); }
 
-	if (App->player->IsEnabled()) App->render->camera.x = (App->enemy->position.x*-2) - (App->player->position.x * 2) + 700;
-	if (App->andy->IsEnabled()) App->render->camera.x = (App->enemy->position.x*-2) - (App->andy->position.x * 2) + 700;
-	if (App->joe->IsEnabled()) App->render->camera.x = (App->enemy->position.x*-2) - (App->joe->position.x * 2) + 700;
+	if (App->player->IsEnabled()) App->render->CameraFollowingPlayers(App->player->position.x, App->enemy->position.x);
+	if (App->andy->IsEnabled()) App->render->CameraFollowingPlayers(App->andy->position.x, App->enemy->position.x);
+	if (App->joe->IsEnabled()) App->render->CameraFollowingPlayers(App->joe->position.x, App->enemy->position.x);
 
 	if (round == 1)
 	{

@@ -25,6 +25,7 @@ public:
 	bool DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool use_camera = true);
 	void StartCameraShake(int duration, float magnitude);
 	void UpdateCameraShake();
+	void CameraFollowingPlayers(int, int);
 
 public:
 	SDL_Renderer* renderer = nullptr;
@@ -34,6 +35,7 @@ public:
 	float shake_duration = 0.0f;
 	float shake_timer = 0.0f;
 	float shake_magnitude = 0.0f;
+	float cameraX;
 	SDL_Point camera_offset;
 };
 
