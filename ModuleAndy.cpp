@@ -89,8 +89,8 @@ ModuleAndy::ModuleAndy()
 	specialpunch.speed = 0.03f;
 
 	// taking damage animation
-	damage.PushBack({ 864, 239, 60, 100 });
-	damage.PushBack({ 932, 256, 68, 106 });
+	damage.PushBack({ 865, 238, 62, 95 });
+	damage.PushBack({ 933, 251, 65, 82 });
 	damage.speed = 0.15f;
 
 	// defeat animation
@@ -202,9 +202,19 @@ update_status ModuleAndy::Update()
 		break;
 
 	case ANDY_BACKWARD:
-		if (specialEnable == false) { position.x += 0; }
+		if (special_timer < 50 && special_timer > 0) { position.x += 0; }
 		else
 		{
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+				if (jumpEnable == true) {
+					jumpEnable = false;
+					jump.Reset();
+					if (App->sounds->Play_chunk(jumpfx))
+					{
+						LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+					}
+					jump_timer = 1;
+				}
 			if (position.x < 10) { position.x -= 0; }
 			else position.x -= speed;
 			current_animation = &backward;
@@ -213,11 +223,23 @@ update_status ModuleAndy::Update()
 
 	case ANDY_FORWARD:
 
-		if (specialEnable == false) { position.x += 0; }
+		if (special_timer <= 50 && special_timer > 0) { position.x += 0; }
 		else
 		{
-			position.x += speed;
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+				if (jumpEnable == true) {
+					jumpEnable = false;
+					jump.Reset();
+					if (App->sounds->Play_chunk(jumpfx))
+					{
+						LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
+					}
+					jump_timer = 1;
+				}
+			if (position.x > 590) { position.x -= 0; }
+			else position.x += speed;
 			current_animation = &forward;
+	
 		}
 		break;
 
