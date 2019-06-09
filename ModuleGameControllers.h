@@ -27,6 +27,7 @@ public:
 	bool A_pressed = false;
 	bool Y_pressed = false;
 	bool B_pressed = false;
+	bool X_pressed = false;
 	bool Start_pressed = false;
 	bool Up_pressed = false;
 
@@ -38,6 +39,7 @@ public:
 	bool A_pressed2 = false;
 	bool Y_pressed2 = false;
 	bool B_pressed2 = false;
+	bool X_pressed2 = false;
 	bool Start_pressed2 = false;
 	bool Up_pressed2 = false;
 

@@ -41,6 +41,7 @@ update_status  ModuleGameControllers::PreUpdate()
 						A_pressed = SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_A);
 						B_pressed = SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_B);
 						Y_pressed = SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_Y);
+						X_pressed = SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_X);
 						Start_pressed = SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_START);
 
 						Controller_player1_Connected = true;
@@ -73,6 +74,7 @@ update_status  ModuleGameControllers::PreUpdate()
 						A_pressed2 = SDL_GameControllerGetButton(controller2, SDL_CONTROLLER_BUTTON_A);
 						B_pressed2 = SDL_GameControllerGetButton(controller2, SDL_CONTROLLER_BUTTON_B);
 						Y_pressed2 = SDL_GameControllerGetButton(controller2, SDL_CONTROLLER_BUTTON_Y);
+						X_pressed2 = SDL_GameControllerGetButton(controller2, SDL_CONTROLLER_BUTTON_X);
 						Start_pressed2 = SDL_GameControllerGetButton(controller2, SDL_CONTROLLER_BUTTON_START);
 
 						Controller_player2_Connected = true;
@@ -103,6 +105,11 @@ update_status  ModuleGameControllers::PreUpdate()
 		if (Y_pressed == true)
 		{
 			App->input->keyboard[SDL_SCANCODE_Y] = KEY_STATE::KEY_DOWN;
+		}
+
+		if (X_pressed == true)
+		{
+			App->input->keyboard[SDL_SCANCODE_U] = KEY_STATE::KEY_DOWN;
 		}
 
 		if (Start_pressed == true)
@@ -148,6 +155,11 @@ update_status  ModuleGameControllers::PreUpdate()
 		if (Y_pressed2 == true)
 		{
 			App->input->keyboard[SDL_SCANCODE_RALT] = KEY_STATE::KEY_DOWN;
+		}
+
+		if (X_pressed2 == true)
+		{
+			App->input->keyboard[SDL_SCANCODE_P] = KEY_STATE::KEY_DOWN;
 		}
 
 		if (Controller2_AxisX > 6400)
