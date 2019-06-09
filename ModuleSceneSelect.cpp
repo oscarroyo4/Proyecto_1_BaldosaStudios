@@ -7,6 +7,7 @@
 #include "ModuleHowardArena.h"
 #include "ModuleInput.h"
 #include "ModuleSounds.h"
+#include "ModuleVs.h"
 #include "ModulePlayerSelect.h"
 #include "ModuleSceneSelect.h"
 #include "ModuleFadeToBlack.h"
@@ -111,13 +112,19 @@ update_status ModuleSceneSelect::Update()
 	else if (App->input->GetKey(SDL_SCANCODE_T))
 	{
 		if (posPaoPao == true) {
-			App->fade->FadeToBlack(this, App->paopao, 1.5);
+			App->versus->pp = true;
+			App->fade->FadeToBlack(this, App->versus, 1.5);
+
 		}
 		if (posSoundBeach == true) {
-			App->fade->FadeToBlack(this, App->soundBeach, 1.5);
+			App->versus->bch = true;
+			App->fade->FadeToBlack(this, App->versus, 1.5);
+
 		}
 		if (posHowardArena == true) {
-			App->fade->FadeToBlack(this, App->howardArena, 1.5);
+			App->versus->hwa = true;
+			App->fade->FadeToBlack(this, App->versus, 1.5);
+			
 		}
 	}
 	else {

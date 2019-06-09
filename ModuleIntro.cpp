@@ -6,6 +6,7 @@
 #include "ModuleInput.h"
 #include "ModulePaoPao.h"
 #include "ModuleAudio.h"
+#include "ModuleVs.h"
 #include "ModulePlayerSelect.h"
 #include "ModuleFadeToBlack.h"
 

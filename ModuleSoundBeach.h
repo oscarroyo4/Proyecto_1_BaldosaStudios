@@ -39,6 +39,8 @@ public:
 	bool AndyOnStage = false;
 	int round = 1;
 	SDL_Rect rectShadowSB;
+	int fight_timer = 0;
+
 };
 
 #endif
