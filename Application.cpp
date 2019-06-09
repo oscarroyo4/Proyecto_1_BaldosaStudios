@@ -20,6 +20,7 @@
 #include "ModuleGameControllers.h"
 #include "ModuleCinematics.h"
 #include "ModuleJoe.h"
+#include "ModuleVs.h"
 #include "ModuleAndy.h"
 #include "ModuleFonts.h"
 
@@ -49,7 +50,7 @@ Application::Application()
 	modules[19] = andy = new ModuleAndy();
 	modules[20] = fonts = new ModuleFonts();
 	modules[21] = selectScene = new ModuleSceneSelect();
-	
+	modules[22] = versus = new ModuleVsCinematic();
 
 }
 
@@ -75,6 +76,7 @@ bool Application::Init()
 	soundBeach->Disable();
 	howardArena->Disable();
 	hud->Disable();
+	versus->Disable();
 
 	// ---
 

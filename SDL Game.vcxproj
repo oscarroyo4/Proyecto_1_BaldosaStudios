@@ -107,6 +107,7 @@
     <ClInclude Include="ModuleSoundBeach.h" />
     <ClInclude Include="ModuleSounds.h" />
     <ClInclude Include="ModuleTextures.h" />
+    <ClInclude Include="ModuleVs.h" />
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="p2Point.h" />
     <ClInclude Include="RectSprites.h" />
@@ -137,6 +138,7 @@
     <ClCompile Include="ModuleSoundBeach.cpp" />
     <ClCompile Include="ModuleSounds.cpp" />
     <ClCompile Include="ModuleTextures.cpp" />
+    <ClCompile Include="ModuleVs.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
