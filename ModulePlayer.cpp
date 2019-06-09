@@ -54,9 +54,9 @@ ModulePlayer::ModulePlayer()
 
 	//Jump animation
 	jump.PushBack({ 15, 337, 60, 106 });
-	jump.PushBack({ 268, 163, 52, 160 });
-	jump.PushBack({ 328, 156, 65, 175 });
-	jump.PushBack({ 393, 185, 59, 150 });
+	jump.PushBack({ 468, 163, 52, 170 });
+	jump.PushBack({ 528, 156, 65, 185 });
+	jump.PushBack({ 593, 185, 59, 158 });
 	jump.speed = 0.12f;
 
 	//crouch animation
