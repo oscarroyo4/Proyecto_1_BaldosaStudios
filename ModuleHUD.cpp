@@ -102,8 +102,8 @@ update_status ModuleHUD::Update()
 		Lose = true;
 	}
 
-	App->render->Blit(hud, App->render->camera.x + 22 , App->render->camera.y + 8, &lifebar, - 3);
-	App->render->Blit(hud, App->render->camera.x + 175, App->render->camera.y + 16, &lifebar2, -3);
+	App->render->Blit(hud, App->render->camera.x + 22 , App->render->camera.y + 8, &lifebar, - 1);
+	App->render->Blit(hud, App->render->camera.x + 175, App->render->camera.y + 16, &lifebar2, -1);
 
 
 	if (ticks1 > 29000) {
@@ -131,12 +131,12 @@ update_status ModuleHUD::Update()
 		}
 	}
 
-	rectPlayer.x = 39 + App->render->camera.x * -1 / 3;
+	rectPlayer.x = 39 + App->render->camera.x * -1 ;
 	rectPlayer.y = 25 + App->render->camera.y;
 	rectPlayer.w = App->player->Life;
 	App->render->DrawQuad(rectPlayer, 250, 230, 30, 255, true);
 
-	rectEnemy.x = 177 + App->render->camera.x * -1 / 3;
+	rectEnemy.x = 177 + App->render->camera.x * -1 ;
 	rectEnemy.y = 25 + App->render->camera.y;
 	rectEnemy.w = App->enemy->Life;
 	App->render->DrawQuad(rectEnemy, 250, 230, 30, 255, true);
