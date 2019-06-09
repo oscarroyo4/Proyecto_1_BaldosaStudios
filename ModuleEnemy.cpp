@@ -545,6 +545,8 @@ update_status ModuleEnemy::Update()
 		else if (jump_timer < 29) { colEnemy->SetPos(position.x + 12, position.y - 180); }
 		else if (jump_timer < 38) { colEnemy->SetPos(position.x + 12, position.y - 165); }
 
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) { position.x--; }
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) { position.x++; }
 		if (jump_timer > 38)
 		{
 			jumpEnable = true;
