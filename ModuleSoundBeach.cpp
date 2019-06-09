@@ -68,7 +68,7 @@ bool ModuleSceneSoundBeach::Start()
 	graphics3 = App->textures->Load("Assets/Sprites/Sound Beach Tileset/SoundBeachNight.png");
 	graphicsAnim3 = App->textures->Load("Assets/Sprites/Sound Beach Tileset/PeopleAnimation (night).png");
 	ShadowSB = App->textures->Load("Assets/Sprites/Main/Shadow.png");
-	music = App->sounds->Load_music("Assets/Fatal Fury King of Fighters - The Sea Knows (Michael Max Theme).ogg");
+	music = App->sounds->Load_music("Assets/Audio/Fatal Fury King of Fighters - The Sea Knows (Michael Max Theme).ogg");
 
 	App->player->Disable();
 	if (JoeOnStage == true) { 

@@ -76,7 +76,7 @@ bool ModuleHowardArena::Start()
 	graphics = App->textures->Load("Assets/Sprites/Howard Arena Tileset/night/Night_HowardArena.png");
 	graphics2 = App->textures->Load("Assets/Sprites/Howard Arena Tileset/night rain/NightRain_HowardArena.png");
 	ShadowHA = App->textures->Load("Assets/Sprites/Main/Shadow.png");
-	music = App->sounds->Load_music("Assets/Fatal Fury King of Fighters - Four Thousand Years of Chinese History (Tung Fu Rue Theme).ogg");
+	music = App->sounds->Load_music("Assets/Audio/Fatal Fury King of Fighters - Four Thousand Years of Chinese History (Tung Fu Rue Theme).ogg");
 
 	if (JoeOnStage == true) {
 		App->joe->Enable();
