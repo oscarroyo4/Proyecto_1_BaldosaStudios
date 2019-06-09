@@ -4,6 +4,8 @@
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
 #include "RectSprites.h"
+#include <stdlib.h>
+#include <time.h>
 #include "SDL/include/SDL.h"
 
 ModuleRender::ModuleRender() : Module()
@@ -11,6 +13,7 @@ ModuleRender::ModuleRender() : Module()
 	camera.x = camera.y = 0;
 	camera.w = SCREEN_WIDTH;
 	camera.h = SCREEN_HEIGHT;
+	srand(time(NULL));
 }
 
 // Destructor
@@ -97,11 +100,8 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
 {
 	bool ret = true;
 	SDL_Rect rect;
-	rect.x = (int)(camera.x * speed) + x * SCREEN_SIZE;
-	if (speed == 0)
-		rect.y = y * SCREEN_SIZE;
-	else
-		rect.y = (int)(camera.y) + y * SCREEN_SIZE;
+	rect.x = (int)((camera.x + camera_offset.x) * speed) + x * SCREEN_SIZE;
+	rect.y = (int)((camera.y + camera_offset.y) * speed) + y * SCREEN_SIZE;
 
 	if (section != NULL)
 	{
@@ -123,6 +123,27 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
 	}
 
 	return ret;
+}
+
+void ModuleRender::StartCameraShake(int duration, float magnitude)
+{
+	shake_duration = duration;
+	shake_magnitude = magnitude;
+	shaking = true;
+	shake_timer = SDL_GetTicks();
+}
+void ModuleRender::UpdateCameraShake()
+{
+	if (SDL_GetTicks() - shake_duration < shake_timer)
+	{
+		camera_offset.x = rand() % (int)shake_magnitude;
+		camera_offset.y = rand() % (int)shake_magnitude;
+	}
+	else
+	{
+		camera_offset.x = 0;
+		camera_offset.y = 0;
+	}
 }
 
 bool ModuleRender::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool use_camera)
