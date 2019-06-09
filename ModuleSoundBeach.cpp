@@ -349,6 +349,10 @@ update_status ModuleSceneSoundBeach::Update()
 		App->render->Blit(App->hud->hud, 286, 42, &(App->hud->roundCircle.GetCurrentFrame()), -1 / 3);
 	}
 	if (fight_timer >= 0 && fight_timer < 90) { App->render->Blit(App->hud->hud, 90, 52, &(App->hud->fight), -1 / 3); fight_timer++; }
+	if (App->player->win_timer > 40 && App->player->win_timer < 180)App->render->Blit(App->hud->Wwin, 0, 0, &(App->hud->win), -1 / 3);
+	if (App->joe->win_timer > 40 && App->joe->win_timer < 180)App->render->Blit(App->hud->Wwin, 0, 0, &(App->hud->win), -1 / 3);
+	if (App->andy->win_timer > 40 && App->andy->win_timer < 180)App->render->Blit(App->hud->Wwin, 0, 0, &(App->hud->win), -1 / 3);
+	if (App->enemy->win_timer > 40 && App->enemy->win_timer < 180)App->render->Blit(App->hud->Wwin, 0, 0, &(App->hud->win), -1 / 3);
 
 	if (App->player->IsEnabled()) { App->render->Blit(ShadowSB, App->player->position.x - 5, 210, &rectShadowSB); }
 	if (App->enemy->IsEnabled()) { App->render->Blit(ShadowSB, App->enemy->position.x - 5, 210, &rectShadowSB); }
