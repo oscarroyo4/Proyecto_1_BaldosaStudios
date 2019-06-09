@@ -97,7 +97,7 @@ update_status ModuleCinematics::Update()
 		App->fade->FadeToBlack(this, App->scene_intro, 4);
 	}
 
-	if (GameIntroCinematic_timer == 381)
+	if (GameIntroCinematic_timer >= 381)
 	{
 		GameIntroCinematic_timer = 381;
 	}

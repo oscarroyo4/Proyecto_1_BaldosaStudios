@@ -82,7 +82,7 @@ update_status ModuleScenePaoPao::Update()
 	// Draw everything --------------------------------------
 	App->render->Blit(graphics, 0, 0, &(paopao.GetCurrentFrame()), 0.75f);
 
-	if (fight_timer >= 0 && fight_timer < 90) { App->render->Blit(App->hud->hud, 90, 52, &(App->hud->fight), -1 / 3); fight_timer++; }
+	if (fight_timer >= 0 && fight_timer < 80) { App->render->Blit(App->hud->hud, 90, 52, &(App->hud->fight), -1 / 3); fight_timer++; }
 
 	if (App->player->IsEnabled()) App->render->CameraFollowingPlayers(App->player->position.x, App->enemy->position.x);
 	if (App->andy->IsEnabled()) App->render->CameraFollowingPlayers(App->andy->position.x, App->enemy->position.x);

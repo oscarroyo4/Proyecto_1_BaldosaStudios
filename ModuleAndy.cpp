@@ -202,23 +202,16 @@ update_status ModuleAndy::Update()
 		break;
 
 	case ANDY_BACKWARD:
-		if (specialEnable == false) { position.x += 0; }
-		else
-		{
-			if (position.x < 10) { position.x -= 0; }
-			else position.x -= speed;
-			current_animation = &backward;
-		}
+		if (position.x < 10) { position.x -= 0; }
+		else position.x -= speed;
+		current_animation = &backward;
 		break;
 
 	case ANDY_FORWARD:
 
-		if (specialEnable == false) { position.x += 0; }
-		else
-		{
-			position.x += speed;
-			current_animation = &forward;
-		}
+		position.x += speed;
+		current_animation = &forward;
+
 		break;
 
 	case ANDY_JUMP:
@@ -285,7 +278,7 @@ update_status ModuleAndy::Update()
 
 	case ANDY_SPECIAL_PUNCH_FINISH:
 		status = ANDY_IDLE;
-		specialAttack.Reset();
+		specialpunch.Reset();
 		break;
 
 	case ANDY_KICK:
@@ -524,8 +517,9 @@ update_status ModuleAndy::Update()
 		if (blast_timer >= 50)
 		{
 			status = ANDY_IDLE;
+			input = true;
 		}
-		if (blast_timer >= 1000)
+		if (blast_timer >= 250)
 		{
 			specialEnable = true;
 			blast_timer = 0;
