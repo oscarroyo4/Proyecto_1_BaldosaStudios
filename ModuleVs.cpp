@@ -55,9 +55,10 @@ update_status ModuleVsCinematic::Update()
 	
 	App->render->Blit(graphics, 0, 0, &(background.GetCurrentFrame()), 0);
 	
-	if (timer >= 0 && timer < 34) { leftposX++; timer++; }
-	if (timer >= 0 && timer < 34) { rightposX--; }
+	if (timer >= 0 && timer < 28) { leftposX++; timer++; }
+	if (timer >= 0 && timer < 28) { rightposX--; }
 
+	App->render->Blit(graphics, 125, 75, &(vs.GetCurrentFrame()), 0);
 
 	if (App->select->posT) App->render->Blit(graphics, leftposX, 60, &(terry.GetCurrentFrame()), 0);
 	if (App->select->posA) App->render->Blit(graphics, leftposX, 60, &(andy.GetCurrentFrame()), 0);
