@@ -46,6 +46,17 @@ bool ModuleParticles::Start()
 
 	tornado.anim.speed = 0.09f;
 
+	blast.anim.PushBack({ 11,290,22,22 });
+	blast.anim.PushBack({ 47,269,35,64 });
+	blast.anim.PushBack({ 87,270,48,62 });
+	blast.anim.PushBack({ 145,257,61,87 });
+	blast.anim.PushBack({ 217,258,46,85 });
+	blast.anim.PushBack({ 278,257,61,87 });
+	blast.anim.PushBack({ 348,258,46,85 });
+	blast.anim.PushBack({ 412,252,60,96 });
+
+	blast.anim.speed = 0.09f;
+
 	return true;
 }
 

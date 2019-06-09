@@ -52,6 +52,7 @@ public:
 	Particle midfire;
 	Particle smallfire;
 	Particle tornado;
+	Particle blast;
 };
 
 #endif // __MODULEPARTICLES_H__

@@ -339,7 +339,7 @@ update_status ModuleJoe::Update()
 		}
 		break;
 
-	/*case JOE_SPECIAL_KICK:
+	case JOE_SPECIAL_KICK:
 		if (specialkickEnable == true) {
 			specialkickEnable = false;
 			specialkick.Reset();
@@ -354,7 +354,7 @@ update_status ModuleJoe::Update()
 			kickHit = false;
 		}
 		break;
-		*/
+	
 
 	case JOE_PUNCH:
 		if (punchEnable == true) {

@@ -311,7 +311,7 @@ update_status ModuleAndy::Update()
 			{
 				LOG("Could not play select sound. Mix_PlayChannel: %s", Mix_GetError());
 			}
-			groundFire_timer = 1;
+			blast_timer = 1;
 			special_timer = 1;
 			specialEnable = false;
 		}
@@ -468,43 +468,24 @@ update_status ModuleAndy::Update()
 		}
 	}
 
-	if (groundFire_timer > 0)
+	if (blast_timer > 0)
 	{
-		groundFire_timer = groundFire_timer + 1;
-		if (groundFire_timer > 30) { current_animation = &specialAttackStatic; }
-		if (groundFire_timer == 69)
+		blast_timer = blast_timer + 1;
+		if (blast_timer > 30 && blast_timer < 50) { current_animation = &specialAttackStatic; }
+		if (blast_timer == 25)
 		{
-			App->particles->AddParticle(App->particles->smallfire, position.x + 26, position.y - 45, 0, 2800, 1.5, 0, 1);
+			if (App->enemy->position.x > position.x) App->particles->AddParticle(App->particles->blast, position.x + 35, position.y-80, 0, 1100, 2.2, 0, 1);
+			else App->particles->AddParticle(App->particles->blast, position.x - 5, position.y-80, 0, 1100, -2.2, 0, 1);
 
 		}
-		if (groundFire_timer == 55)
-		{
-			App->particles->AddParticle(App->particles->midfire, position.x + 28, position.y - 72, 0, 2700, 1.5, 0, 1);
-
-		}
-		if (groundFire_timer == 41)
-		{
-			App->particles->AddParticle(App->particles->bigfire, position.x + 29, position.y - 100, 0, 2600, 1.5, 0, 1);
-
-		}
-		if (groundFire_timer == 27)
-		{
-			App->particles->AddParticle(App->particles->midfire, position.x + 31, position.y - 72, 0, 2500, 1.5, 0, 1);
-
-		}
-		if (groundFire_timer == 13)
-		{
-			App->particles->AddParticle(App->particles->smallfire, position.x + 33, position.y - 45, 0, 2400, 1.5, 0, 1);
-
-		}
-		if (groundFire_timer >= 120)
+		if (blast_timer >= 50)
 		{
 			status = ANDY_IDLE;
 		}
-		if (groundFire_timer >= 180)
+		if (blast_timer >= 1000)
 		{
 			specialEnable = true;
-			groundFire_timer = 0;
+			blast_timer = 0;
 		}
 	}
 

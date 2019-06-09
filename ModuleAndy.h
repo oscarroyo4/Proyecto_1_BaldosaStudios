@@ -85,6 +85,7 @@ public:
 	Uint32 kick_timer = 0;
 	Uint32 special_punch_timer = 0;
 	Uint32 damage_timer = 0;
+	Uint32 blast_timer = 0;
 	Uint32 special_timer = 0;
 	Uint32 groundFire_timer = 0;
 	Uint32 defeat_timer = 0;
