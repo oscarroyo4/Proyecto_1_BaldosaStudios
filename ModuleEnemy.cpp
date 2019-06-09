@@ -449,6 +449,14 @@ update_status ModuleEnemy::Update()
 			App->player->hit = true;
 			kickHit = true;
 		}
+		if (kickCol->CheckCollision(App->andy->r) && kickHit == false) {
+			App->andy->hit = true;
+			kickHit = true;
+		}
+		if (kickCol->CheckCollision(App->joe->r) && kickHit == false) {
+			App->joe->hit = true;
+			kickHit = true;
+		}
 		if (kick_timer > 37)
 		{
 			kickEnable = true;
@@ -464,6 +472,14 @@ update_status ModuleEnemy::Update()
 		current_animation = &punch;
 		if (punchCol->CheckCollision(App->player->r) && punchHit == false) {
 			App->player->hit = true;
+			punchHit = true;
+		}
+		if (punchCol->CheckCollision(App->andy->r) && punchHit == false) {
+			App->andy->hit = true;
+			punchHit = true;
+		}
+		if (punchCol->CheckCollision(App->joe->r) && punchHit == false) {
+			App->joe->hit = true;
 			punchHit = true;
 		}
 		if (punch_timer > 30)

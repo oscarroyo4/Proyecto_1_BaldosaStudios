@@ -5,6 +5,8 @@
 #include "ModuleIntro.h"
 #include "ModuleInput.h"
 #include "ModuleHUD.h"
+#include "ModuleAndy.h"
+#include "ModuleJoe.h"
 #include "ModuleEnemy.h"
 #include "ModulePlayer.h"
 #include "ModulePaoPao.h"
@@ -133,7 +135,9 @@ update_status ModuleHUD::Update()
 
 	rectPlayer.x = 39 + App->render->camera.x * -1 ;
 	rectPlayer.y = 25 + App->render->camera.y;
-	rectPlayer.w = App->player->Life;
+	if(App->player->IsEnabled())rectPlayer.w = App->player->Life;
+	if (App->joe->IsEnabled())rectPlayer.w = App->joe->Life;
+	if (App->andy->IsEnabled())rectPlayer.w = App->andy->Life;
 	App->render->DrawQuad(rectPlayer, 250, 230, 30, 255, true);
 
 	rectEnemy.x = 177 + App->render->camera.x * -1 ;
