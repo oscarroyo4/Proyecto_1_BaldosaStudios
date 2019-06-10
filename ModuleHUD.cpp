@@ -148,8 +148,8 @@ update_status ModuleHUD::Update()
 	rectEnemy.w = App->enemy->Life;
 	App->render->DrawQuad(rectEnemy, 250, 230, 30, 255, true);
 
-	if (Win) { App->render->Blit(hud, App->render->camera.x, App->render->camera.y, &win, -3); }
-	if (Lose) { App->render->Blit(hud, App->render->camera.x, App->render->camera.y, &lose, -3); }
+	if (Win) { App->render->Blit(hud, App->render->camera.x, App->render->camera.y, &win, -3); timer = 60; }
+	if (Lose) { App->render->Blit(hud, App->render->camera.x, App->render->camera.y, &lose, -3); timer = 60; }
 
 	return UPDATE_CONTINUE;
 }
