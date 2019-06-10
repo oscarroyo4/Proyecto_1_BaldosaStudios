@@ -168,7 +168,7 @@ update_status ModuleAndy::Update()
 		else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
 			status = ANDY_JUMP;
 
-		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 			status = ANDY_CROUCH;
 
 		else if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
